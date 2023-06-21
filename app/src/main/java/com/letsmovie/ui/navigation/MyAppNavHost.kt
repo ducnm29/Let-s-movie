@@ -11,7 +11,7 @@ import com.letsmovie.ui.setting.SettingUI
 import com.letsmovie.ui.tv.TvUI
 
 @Composable
-fun AppNavigation(
+fun MyAppNavHost(
     modifier: Modifier = Modifier,
     navController: NavHostController,
     startDestination: String

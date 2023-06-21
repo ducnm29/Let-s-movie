@@ -63,4 +63,8 @@ dependencies {
     debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
     debugImplementation "androidx.compose.ui:ui-test-manifest:$compose_version"
     implementation "androidx.navigation:navigation-compose:$nav_version"
+
+    // Coil load image
+    implementation("io.coil-kt:coil-compose:2.4.0")
+    implementation "androidx.compose.ui:ui-util:$compose_version"
 }

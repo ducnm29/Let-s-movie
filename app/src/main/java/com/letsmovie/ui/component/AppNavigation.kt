@@ -9,6 +9,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import com.letsmovie.data.Define.Companion.LIST_SCREEN
 
 @Composable
@@ -29,6 +30,9 @@ fun AppNavigation(
                 onClick = {
                     selectedItem.value = index
                     navController.navigate(baseScreen.route){
+                        popUpTo(navController.graph.findStartDestination().id){
+                            saveState = true
+                        }
                         launchSingleTop = true
                         restoreState = true
                     }
