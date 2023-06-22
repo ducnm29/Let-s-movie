@@ -24,5 +24,11 @@ class Define {
          */
          val LIST_SCREEN = listOf(BaseScreen.MovieScreen, BaseScreen.TvScreen,
             BaseScreen.FavouriteScreen, BaseScreen.SettingScreen)
+
+        /**
+         *
+         */
+        const val HEADER_HELLO = "Hello Duc NM ahyhy"
+        const val HEADER_1 = "It's movie time ahyhy!"
     }
 }
