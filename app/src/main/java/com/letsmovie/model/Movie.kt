@@ -1,6 +1,7 @@
 package com.letsmovie.model
 
 data class Movie(
+
     val id: String,
     var movieName: String,
     var producer: String,

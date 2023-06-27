@@ -11,6 +11,8 @@ class Define {
         const val FAVOURITE_ROUTE = "favourite_route"
         const val SETTING_ROUTE = "setting_route"
         const val TV_ROUTE = "tv_route"
+        const val MOVIE_DETAIL_ROUTE = "movie_detail_route"
+        const val MOVIE_HOME = "movie_home"
 
         /**
          * Name constant for navigation
@@ -19,6 +21,7 @@ class Define {
         const val FAVOURITE_NAME = "favourite_route"
         const val SETTING_NAME = "setting_route"
         const val TV_NAME = "tv_route"
+        const val MOVIE_DETAIL_NAME = "movie_detail_name"
         /**
          * List navigation view
          */

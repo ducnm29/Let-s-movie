@@ -19,6 +19,7 @@ import com.letsmovie.model.Movie
 fun ListMovieUI(
     modifier: Modifier = Modifier,
     listMovieName: String,
+    onMovieClick: () -> Unit,
     listMovie: List<Movie> = listOf(
         Movie("1","Fast and mad", "Duc nm", "https://picsum.photos/id/237/550/860",""),
         Movie("1","Fast and mad", "Duc nm", "https://picsum.photos/id/238/550/860",""),
@@ -28,10 +29,10 @@ fun ListMovieUI(
         Movie("1","Fast and mad", "Duc nm", "https://picsum.photos/id/242/550/860",""),
         Movie("1","Fast and mad", "Duc nm", "https://picsum.photos/id/243/550/860",""),
         Movie("1","Fast and mad", "Duc nm", "https://picsum.photos/id/244/550/860",""),
-        Movie("1","Fast and mad", "Duc nm", "https://picsum.photos/id/245/550/860",""),
-        Movie("1","Fast and mad", "Duc nm", "https://picsum.photos/id/246/550/860",""),
+        Movie("1","Fast and mad", "Duc nm", "https://picsum.photos/id/250/550/860",""),
         Movie("1","Fast and mad", "Duc nm", "https://picsum.photos/id/247/550/860",""),
         Movie("1","Fast and mad", "Duc nm", "https://picsum.photos/id/248/550/860",""),
+        Movie("1","Fast and mad", "Duc nm", "https://picsum.photos/id/249/550/860",""),
     )
 ) {
     Column(
@@ -53,7 +54,10 @@ fun ListMovieUI(
                 )
         ){
             items(listMovie) {
-                MovieItem(movie = it)
+                MovieItem(
+                    movie = it,
+                    onMovieClick = onMovieClick
+                )
                 Spacer(modifier = Modifier.size(8.dp))
             }
         }
