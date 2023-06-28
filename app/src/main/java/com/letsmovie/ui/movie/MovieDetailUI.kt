@@ -25,6 +25,7 @@ import androidx.compose.material.icons.outlined.KeyboardArrowLeft
 import androidx.compose.material.icons.sharp.Favorite
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -36,15 +37,18 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import coil.size.Scale
 import com.letsmovie.model.Movie
 import com.letsmovie.model.TagIcon
 import com.letsmovie.ui.component.TagIconUI
+import com.letsmovie.util.Define
 
 @Composable
 fun MovieDetailUI(
+    navHostController:NavHostController,
     modifier: Modifier = Modifier,
     movie: Movie
 ) {
@@ -58,11 +62,11 @@ fun MovieDetailUI(
         ) {
             AsyncImage(
                 model = ImageRequest.Builder(LocalContext.current)
-                    .data(movie.imgUrl)
+                    .data(Define.BASE_IMG_URL1+movie.imgBackground)
                     .crossfade(true)
                     .build(),
                 contentDescription = null,
-                alpha = 0.2f,
+                alpha = 0.4f,
                 contentScale = ContentScale.Crop
             )
         }
@@ -71,14 +75,20 @@ fun MovieDetailUI(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Row() {
-                Icon(
-                    imageVector = Icons.Outlined.KeyboardArrowLeft,
-                    contentDescription = null,
+                IconButton(
+                    onClick = {
+                              navHostController.popBackStack()
+                    },
                     modifier = Modifier.padding(
                         top = 16.dp,
                         start = 16.dp
                     )
-                )
+                ) {
+                    Icon(
+                        imageVector = Icons.Outlined.KeyboardArrowLeft,
+                        contentDescription = null,
+                    )
+                }
                 Text(
                     text = movie.movieName,
                     fontWeight = FontWeight.Medium,
@@ -108,7 +118,7 @@ fun MovieDetailUI(
                 AsyncImage(
                     model = ImageRequest
                         .Builder(LocalContext.current)
-                        .data(movie.imgUrl)
+                        .data(Define.BASE_IMG_URL1+movie.imgPoster)
                         .scale(Scale.FILL)
                         .build(),
                     contentDescription = null,
@@ -119,13 +129,13 @@ fun MovieDetailUI(
                 horizontalArrangement = Arrangement.Center
             ){
                 TagIconUI(
-                    tagIcon = TagIcon("2021",Icons.Default.DateRange)
+                    tagIcon = TagIcon(movie.releaseDate,Icons.Default.DateRange)
                 )
                 TagIconUI(
-                    tagIcon = TagIcon("148 phút",Icons.Default.Done)
+                    tagIcon = TagIcon(movie.voteAverage.toString(),Icons.Default.Done)
                 )
                 TagIconUI(
-                    tagIcon = TagIcon("Comedy",Icons.Default.Info)
+                    tagIcon = TagIcon(movie.mediaType,Icons.Default.Info)
                 )
             }
             Text(
@@ -141,7 +151,7 @@ fun MovieDetailUI(
                 textAlign = TextAlign.Start
             )
             Text(
-                text = movie.movieStoryLine,
+                text = movie.movieOverview,
                 fontSize = 18.sp,
                 modifier = Modifier
                     .padding(

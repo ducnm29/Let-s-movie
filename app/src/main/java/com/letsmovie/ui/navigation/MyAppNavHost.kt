@@ -4,12 +4,13 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
-import com.letsmovie.data.Define
+import com.letsmovie.util.Define
 import com.letsmovie.model.Movie
 import com.letsmovie.ui.favourite.FavouriteUI
 import com.letsmovie.ui.movie.MovieDetailUI
@@ -46,14 +47,20 @@ fun NavGraphBuilder.movieGraph(navController: NavHostController){
         route = Define.MOVIE_HOME
     ){
         composable(route = BaseScreen.MovieScreen.route){
-            MovieUI(navHostController = navController)
+            MovieUI(
+                navHostController = navController,
+                movieViewModel = hiltViewModel()
+            )
         }
         composable(route = BaseScreen.MovieDetailScreen.route){
             MovieDetailUI(
+                navHostController = navController,
                 modifier = Modifier.verticalScroll(rememberScrollState()),
-                movie = Movie("1","Fast and mad", "Duc nm",
-                "https://picsum.photos/id/238/1600/1440", "Alodasjdahsgdahsgbdasdgashdgghasgsjgahahgsllllkkkkjhjkhdkjashdjhajksdhajkhsdkajshdajkdh" +
-                        "ajkshhhhhhhsjjjjjsdjkasdkjhsjdnajsdkjbcnbasbbcabcbajbshbdhabhsdasdgasdgasdguasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdfffbvhjbvdagsvbdjhjabsvdagjbahs")
+                movie = Movie("1","Fast and mad", "/qW4crfED8mpNDadSmMdi7ZDzhXF.jpg",
+                "When a headstrong street orphan, Seiya, in search of his abducted sister unwittingly taps into hidden powers," +
+                        " he discovers he might be the only person alive who can protect a reincarnated goddess, sent to watch over humanity. " +
+                        "Can he let his past go and embrace his destiny to become a Knight of the Zodiac?", "/u17VLZqWFbeJsj1HpvB6QOOHvlC.jpg",
+                    listOf(1,2),1f,"2022",1f,1,"movie")
             )
         }
     }

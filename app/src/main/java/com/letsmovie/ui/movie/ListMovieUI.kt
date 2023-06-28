@@ -14,26 +14,15 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.letsmovie.model.Movie
+import com.letsmovie.model.MovieResponse
+import com.letsmovie.model.Result
 
 @Composable
 fun ListMovieUI(
     modifier: Modifier = Modifier,
     listMovieName: String,
     onMovieClick: () -> Unit,
-    listMovie: List<Movie> = listOf(
-        Movie("1","Fast and mad", "Duc nm", "https://picsum.photos/id/237/550/860",""),
-        Movie("1","Fast and mad", "Duc nm", "https://picsum.photos/id/238/550/860",""),
-        Movie("1","Fast and mad", "Duc nm", "https://picsum.photos/id/239/550/860",""),
-        Movie("1","Fast and mad", "Duc nm", "https://picsum.photos/id/240/550/860",""),
-        Movie("1","Fast and mad", "Duc nm", "https://picsum.photos/id/241/550/860",""),
-        Movie("1","Fast and mad", "Duc nm", "https://picsum.photos/id/242/550/860",""),
-        Movie("1","Fast and mad", "Duc nm", "https://picsum.photos/id/243/550/860",""),
-        Movie("1","Fast and mad", "Duc nm", "https://picsum.photos/id/244/550/860",""),
-        Movie("1","Fast and mad", "Duc nm", "https://picsum.photos/id/250/550/860",""),
-        Movie("1","Fast and mad", "Duc nm", "https://picsum.photos/id/247/550/860",""),
-        Movie("1","Fast and mad", "Duc nm", "https://picsum.photos/id/248/550/860",""),
-        Movie("1","Fast and mad", "Duc nm", "https://picsum.photos/id/249/550/860",""),
-    )
+    listMovie: List<Movie>
 ) {
     Column(
         modifier = Modifier
@@ -63,3 +52,17 @@ fun ListMovieUI(
         }
     }
 }
+//= listOf(
+//Movie("1","Fast and mad", "Duc nm", "https://picsum.photos/id/237/550/860",""),
+//Movie("1","Fast and mad", "Duc nm", "https://picsum.photos/id/238/550/860",""),
+//Movie("1","Fast and mad", "Duc nm", "https://picsum.photos/id/239/550/860",""),
+//Movie("1","Fast and mad", "Duc nm", "https://picsum.photos/id/240/550/860",""),
+//Movie("1","Fast and mad", "Duc nm", "https://picsum.photos/id/241/550/860",""),
+//Movie("1","Fast and mad", "Duc nm", "https://picsum.photos/id/242/550/860",""),
+//Movie("1","Fast and mad", "Duc nm", "https://picsum.photos/id/243/550/860",""),
+//Movie("1","Fast and mad", "Duc nm", "https://picsum.photos/id/244/550/860",""),
+//Movie("1","Fast and mad", "Duc nm", "https://picsum.photos/id/250/550/860",""),
+//Movie("1","Fast and mad", "Duc nm", "https://picsum.photos/id/247/550/860",""),
+//Movie("1","Fast and mad", "Duc nm", "https://picsum.photos/id/248/550/860",""),
+//Movie("1","Fast and mad", "Duc nm", "https://picsum.photos/id/249/550/860",""),
+//)

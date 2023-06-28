@@ -1,10 +1,28 @@
 package com.letsmovie.model
 
-data class Movie(
+import com.google.gson.annotations.SerializedName
 
+data class Movie(
+    @SerializedName("id")
     val id: String,
-    var movieName: String,
-    var producer: String,
-    var imgUrl: String,
-    var movieStoryLine: String
+    @SerializedName("title")
+    val movieName: String,
+    @SerializedName("poster_path")
+    val imgPoster: String,
+    @SerializedName("overview")
+    val movieOverview: String,
+    @SerializedName("backdrop_path")
+    val imgBackground: String,
+    @SerializedName("genre_ids")
+    val genreIdArr: List<Int>,
+    @SerializedName("popularity")
+    val popularityPoint: Float,
+    @SerializedName("release_date")
+    val releaseDate: String,
+    @SerializedName("vote_average")
+    val voteAverage: Float,
+    @SerializedName("vote_count")
+    val voteCount: Int,
+    @SerializedName("media_type")
+    val mediaType: String
 )

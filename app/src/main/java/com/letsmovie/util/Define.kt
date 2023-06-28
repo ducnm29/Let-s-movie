@@ -1,4 +1,4 @@
-package com.letsmovie.data
+package com.letsmovie.util
 
 import com.letsmovie.ui.navigation.BaseScreen
 
@@ -29,9 +29,14 @@ class Define {
             BaseScreen.FavouriteScreen, BaseScreen.SettingScreen)
 
         /**
-         *
+         *  Const variable
          */
+        const val BASE_URL = "https://api.themoviedb.org/3/"
+        const val BASE_IMG_URL = "https://image.tmdb.org/t/p/w500/"
+        const val BASE_IMG_URL1 = "https://image.tmdb.org/t/p/original/"
+        const val API_KEY = "f39c7e6b303df4c5106ab18f41b95c54"
         const val HEADER_HELLO = "Hello Duc NM ahyhy"
         const val HEADER_1 = "It's movie time ahyhy!"
+
     }
 }

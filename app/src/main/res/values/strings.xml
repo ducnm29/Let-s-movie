@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Let\'s Movie</string>
+    <string name="common_error">There was an error occur</string>
 </resources>

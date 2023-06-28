@@ -3,7 +3,7 @@ package com.letsmovie.ui.navigation
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.ui.graphics.vector.ImageVector
-import com.letsmovie.data.Define
+import com.letsmovie.util.Define
 
 sealed class BaseScreen(val route: String, val name: String, val icon: ImageVector){
     object MovieScreen: BaseScreen(Define.MOVIE_ROUTE, Define.MOVIE_NAME, Icons.Default.Home)

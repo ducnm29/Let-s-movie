@@ -22,17 +22,17 @@ fun TvUI(
     ) {
         HeaderUserInfoUI()
         SearchBarUI()
-        ListMovieUI(
-            listMovieName = "VTV digital",
-            onMovieClick = {
-                navHostController.navigate(BaseScreen.MovieDetailScreen.route)
-            }
-        )
-        ListMovieUI(
-            listMovieName = "Trending",
-            onMovieClick = {
-                navHostController.navigate(BaseScreen.MovieDetailScreen.route)
-            }
-        )
+//        ListMovieUI(
+//            listMovieName = "VTV digital",
+//            onMovieClick = {
+//                navHostController.navigate(BaseScreen.MovieDetailScreen.route)
+//            }
+//        )
+//        ListMovieUI(
+//            listMovieName = "Trending",
+//            onMovieClick = {
+//                navHostController.navigate(BaseScreen.MovieDetailScreen.route)
+//            }
+//        )
     }
 }

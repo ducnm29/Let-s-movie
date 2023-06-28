@@ -11,6 +11,7 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import coil.size.Scale
 import com.letsmovie.model.Movie
+import com.letsmovie.util.Define
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -26,7 +27,7 @@ fun MovieItem(
     ){
         AsyncImage(
             model = ImageRequest.Builder(LocalContext.current)
-                .data(movie.imgUrl)
+                .data(Define.BASE_IMG_URL+movie.imgPoster)
                 .scale(Scale.FIT)
                 .crossfade(true)
                 .build(),

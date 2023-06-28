@@ -18,7 +18,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.letsmovie.R
-import com.letsmovie.data.Define
+import com.letsmovie.util.Define
 
 @Composable
 fun HeaderUserInfoUI(
