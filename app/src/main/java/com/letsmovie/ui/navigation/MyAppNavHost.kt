@@ -34,7 +34,10 @@ fun MyAppNavHost(
             TvUI(navHostController = navController)
         }
         composable(BaseScreen.FavouriteScreen.route){
-            FavouriteUI()
+            FavouriteUI(
+                navHostController = navController,
+                movieViewModel = hiltViewModel()
+            )
         }
         composable(BaseScreen.SettingScreen.route){
             SettingUI()
