@@ -10,6 +10,7 @@ import retrofit2.create
 
 object NetworkManager {
     fun createMovieApi(): MovieApi = createRetrofit().create(MovieApi::class.java)
+    fun createTvApi(): TvApi = createRetrofit().create(TvApi::class.java)
     private fun createRetrofit(): Retrofit{
         val retrofit = Retrofit.Builder()
             .baseUrl(Define.BASE_URL)

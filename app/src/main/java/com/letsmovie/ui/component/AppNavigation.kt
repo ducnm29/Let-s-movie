@@ -4,6 +4,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarDefaults.containerColor
 import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -38,9 +39,20 @@ fun AppNavigation(
                     }
                 },
                 icon = {
-                    Icon(
-                        imageVector = baseScreen.icon,
-                        contentDescription = null)
+                    if(index == selectedItem.value){
+                        Icon(
+                            imageVector = baseScreen.iconSelected,
+                            contentDescription = null
+                        )
+                    } else {
+                        Icon(
+                            imageVector = baseScreen.iconNormal,
+                            contentDescription = null
+                        )
+                    }
+                },
+                label = {
+                    Text(text = baseScreen.name)
                 }
             )
         }

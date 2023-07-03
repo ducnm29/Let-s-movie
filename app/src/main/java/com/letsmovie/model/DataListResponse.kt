@@ -2,11 +2,11 @@ package com.letsmovie.model
 
 import com.google.gson.annotations.SerializedName
 
-data class MovieResponse(
+data class DataListResponse<out T>(
     @SerializedName("page")
     val currentPage: Int,
     @SerializedName("results")
-    val movieList: List<Movie>,
+    val dataList: List<T>,
     @SerializedName("total_pages")
     val totalPages: Int,
     @SerializedName("total_results")

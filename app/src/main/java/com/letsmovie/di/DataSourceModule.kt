@@ -2,6 +2,7 @@ package com.letsmovie.di
 
 import com.letsmovie.data.api.MovieApi
 import com.letsmovie.data.api.NetworkManager
+import com.letsmovie.data.api.TvApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -14,4 +15,8 @@ object DataSourceModule {
     @Singleton
     @Provides
     fun provideMovieApi() : MovieApi = NetworkManager.createMovieApi()
+
+    @Singleton
+    @Provides
+    fun provideTvApi() : TvApi = NetworkManager.createTvApi()
 }

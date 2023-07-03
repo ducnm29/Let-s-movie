@@ -31,12 +31,16 @@ fun MyAppNavHost(
     ){
         movieGraph(navController)
         composable(BaseScreen.TvScreen.route){
-            TvUI(navHostController = navController)
+            TvUI(
+                navHostController = navController,
+                tvViewModel = hiltViewModel()
+            )
         }
         composable(BaseScreen.FavouriteScreen.route){
             FavouriteUI(
                 navHostController = navController,
-                movieViewModel = hiltViewModel()
+                movieViewModel = hiltViewModel(),
+                tvViewModel = hiltViewModel()
             )
         }
         composable(BaseScreen.SettingScreen.route){

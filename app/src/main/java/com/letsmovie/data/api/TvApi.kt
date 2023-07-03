@@ -1,19 +1,19 @@
 package com.letsmovie.data.api
 
-import com.letsmovie.model.Movie
 import com.letsmovie.model.DataListResponse
+import com.letsmovie.model.Tv
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-interface MovieApi {
-    @GET("trending/movie/day")
-    suspend fun getTrendingMovie(
+interface TvApi {
+    @GET("trending/tv/day")
+    suspend fun getTrendingTv(
         @Query("language") language: String,
         @Query("api_key") apiKey: String
-    ): DataListResponse<Movie>
-    @GET("movie/popular")
-    suspend fun getPopularMovie(
+    ): DataListResponse<Tv>
+    @GET("tv/popular")
+    suspend fun getPopularTv(
         @Query("language") language: String,
         @Query("api_key") apiKey: String
-    ): DataListResponse<Movie>
+    ):DataListResponse<Tv>
 }

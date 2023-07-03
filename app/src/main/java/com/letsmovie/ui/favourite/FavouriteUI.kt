@@ -15,13 +15,15 @@ import com.letsmovie.model.TagIcon
 import com.letsmovie.ui.component.TabContent
 import com.letsmovie.ui.component.Tabs
 import com.letsmovie.ui.movie.MovieViewModel
+import com.letsmovie.ui.tv.TvViewModel
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun FavouriteUI(
     modifier: Modifier = Modifier,
     navHostController: NavHostController,
-    movieViewModel: MovieViewModel
+    movieViewModel: MovieViewModel,
+    tvViewModel: TvViewModel
 ) {
     val pagerState = rememberPagerState(initialPage = 0)
 
@@ -33,12 +35,14 @@ fun FavouriteUI(
             pagerState = pagerState,
             listTabs = listOf(
                 TagIcon("Movie", Icons.Default.AccountBox),
-                TagIcon("TV", Icons.Default.AccountBox)
+                TagIcon("Tv", Icons.Default.AccountBox)
             )
         )
         TabContent(
             pagerState = pagerState,
             navHostController = navHostController,
-            movieViewModel = movieViewModel)
+            movieViewModel = movieViewModel,
+            tvViewModel = tvViewModel
+        )
     }
 }

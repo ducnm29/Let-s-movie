@@ -2,7 +2,8 @@ package com.letsmovie.ui.movie
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.letsmovie.model.MovieResponse
+import com.letsmovie.model.DataListResponse
+import com.letsmovie.model.Movie
 import com.letsmovie.model.Result
 import com.letsmovie.repository.MovieRepository
 import com.letsmovie.util.Define
@@ -11,7 +12,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -19,12 +19,12 @@ import javax.inject.Inject
 class MovieViewModel @Inject constructor(
     private val movieRepository: MovieRepository
 ): ViewModel() {
-    private val _trendingMovieStateFlow: MutableStateFlow<Result<MovieResponse>>
+    private val _trendingMovieStateFlow: MutableStateFlow<Result<DataListResponse<Movie>>>
     = MutableStateFlow(Result.Loading)
-    private val _popularMovieStateFlow: MutableStateFlow<Result<MovieResponse>>
+    private val _popularMovieStateFlow: MutableStateFlow<Result<DataListResponse<Movie>>>
     = MutableStateFlow(Result.Loading)
-    val trendingMovieStateFlow: StateFlow<Result<MovieResponse>> = _trendingMovieStateFlow.asStateFlow()
-    val popularMovieStateFlow: StateFlow<Result<MovieResponse>> = _popularMovieStateFlow.asStateFlow()
+    val trendingMovieStateFlow: StateFlow<Result<DataListResponse<Movie>>> = _trendingMovieStateFlow.asStateFlow()
+    val popularMovieStateFlow: StateFlow<Result<DataListResponse<Movie>>> = _popularMovieStateFlow.asStateFlow()
     fun getTrendingMovie(){
         viewModelScope.launch {
             _trendingMovieStateFlow.emit(Result.Loading)

@@ -17,11 +17,11 @@ class Define {
         /**
          * Name constant for navigation
          */
-        const val MOVIE_NAME = "movie_route"
-        const val FAVOURITE_NAME = "favourite_route"
-        const val SETTING_NAME = "setting_route"
-        const val TV_NAME = "tv_route"
-        const val MOVIE_DETAIL_NAME = "movie_detail_name"
+        const val MOVIE_NAME = "Movie"
+        const val FAVOURITE_NAME = "Favourite"
+        const val SETTING_NAME = "Setting"
+        const val TV_NAME = "Tv"
+        const val MOVIE_DETAIL_NAME = "Movie Detail"
         /**
          * List navigation view
          */

@@ -1,4 +1,4 @@
-package com.letsmovie.ui.tv
+package com.letsmovie.ui.favourite
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.rememberScrollState
@@ -8,39 +8,30 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
-import com.letsmovie.ui.component.HeaderUserInfoUI
 import com.letsmovie.ui.component.SearchBarUI
 import com.letsmovie.ui.movie.ListItemWithData
+import com.letsmovie.ui.movie.MovieViewModel
+import com.letsmovie.ui.tv.TvViewModel
 
 @Composable
-fun TvUI(
+fun FavouriteTvUI(
     modifier: Modifier = Modifier,
-    navHostController: NavHostController,
-    tvViewModel: TvViewModel
+    tvViewModel: TvViewModel,
+    navHostController: NavHostController
 ) {
-    val trendingTvResult = tvViewModel.trendingTvStateFlow.collectAsState()
-    val popularTvResult = tvViewModel.popularTvStateFlow.collectAsState()
+    val trendingTvStateFlow = tvViewModel.trendingTvStateFlow.collectAsState()
     LaunchedEffect(true){
         tvViewModel.getTrendingTv()
-        tvViewModel.getPopularTv()
     }
     Column(
-        modifier = Modifier.
-        verticalScroll(rememberScrollState())
+        modifier = modifier.verticalScroll(rememberScrollState())
     ) {
-        HeaderUserInfoUI()
         SearchBarUI()
         ListItemWithData(
-            result =  trendingTvResult.value,
+            result =  trendingTvStateFlow.value,
             modifier = modifier,
             navHostController = navHostController,
             categoryName = "Trending"
-        )
-        ListItemWithData(
-            result =  popularTvResult.value,
-            modifier = modifier,
-            navHostController = navHostController,
-            categoryName = "Popular"
         )
     }
 }
