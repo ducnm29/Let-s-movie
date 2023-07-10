@@ -1,5 +1,6 @@
 package com.letsmovie.ui.movie
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.letsmovie.model.DataListResponse
@@ -12,40 +13,70 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class MovieViewModel @Inject constructor(
     private val movieRepository: MovieRepository
-): ViewModel() {
-    private val _trendingMovieStateFlow: MutableStateFlow<Result<DataListResponse<Movie>>>
-    = MutableStateFlow(Result.Loading)
-    private val _popularMovieStateFlow: MutableStateFlow<Result<DataListResponse<Movie>>>
-    = MutableStateFlow(Result.Loading)
-    val trendingMovieStateFlow: StateFlow<Result<DataListResponse<Movie>>> = _trendingMovieStateFlow.asStateFlow()
-    val popularMovieStateFlow: StateFlow<Result<DataListResponse<Movie>>> = _popularMovieStateFlow.asStateFlow()
-    fun getTrendingMovie(){
+) : ViewModel() {
+
+
+    private val _trendingMovieStateFlow: MutableStateFlow<Result<DataListResponse<Movie>>> =
+        MutableStateFlow(Result.Loading)
+    private val _popularMovieStateFlow: MutableStateFlow<Result<DataListResponse<Movie>>> =
+        MutableStateFlow(Result.Loading)
+    private val _movieDetail: MutableStateFlow<Result<Movie>> = MutableStateFlow(Result.Loading)
+    val trendingMovieStateFlow: StateFlow<Result<DataListResponse<Movie>>> =
+        _trendingMovieStateFlow.asStateFlow()
+    val popularMovieStateFlow: StateFlow<Result<DataListResponse<Movie>>> =
+        _popularMovieStateFlow.asStateFlow()
+    val movieDetail: StateFlow<Result<Movie>> = _movieDetail.asStateFlow()
+
+    init {
         viewModelScope.launch {
-            _trendingMovieStateFlow.emit(Result.Loading)
-            movieRepository.getTrendingMovie("vi",Define.API_KEY)
+            movieRepository.getTrendingMovie("vi",Define.API_KEY).collectLatest {
+                _trendingMovieStateFlow.value = it
+            }
+        }
+    }
+
+    fun getTrendingMovie(language: String, apiKey: String) {
+        viewModelScope.launch {
+            movieRepository.getTrendingMovie(language, apiKey).collectLatest {
+                _trendingMovieStateFlow.value = it
+            }
+        }
+    }
+
+    fun getPopularMovie(language: String, apiKey: String) {
+        viewModelScope.launch {
+            _popularMovieStateFlow.emit(Result.Loading)
+            movieRepository.getPopularMovie(
+                language = language,
+                apiKey = apiKey
+            )
                 .catch {
-                    _trendingMovieStateFlow.emit(Result.Error(it.toString()))
+                    _popularMovieStateFlow.emit(Result.Error(it.toString()))
+                    Log.w(Define.ERROR_TAG, it.toString())
                 }
-                .collect{data ->
-                    _trendingMovieStateFlow.emit(Result.Success(data))
+                .collect { data ->
+                    _popularMovieStateFlow.emit(Result.Success(data))
                 }
         }
     }
-    fun getPopularMovie(){
+
+    fun getMovieDetail(movieId: String, language: String, apiKey: String) {
         viewModelScope.launch {
-            _popularMovieStateFlow.emit(Result.Loading)
-            movieRepository.getPopularMovie("vi", Define.API_KEY)
+            _movieDetail.emit(Result.Loading)
+            movieRepository.getMovieDetail(movieId = movieId, language = language, apiKey = apiKey)
                 .catch {
-                    _popularMovieStateFlow.emit(Result.Error(it.toString()))
+                    _movieDetail.emit(Result.Error(it.toString()))
+                    Log.w(Define.ERROR_TAG, it.toString())
                 }
-                .collect{data ->
-                    _popularMovieStateFlow.emit(Result.Success(data))
+                .collect { data ->
+                    _movieDetail.emit(Result.Success(data))
                 }
         }
     }

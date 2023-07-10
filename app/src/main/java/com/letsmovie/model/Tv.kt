@@ -28,5 +28,14 @@ data class Tv(
     @SerializedName("media_type")
     val mediaType: String,
     @SerializedName("origin_country")
-    val originCountry: List<String>
+    val originCountry: List<String>,
+    @SerializedName("created_by")
+    val createdBy: List<Producer>,
+    @SerializedName("genres")
+    val genreList: List<Genre>,
+    @SerializedName("languages")
+    val languageList: List<String>,
+    @SerializedName("status")
+    val status: String
+
 )

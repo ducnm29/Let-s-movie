@@ -24,5 +24,11 @@ data class Movie(
     @SerializedName("vote_count")
     val voteCount: Int,
     @SerializedName("media_type")
-    val mediaType: String
+    val mediaType: String,
+    @SerializedName("genres")
+    val genreList: List<Genre>,
+    @SerializedName("homepage")
+    val homePage: String,
+    @SerializedName("runtime")
+    val runtime: Int
 )

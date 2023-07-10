@@ -18,12 +18,14 @@ import com.letsmovie.util.Define
 fun MovieItem(
     movie: Movie,
     modifier: Modifier = Modifier,
-    onMovieClick : ()-> Unit
+    onMovieClick : (movieId: String)-> Unit
 ) {
     Card (
         shape = RoundedCornerShape(10.dp),
         modifier = modifier,
-        onClick = onMovieClick
+        onClick = {
+            onMovieClick(movie.id)
+        }
     ){
         AsyncImage(
             model = ImageRequest.Builder(LocalContext.current)

@@ -9,8 +9,10 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import com.letsmovie.ui.component.SearchBarUI
-import com.letsmovie.ui.movie.ListItemWithData
+import com.letsmovie.ui.component.ListItemWithData
 import com.letsmovie.ui.movie.MovieViewModel
+import com.letsmovie.ui.navigation.BaseScreen
+import com.letsmovie.util.Define
 
 @Composable
 fun FavouriteMovieUI(
@@ -20,7 +22,7 @@ fun FavouriteMovieUI(
 ) {
     val trendingMovieResult = movieViewModel.trendingMovieStateFlow.collectAsState()
     LaunchedEffect(true){
-        movieViewModel.getTrendingMovie()
+        movieViewModel.getTrendingMovie("vi", Define.API_KEY)
     }
     Column(
         modifier = modifier.verticalScroll(rememberScrollState())
@@ -30,7 +32,10 @@ fun FavouriteMovieUI(
             result =  trendingMovieResult.value,
             modifier = modifier,
             navHostController = navHostController,
-            categoryName = "Trending"
+            categoryName = "Trending",
+            onClick = {movieId ->
+                navHostController.navigate(BaseScreen.MovieDetailScreen.route + "/"+movieId)
+            }
         )
     }
 }

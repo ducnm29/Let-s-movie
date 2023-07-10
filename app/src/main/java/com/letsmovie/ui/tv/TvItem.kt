@@ -19,12 +19,14 @@ import com.letsmovie.util.Define
 fun TvItem(
     tv: Tv,
     modifier: Modifier = Modifier,
-    onMovieClick : ()-> Unit
+    onTvClick : (tvId: String)-> Unit
 ) {
     Card (
         shape = RoundedCornerShape(10.dp),
         modifier = modifier,
-        onClick = onMovieClick
+        onClick = {
+            onTvClick(tv.id)
+        }
     ){
         AsyncImage(
             model = ImageRequest.Builder(LocalContext.current)

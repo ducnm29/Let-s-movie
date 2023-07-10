@@ -22,4 +22,10 @@ class TvRepositoryImpl(
             emit(tvApi.getPopularTv(language = language, apiKey = apiKey))
         }.flowOn(Dispatchers.IO)
     }
+
+    override fun getTvDetail(tvId: String, language: String, apiKey: String): Flow<Tv> {
+        return flow {
+            emit(tvApi.getTvDetail(tvId = tvId, language = language, apiKey = apiKey))
+        }.flowOn(Dispatchers.IO)
+    }
 }

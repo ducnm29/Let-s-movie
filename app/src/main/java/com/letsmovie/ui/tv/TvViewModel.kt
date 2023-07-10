@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -23,8 +24,11 @@ class TvViewModel @Inject constructor(
     = MutableStateFlow(Result.Loading)
     private val _popularTvStateFlow: MutableStateFlow<Result<DataListResponse<Tv>>>
     = MutableStateFlow(Result.Loading)
+    private val _tvDetailStateFlow: MutableStateFlow<Result<Tv>>
+    = MutableStateFlow(Result.Loading)
     val trendingTvStateFlow: StateFlow<Result<DataListResponse<Tv>>> = _trendingTvStateFlow.asStateFlow()
     val popularTvStateFlow: StateFlow<Result<DataListResponse<Tv>>> = _popularTvStateFlow.asStateFlow()
+    val tvDetailStateFlow: StateFlow<Result<Tv>> = _tvDetailStateFlow.asStateFlow()
 
     fun getTrendingTv(){
         viewModelScope.launch {
@@ -47,6 +51,18 @@ class TvViewModel @Inject constructor(
                 }
                 .collect{data ->
                     _popularTvStateFlow.emit(Result.Success(data))
+                }
+        }
+    }
+    fun getTvDetail(tvId: String, language: String, apiKey: String){
+        viewModelScope.launch {
+            _tvDetailStateFlow.emit(Result.Loading)
+            tvRepository.getTvDetail(tvId = tvId, language = "vi", apiKey = Define.API_KEY)
+                .catch { error ->
+                    _tvDetailStateFlow.emit(Result.Error(error.toString()))
+                }
+                .collect{ data ->
+                    _tvDetailStateFlow.emit(Result.Success(data))
                 }
         }
     }

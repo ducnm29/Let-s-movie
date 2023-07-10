@@ -41,4 +41,10 @@ sealed class BaseScreen(val route: String, val name: String, val iconSelected: I
         Icons.Default.Movie,
         Icons.Outlined.Movie
     )
+    object TvDetailScreen: BaseScreen(
+        Define.TV_DETAIL_ROUTE,
+        Define.TV_DETAIL_NAME,
+        Icons.Default.Tv,
+        Icons.Outlined.Tv
+    )
 }

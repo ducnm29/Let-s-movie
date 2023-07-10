@@ -9,8 +9,8 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import com.letsmovie.ui.component.SearchBarUI
-import com.letsmovie.ui.movie.ListItemWithData
-import com.letsmovie.ui.movie.MovieViewModel
+import com.letsmovie.ui.component.ListItemWithData
+import com.letsmovie.ui.navigation.BaseScreen
 import com.letsmovie.ui.tv.TvViewModel
 
 @Composable
@@ -31,7 +31,10 @@ fun FavouriteTvUI(
             result =  trendingTvStateFlow.value,
             modifier = modifier,
             navHostController = navHostController,
-            categoryName = "Trending"
+            categoryName = "Trending",
+            onClick = {tvId ->
+                navHostController.navigate(BaseScreen.TvDetailScreen.route + "/"+tvId)
+            }
         )
     }
 }

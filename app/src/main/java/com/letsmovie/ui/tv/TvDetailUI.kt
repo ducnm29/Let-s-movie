@@ -1,4 +1,4 @@
-package com.letsmovie.ui.movie
+package com.letsmovie.ui.tv
 
 
 import androidx.compose.foundation.layout.Arrangement
@@ -40,28 +40,28 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import coil.size.Scale
 import com.letsmovie.R
-import com.letsmovie.model.Movie
 import com.letsmovie.model.Result
 import com.letsmovie.model.TagIcon
+import com.letsmovie.model.Tv
 import com.letsmovie.ui.component.TagIconUI
 import com.letsmovie.util.Define
 
 @Composable
-fun MovieDetailUI(
+fun TvDetailUI(
     navHostController:NavHostController,
     modifier: Modifier = Modifier,
-    movieId: String,
-    movieViewModel: MovieViewModel
+    tvId: String,
+    tvViewModel: TvViewModel
 ) {
-    val movieResult:Result<Movie> = movieViewModel.movieDetail.collectAsState().value
+    val tvResult:Result<Tv> = tvViewModel.tvDetailStateFlow.collectAsState().value
     LaunchedEffect(true){
-        movieViewModel.getMovieDetail(
-            movieId = movieId,
+        tvViewModel.getTvDetail(
+            tvId = tvId,
             language = "vi",
             apiKey = Define.API_KEY
         )
     }
-    when(movieResult){
+    when(tvResult){
         is Result.Loading -> {
             Box(
                 modifier = Modifier.fillMaxSize(),
@@ -92,7 +92,7 @@ fun MovieDetailUI(
                 ) {
                     AsyncImage(
                         model = ImageRequest.Builder(LocalContext.current)
-                            .data(Define.BASE_IMG_URL_ORIGIN + movieResult.data.imgBackground)
+                            .data(Define.BASE_IMG_URL_ORIGIN + tvResult.data.imgBackground)
                             .crossfade(true)
                             .build(),
                         contentDescription = null,
@@ -120,7 +120,7 @@ fun MovieDetailUI(
                             )
                         }
                         Text(
-                            text = movieResult.data.movieName,
+                            text = tvResult.data.tvName,
                             fontWeight = FontWeight.Medium,
                             fontSize = 23.sp,
                             modifier = Modifier
@@ -148,7 +148,7 @@ fun MovieDetailUI(
                         AsyncImage(
                             model = ImageRequest
                                 .Builder(LocalContext.current)
-                                .data(Define.BASE_IMG_URL_ORIGIN + movieResult.data.imgPoster)
+                                .data(Define.BASE_IMG_URL_ORIGIN + tvResult.data.imgPoster)
                                 .scale(Scale.FILL)
                                 .build(),
                             contentDescription = null,
@@ -160,17 +160,17 @@ fun MovieDetailUI(
                     ){
                         TagIconUI(
                             tagIcon = TagIcon(
-                                tagName = movieResult.data.releaseDate,
+                                tagName = tvResult.data.firstAirDate,
                                 tagIconImageVector = Icons.Default.DateRange)
                         )
                         TagIconUI(
                             tagIcon = TagIcon(
-                                tagName = movieResult.data.voteAverage.toString(),
+                                tagName = tvResult.data.voteAverage.toString(),
                                 tagIconImageVector = Icons.Default.StarRate)
                         )
                         TagIconUI(
                             tagIcon = TagIcon(
-                                tagName = movieResult.data.runtime.toString(),
+                                tagName = tvResult.data.voteAverage.toString(),
                                 tagIconImageVector = Icons.Default.AccessTime)
                         )
                     }
@@ -187,7 +187,7 @@ fun MovieDetailUI(
                         textAlign = TextAlign.Start
                     )
                     Text(
-                        text = movieResult.data.movieOverview,
+                        text = tvResult.data.tvOverview,
                         fontSize = 18.sp,
                         modifier = Modifier
                             .padding(

@@ -10,7 +10,8 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import com.letsmovie.ui.component.HeaderUserInfoUI
 import com.letsmovie.ui.component.SearchBarUI
-import com.letsmovie.ui.movie.ListItemWithData
+import com.letsmovie.ui.component.ListItemWithData
+import com.letsmovie.ui.navigation.BaseScreen
 
 @Composable
 fun TvUI(
@@ -34,13 +35,19 @@ fun TvUI(
             result =  trendingTvResult.value,
             modifier = modifier,
             navHostController = navHostController,
-            categoryName = "Trending"
+            categoryName = "Trending",
+            onClick = {tvId ->
+                navHostController.navigate(BaseScreen.TvDetailScreen.route + "/"+tvId)
+            }
         )
         ListItemWithData(
             result =  popularTvResult.value,
             modifier = modifier,
             navHostController = navHostController,
-            categoryName = "Popular"
+            categoryName = "Popular",
+            onClick = {tvId ->
+                navHostController.navigate(BaseScreen.TvDetailScreen.route + "/"+tvId)
+            }
         )
     }
 }

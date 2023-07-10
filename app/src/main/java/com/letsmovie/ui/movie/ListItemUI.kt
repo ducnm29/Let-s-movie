@@ -20,7 +20,7 @@ import com.letsmovie.ui.tv.TvItem
 fun <T: Any>ListItemUI(
     modifier: Modifier = Modifier,
     listName: String,
-    onClick: () -> Unit,
+    onClick: (itemId: String) -> Unit,
     listItem: List<T>
 ) {
     Column(
@@ -51,7 +51,7 @@ fun <T: Any>ListItemUI(
                    } else {
                        TvItem(
                            tv = it as Tv,
-                           onMovieClick = onClick
+                           onTvClick = onClick
                        )
                        Spacer(modifier = Modifier.size(8.dp))
                    }

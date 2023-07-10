@@ -16,6 +16,7 @@ import com.letsmovie.ui.favourite.FavouriteUI
 import com.letsmovie.ui.movie.MovieDetailUI
 import com.letsmovie.ui.movie.MovieUI
 import com.letsmovie.ui.setting.SettingUI
+import com.letsmovie.ui.tv.TvDetailUI
 import com.letsmovie.ui.tv.TvUI
 
 @Composable
@@ -30,12 +31,7 @@ fun MyAppNavHost(
         startDestination = startDestination
     ){
         movieGraph(navController)
-        composable(BaseScreen.TvScreen.route){
-            TvUI(
-                navHostController = navController,
-                tvViewModel = hiltViewModel()
-            )
-        }
+        tvGraph(navController)
         composable(BaseScreen.FavouriteScreen.route){
             FavouriteUI(
                 navHostController = navController,
@@ -59,16 +55,32 @@ fun NavGraphBuilder.movieGraph(navController: NavHostController){
                 movieViewModel = hiltViewModel()
             )
         }
-        composable(route = BaseScreen.MovieDetailScreen.route){
+        composable(route = BaseScreen.MovieDetailScreen.route+"/{movieId}"){backStackEntry ->
             MovieDetailUI(
                 navHostController = navController,
                 modifier = Modifier.verticalScroll(rememberScrollState()),
-                movie = Movie("1","Fast and mad", "/qW4crfED8mpNDadSmMdi7ZDzhXF.jpg",
-                "When a headstrong street orphan, Seiya, in search of his abducted sister unwittingly taps into hidden powers," +
-                        " he discovers he might be the only person alive who can protect a reincarnated goddess, sent to watch over humanity. " +
-                        "Can he let his past go and embrace his destiny to become a Knight of the Zodiac?", "/u17VLZqWFbeJsj1HpvB6QOOHvlC.jpg",
-                    listOf(1,2),1f,"2022",1f,1,"movie")
+                movieId = backStackEntry.arguments?.getString("movieId") ?: "0",
+                movieViewModel = hiltViewModel()
             )
+        }
+    }
+}
+fun NavGraphBuilder.tvGraph(navController: NavHostController){
+    navigation(
+        startDestination = BaseScreen.TvScreen.route,
+        route = Define.TV_HOME
+    ){
+        composable(route = BaseScreen.TvScreen.route){
+            TvUI(
+                navHostController = navController,
+                tvViewModel = hiltViewModel()
+            )
+        }
+        composable(route = BaseScreen.TvDetailScreen.route + "/{tvId}"){ backStackKEntry ->
+            TvDetailUI(
+                navHostController = navController,
+                tvId = backStackKEntry.arguments?.getString("tvId") ?: "0",
+                tvViewModel = hiltViewModel())
         }
     }
 }
