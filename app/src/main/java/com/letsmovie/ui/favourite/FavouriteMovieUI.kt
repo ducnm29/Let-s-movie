@@ -21,9 +21,6 @@ fun FavouriteMovieUI(
     navHostController: NavHostController
 ) {
     val trendingMovieResult = movieViewModel.trendingMovieStateFlow.collectAsState()
-    LaunchedEffect(true){
-        movieViewModel.getTrendingMovie("vi", Define.API_KEY)
-    }
     Column(
         modifier = modifier.verticalScroll(rememberScrollState())
     ) {

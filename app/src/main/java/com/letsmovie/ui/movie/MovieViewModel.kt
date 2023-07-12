@@ -1,6 +1,8 @@
 package com.letsmovie.ui.movie
 
 import android.util.Log
+import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.letsmovie.model.DataListResponse
@@ -9,6 +11,7 @@ import com.letsmovie.model.Result
 import com.letsmovie.repository.MovieRepository
 import com.letsmovie.util.Define
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -22,7 +25,6 @@ class MovieViewModel @Inject constructor(
     private val movieRepository: MovieRepository
 ) : ViewModel() {
 
-
     private val _trendingMovieStateFlow: MutableStateFlow<Result<DataListResponse<Movie>>> =
         MutableStateFlow(Result.Loading)
     private val _popularMovieStateFlow: MutableStateFlow<Result<DataListResponse<Movie>>> =
@@ -34,12 +36,12 @@ class MovieViewModel @Inject constructor(
         _popularMovieStateFlow.asStateFlow()
     val movieDetail: StateFlow<Result<Movie>> = _movieDetail.asStateFlow()
 
+    // Pull to refresh
+    private val _refreshing = mutableStateOf(false)
+    var refreshing: State<Boolean> = _refreshing
+
     init {
-        viewModelScope.launch {
-            movieRepository.getTrendingMovie("vi",Define.API_KEY).collectLatest {
-                _trendingMovieStateFlow.value = it
-            }
-        }
+        refreshData()
     }
 
     fun getTrendingMovie(language: String, apiKey: String) {
@@ -52,18 +54,9 @@ class MovieViewModel @Inject constructor(
 
     fun getPopularMovie(language: String, apiKey: String) {
         viewModelScope.launch {
-            _popularMovieStateFlow.emit(Result.Loading)
-            movieRepository.getPopularMovie(
-                language = language,
-                apiKey = apiKey
-            )
-                .catch {
-                    _popularMovieStateFlow.emit(Result.Error(it.toString()))
-                    Log.w(Define.ERROR_TAG, it.toString())
-                }
-                .collect { data ->
-                    _popularMovieStateFlow.emit(Result.Success(data))
-                }
+            movieRepository.getPopularMovie(language, apiKey).collectLatest {
+                _popularMovieStateFlow.value = it
+            }
         }
     }
 
@@ -80,4 +73,18 @@ class MovieViewModel @Inject constructor(
                 }
         }
     }
+
+    fun pullRefresh(){
+        viewModelScope.launch {
+            _refreshing.value = true
+            delay(1500)
+            refreshData()
+            _refreshing.value = false
+        }
+    }
+    private fun refreshData(){
+        getTrendingMovie("vi", Define.API_KEY)
+        getPopularMovie("vi", Define.API_KEY)
+    }
+
 }

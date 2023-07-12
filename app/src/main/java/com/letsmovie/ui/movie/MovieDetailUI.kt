@@ -128,15 +128,21 @@ fun MovieDetailUI(
                                 .padding(top = 16.dp),
                             textAlign = TextAlign.Center
                         )
-                        Icon(
-                            imageVector = Icons.Sharp.Favorite,
-                            contentDescription = null,
+                        IconButton(
+                            onClick = {
+
+                            },
                             modifier = Modifier.padding(
                                 top = 16.dp,
                                 end = 16.dp
-                            ),
-                            tint = Color.DarkGray
-                        )
+                            )
+                        ) {
+                            Icon(
+                                imageVector = Icons.Sharp.Favorite,
+                                contentDescription = null,
+                                tint = Color.DarkGray
+                            )
+                        }
                     }
                     Card(
                         shape = RoundedCornerShape(10.dp),
