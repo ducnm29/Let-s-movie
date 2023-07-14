@@ -48,25 +48,25 @@ import com.letsmovie.util.Define
 
 @Composable
 fun MovieDetailUI(
-    navHostController:NavHostController,
+    navHostController: NavHostController,
     modifier: Modifier = Modifier,
     movieId: String,
     movieViewModel: MovieViewModel
 ) {
-    val movieResult:Result<Movie> = movieViewModel.movieDetail.collectAsState().value
-    LaunchedEffect(true){
+    val movieResult: Result<Movie> = movieViewModel.movieDetail.collectAsState().value
+    LaunchedEffect(true) {
         movieViewModel.getMovieDetail(
             movieId = movieId,
             language = "vi",
             apiKey = Define.API_KEY
         )
     }
-    when(movieResult){
+    when (movieResult) {
         is Result.Loading -> {
             Box(
                 modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center
-            ){
+            ) {
                 CircularProgressIndicator()
             }
 
@@ -75,16 +75,16 @@ fun MovieDetailUI(
             Box(
                 modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center
-            ){
+            ) {
                 Text(text = stringResource(id = R.string.common_error))
             }
 
         }
 
         is Result.Success -> {
-            Box (
+            Box(
                 modifier = modifier
-            ){
+            ) {
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -140,7 +140,6 @@ fun MovieDetailUI(
                             Icon(
                                 imageVector = Icons.Sharp.Favorite,
                                 contentDescription = null,
-                                tint = Color.DarkGray
                             )
                         }
                     }
@@ -161,23 +160,26 @@ fun MovieDetailUI(
                             contentScale = ContentScale.Crop
                         )
                     }
-                    Row (
+                    Row(
                         horizontalArrangement = Arrangement.Center
-                    ){
+                    ) {
                         TagIconUI(
                             tagIcon = TagIcon(
                                 tagName = movieResult.data.releaseDate,
-                                tagIconImageVector = Icons.Default.DateRange)
+                                tagIconImageVector = Icons.Default.DateRange
+                            )
                         )
                         TagIconUI(
                             tagIcon = TagIcon(
                                 tagName = movieResult.data.voteAverage.toString(),
-                                tagIconImageVector = Icons.Default.StarRate)
+                                tagIconImageVector = Icons.Default.StarRate
+                            )
                         )
                         TagIconUI(
                             tagIcon = TagIcon(
                                 tagName = movieResult.data.runtime.toString(),
-                                tagIconImageVector = Icons.Default.AccessTime)
+                                tagIconImageVector = Icons.Default.AccessTime
+                            )
                         )
                     }
                     Text(

@@ -29,33 +29,34 @@ fun MyAppNavHost(
         modifier = modifier,
         navController = navController,
         startDestination = startDestination
-    ){
+    ) {
         movieGraph(navController)
         tvGraph(navController)
-        composable(BaseScreen.FavouriteScreen.route){
+        composable(BaseScreen.FavouriteScreen.route) {
             FavouriteUI(
                 navHostController = navController,
                 movieViewModel = hiltViewModel(),
                 tvViewModel = hiltViewModel()
             )
         }
-        composable(BaseScreen.SettingScreen.route){
+        composable(BaseScreen.SettingScreen.route) {
             SettingUI()
         }
     }
 }
-fun NavGraphBuilder.movieGraph(navController: NavHostController){
+
+fun NavGraphBuilder.movieGraph(navController: NavHostController) {
     navigation(
         startDestination = BaseScreen.MovieScreen.route,
         route = Define.MOVIE_HOME
-    ){
-        composable(route = BaseScreen.MovieScreen.route){
+    ) {
+        composable(route = BaseScreen.MovieScreen.route) {
             MovieUI(
                 navHostController = navController,
                 movieViewModel = hiltViewModel()
             )
         }
-        composable(route = BaseScreen.MovieDetailScreen.route+"/{movieId}"){backStackEntry ->
+        composable(route = BaseScreen.MovieDetailScreen.route + "/{movieId}") { backStackEntry ->
             MovieDetailUI(
                 navHostController = navController,
                 modifier = Modifier.verticalScroll(rememberScrollState()),
@@ -65,22 +66,24 @@ fun NavGraphBuilder.movieGraph(navController: NavHostController){
         }
     }
 }
-fun NavGraphBuilder.tvGraph(navController: NavHostController){
+
+fun NavGraphBuilder.tvGraph(navController: NavHostController) {
     navigation(
         startDestination = BaseScreen.TvScreen.route,
         route = Define.TV_HOME
-    ){
-        composable(route = BaseScreen.TvScreen.route){
+    ) {
+        composable(route = BaseScreen.TvScreen.route) {
             TvUI(
                 navHostController = navController,
                 tvViewModel = hiltViewModel()
             )
         }
-        composable(route = BaseScreen.TvDetailScreen.route + "/{tvId}"){ backStackKEntry ->
+        composable(route = BaseScreen.TvDetailScreen.route + "/{tvId}") { backStackKEntry ->
             TvDetailUI(
                 navHostController = navController,
                 tvId = backStackKEntry.arguments?.getString("tvId") ?: "0",
-                tvViewModel = hiltViewModel())
+                tvViewModel = hiltViewModel()
+            )
         }
     }
 }

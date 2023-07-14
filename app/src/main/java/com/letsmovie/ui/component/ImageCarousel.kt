@@ -25,11 +25,15 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.util.lerp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import coil.size.Scale
+import com.letsmovie.R
 import com.letsmovie.model.DataListResponse
 import com.letsmovie.model.Movie
 import com.letsmovie.model.Result
@@ -37,6 +41,7 @@ import com.letsmovie.model.Tv
 import com.letsmovie.util.Define
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlin.math.absoluteValue
 
 @Composable
 fun <T : Any>ImageCarousel(
@@ -61,12 +66,12 @@ fun <T: Any>ImageCarouselBody(
 ) {
     val pagerState = rememberPagerState(initialPage = 0)
     val scope = rememberCoroutineScope()
-    val tempVar = remember{ mutableStateOf(false) }
-    LaunchedEffect(tempVar.value){
+
+    // Auto animate to next page
+    LaunchedEffect(pagerState.settledPage){
         delay(2000)
         val newPosition = if (pagerState.currentPage < listData.size - 1) pagerState.currentPage + 1 else 0
         pagerState.animateScrollToPage(newPosition)
-        tempVar.value = !tempVar.value
     }
     Column(
         modifier = Modifier
@@ -76,33 +81,37 @@ fun <T: Any>ImageCarouselBody(
         HorizontalPager(
             pageCount = listData.size,
             state = pagerState,
-            pageSpacing = 20.dp,
-            beyondBoundsPageCount = 3,
-            contentPadding = PaddingValues(20.dp)
+            pageSpacing = 10.dp,
+            beyondBoundsPageCount = 2,
+            contentPadding = PaddingValues(25.dp)
         ) { index ->
             Card(
-                shape = RoundedCornerShape(10.dp)
+                shape = RoundedCornerShape(10.dp),
+                modifier = Modifier
+                    .graphicsLayer {
+                        val pageOffset = (
+                                (pagerState.currentPage - index) + pagerState
+                                    .currentPageOffsetFraction
+                                ).absoluteValue
+                        alpha = lerp(
+                            start = 0.4f,
+                            stop = 1f,
+                            fraction = 1f - pageOffset.coerceIn(0f, 1f)
+                        )
+
+                        //translationY = pageOffset.coerceIn(0f, 1f) * 10.dp.toPx()
+                        translationY = lerp(
+                            start = 0.dp.toPx(),
+                            stop = 10.dp.toPx(),
+                            fraction = pageOffset.coerceIn(0f, 1f)
+                        )
+
+                    }
             ) {
                 val currentItem = listData[index]
-                AsyncImage(
-                    model = ImageRequest.Builder(LocalContext.current)
-                        .data(
-                            when(currentItem){
-                                is Movie -> {
-                                    Define.BASE_IMG_URL_ORIGIN + currentItem.imgBackground
-                                }
-                                is Tv -> {
-                                    Define.BASE_IMG_URL_ORIGIN + currentItem.imgBackground
-                                }
-                                else -> {
-                                    // Nothing ahyhy
-                                }
-                            }
-                        )
-                        .crossfade(true)
-                        .scale(Scale.FILL)
-                        .build(),
-                    contentDescription = null)
+                CarouselItem(
+                    movieItem = currentItem as Movie
+                )
             }
         }
         Row (
