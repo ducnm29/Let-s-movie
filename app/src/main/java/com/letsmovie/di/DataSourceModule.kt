@@ -1,5 +1,6 @@
 package com.letsmovie.di
 
+import com.letsmovie.data.api.GenreApi
 import com.letsmovie.data.api.MovieApi
 import com.letsmovie.data.api.NetworkManager
 import com.letsmovie.data.api.TvApi
@@ -19,4 +20,8 @@ object DataSourceModule {
     @Singleton
     @Provides
     fun provideTvApi() : TvApi = NetworkManager.createTvApi()
+
+    @Singleton
+    @Provides
+    fun provideGenreApi() : GenreApi = NetworkManager.createGenreApi()
 }

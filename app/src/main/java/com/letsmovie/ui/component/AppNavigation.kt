@@ -22,7 +22,7 @@ fun AppNavigation(
         modifier = Modifier,
         containerColor = containerColor
     ) {
-        val selectedItem = rememberSaveable{
+        val selectedItem = rememberSaveable {
             mutableStateOf(0)
         }
         LIST_SCREEN.forEachIndexed { index, baseScreen ->
@@ -30,8 +30,8 @@ fun AppNavigation(
                 selected = index == selectedItem.value,
                 onClick = {
                     selectedItem.value = index
-                    navController.navigate(baseScreen.route){
-                        popUpTo(navController.graph.findStartDestination().id){
+                    navController.navigate(baseScreen.route) {
+                        popUpTo(navController.graph.findStartDestination().id) {
                             saveState = true
                         }
                         launchSingleTop = true
@@ -39,7 +39,7 @@ fun AppNavigation(
                     }
                 },
                 icon = {
-                    if(index == selectedItem.value){
+                    if (index == selectedItem.value) {
                         Icon(
                             imageVector = baseScreen.iconSelected,
                             contentDescription = null

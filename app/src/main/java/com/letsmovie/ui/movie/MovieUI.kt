@@ -16,8 +16,10 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import com.letsmovie.ui.component.HeaderUserInfoUI
 import com.letsmovie.ui.component.ImageCarousel
+import com.letsmovie.ui.component.ListGenreUI
 import com.letsmovie.ui.component.ListItemWithData
 import com.letsmovie.ui.component.SearchBarUI
+import com.letsmovie.ui.genre.GenreViewModel
 import com.letsmovie.ui.navigation.BaseScreen
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -25,10 +27,12 @@ import com.letsmovie.ui.navigation.BaseScreen
 fun MovieUI(
     modifier: Modifier = Modifier,
     navHostController: NavHostController,
-    movieViewModel: MovieViewModel
+    movieViewModel: MovieViewModel,
+    genreViewModel: GenreViewModel
 ) {
     val trendingMovieResult = movieViewModel.trendingMovieStateFlow.collectAsState()
     val popularMovieResult = movieViewModel.popularMovieStateFlow.collectAsState()
+    val movieGenreList = genreViewModel.movieGenre.collectAsState()
 
     val pullState = rememberPullRefreshState(
         refreshing = movieViewModel.refreshing.value,
@@ -56,6 +60,7 @@ fun MovieUI(
             ImageCarousel(
                 trendingMovieResult.value
             )
+            ListGenreUI(listGenreResult = movieGenreList.value)
             ListItemWithData(
                 result = trendingMovieResult.value,
                 modifier = modifier,

@@ -53,7 +53,8 @@ fun NavGraphBuilder.movieGraph(navController: NavHostController) {
         composable(route = BaseScreen.MovieScreen.route) {
             MovieUI(
                 navHostController = navController,
-                movieViewModel = hiltViewModel()
+                movieViewModel = hiltViewModel(),
+                genreViewModel = hiltViewModel()
             )
         }
         composable(route = BaseScreen.MovieDetailScreen.route + "/{movieId}") { backStackEntry ->
