@@ -32,7 +32,7 @@ fun ListGenreUI(
             Box(
                 modifier = modifier
                     .padding(vertical = 16.dp)
-                    .height(84.dp)
+                    .height(96.dp)
             ) {
                 LazyHorizontalGrid(
                     rows = GridCells.Fixed(2),

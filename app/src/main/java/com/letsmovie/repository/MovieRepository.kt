@@ -9,5 +9,5 @@ interface MovieRepository {
     fun getTrendingMovie(language: String, apiKey: String): Flow<Result<DataListResponse<Movie>>>
     fun getPopularMovie(language: String, apiKey: String): Flow<Result<DataListResponse<Movie>>>
     fun getMovieDetail(movieId: String, language: String, apiKey: String): Flow<Movie>
-    fun getTopRatedMovie(language: String, apiKey: String): Flow<DataListResponse<Movie>>
+    fun getTopRatedMovie(language: String, apiKey: String): Flow<Result<DataListResponse<Movie>>>
 }

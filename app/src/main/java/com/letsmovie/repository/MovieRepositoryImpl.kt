@@ -40,9 +40,13 @@ class MovieRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun getTopRatedMovie(language: String, apiKey: String): Flow<DataListResponse<Movie>> {
+    override fun getTopRatedMovie(language: String, apiKey: String): Flow<Result<DataListResponse<Movie>>> {
         return flow {
-            emit(movieApi.getTopRatedMovie(language, apiKey))
+            emit(Result.Loading)
+            val data = movieApi.getTopRatedMovie(language, apiKey)
+            emit(Result.Success(data))
+        }.catch {
+            emit(Result.Error(it.toString()))
         }
     }
 }

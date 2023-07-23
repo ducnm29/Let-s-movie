@@ -29,11 +29,15 @@ class MovieViewModel @Inject constructor(
         MutableStateFlow(Result.Loading)
     private val _popularMovieStateFlow: MutableStateFlow<Result<DataListResponse<Movie>>> =
         MutableStateFlow(Result.Loading)
+    private val _topRatedMovieStateFlow: MutableStateFlow<Result<DataListResponse<Movie>>> =
+        MutableStateFlow(Result.Loading)
     private val _movieDetail: MutableStateFlow<Result<Movie>> = MutableStateFlow(Result.Loading)
     val trendingMovieStateFlow: StateFlow<Result<DataListResponse<Movie>>> =
         _trendingMovieStateFlow.asStateFlow()
     val popularMovieStateFlow: StateFlow<Result<DataListResponse<Movie>>> =
         _popularMovieStateFlow.asStateFlow()
+    val topRatedMovieStateFlow: StateFlow<Result<DataListResponse<Movie>>> =
+        _topRatedMovieStateFlow.asStateFlow()
     val movieDetail: StateFlow<Result<Movie>> = _movieDetail.asStateFlow()
 
     // Pull to refresh
@@ -56,6 +60,14 @@ class MovieViewModel @Inject constructor(
         viewModelScope.launch {
             movieRepository.getPopularMovie(language, apiKey).collectLatest {
                 _popularMovieStateFlow.value = it
+            }
+        }
+    }
+
+    fun getTopRatedMovie(language: String, apiKey: String){
+        viewModelScope.launch {
+            movieRepository.getTopRatedMovie(language, apiKey).collectLatest {
+                _topRatedMovieStateFlow.value = it
             }
         }
     }
@@ -85,6 +97,7 @@ class MovieViewModel @Inject constructor(
     private fun refreshData(){
         getTrendingMovie("vi", Define.API_KEY)
         getPopularMovie("vi", Define.API_KEY)
+        getTopRatedMovie("vi", Define.API_KEY)
     }
 
 }

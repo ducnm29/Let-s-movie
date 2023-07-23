@@ -32,6 +32,7 @@ fun MovieUI(
 ) {
     val trendingMovieResult = movieViewModel.trendingMovieStateFlow.collectAsState()
     val popularMovieResult = movieViewModel.popularMovieStateFlow.collectAsState()
+    val topRatedMovieResult = movieViewModel.topRatedMovieStateFlow.collectAsState()
     val movieGenreList = genreViewModel.movieGenre.collectAsState()
 
     val pullState = rememberPullRefreshState(
@@ -58,7 +59,7 @@ fun MovieUI(
             HeaderUserInfoUI()
             SearchBarUI()
             ImageCarousel(
-                trendingMovieResult.value
+                topRatedMovieResult.value
             )
             ListGenreUI(listGenreResult = movieGenreList.value)
             ListItemWithData(
