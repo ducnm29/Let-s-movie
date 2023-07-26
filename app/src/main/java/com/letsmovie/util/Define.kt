@@ -49,7 +49,7 @@ class Define {
         val MOVIE_SAMPLE = Movie(
             id = "1",
             movieName = "",
-            imgPoster = "",
+            imgPoster = "/gPbM0MK8CP8A174rmUwGsADNYKD.jpg",
             movieOverview = "",
             imgBackground = "",
             genreIdArr = listOf(),

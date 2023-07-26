@@ -17,7 +17,7 @@ import com.letsmovie.model.Tv
 import com.letsmovie.ui.tv.TvItem
 
 @Composable
-fun <T: Any>ListItemUI(
+fun <T : Any> ListItemUI(
     modifier: Modifier = Modifier,
     listName: String,
     onClick: (itemId: String) -> Unit,
@@ -40,22 +40,22 @@ fun <T: Any>ListItemUI(
                     start = 16.dp,
                     top = 32.dp,
                 )
-        ){
-               items(listItem) {
-                   if (it is Movie) {
-                       MovieItem(
-                           movie = it,
-                           onMovieClick = onClick
-                       )
-                       Spacer(modifier = Modifier.size(8.dp))
-                   } else {
-                       TvItem(
-                           tv = it as Tv,
-                           onTvClick = onClick
-                       )
-                       Spacer(modifier = Modifier.size(8.dp))
-                   }
-               }
+        ) {
+            items(listItem) {
+                if (it is Movie) {
+                    MovieItem(
+                        movie = it,
+                        onMovieClick = onClick
+                    )
+                    Spacer(modifier = Modifier.size(8.dp))
+                } else {
+                    TvItem(
+                        tv = it as Tv,
+                        onTvClick = onClick
+                    )
+                    Spacer(modifier = Modifier.size(8.dp))
+                }
+            }
         }
     }
 }

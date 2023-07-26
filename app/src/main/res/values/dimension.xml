@@ -4,5 +4,14 @@
     <dimen name="genre_title">18sp</dimen>
 
     <dimen name="genre_width">180dp</dimen>
-    <dimen name="genre_height">36dp</dimen>
+    <dimen name="genre_height">64dp</dimen>
+
+    <dimen name="spacer_vertical1">12dp</dimen>
+    <dimen name="spacer_vertical2">16dp</dimen>
+    <dimen name="spacer_vertical3">32dp</dimen>
+    <dimen name="spacer_horizontal1">12dp</dimen>
+    <dimen name="spacer_horizontal2">16dp</dimen>
+    <dimen name="spacer_horizontal3">32dp</dimen>
+    <dimen name="category_title">23sp</dimen>
+
 </resources>

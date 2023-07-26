@@ -80,6 +80,10 @@ fun MovieUI(
                     navHostController.navigate(BaseScreen.MovieDetailScreen.route + "/" + movieId)
                 }
             )
+            ListMovieDetailUI(
+                categoryType = "Top rated",
+                listMovieResult = topRatedMovieResult.value
+            )
         }
     }
 }
