@@ -1,12 +1,14 @@
 package com.letsmovie.ui.movie
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Text
+import androidx.compose.material3.Text
 import androidx.compose.material3.Card
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -27,10 +29,16 @@ import com.letsmovie.util.Define
 @Composable
 fun MovieItemHorizontalUI(
     modifier: Modifier = Modifier,
-    movie: Movie
+    movie: Movie,
+    onclick: (String) -> Unit
 ) {
     Row(
-        modifier = modifier.fillMaxWidth()
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(bottom = dimensionResource(id = R.dimen.spacer_vertical2))
+            .clickable {
+                onclick(movie.id)
+            }
     ) {
         Card(
             shape = RoundedCornerShape(10.dp)
@@ -43,7 +51,7 @@ fun MovieItemHorizontalUI(
                     .build(),
                 contentDescription = null,
                 contentScale = ContentScale.Crop,
-                modifier = Modifier.size(64.dp)
+                modifier = Modifier.size(72.dp)
             )
         }
         Spacer(modifier = Modifier.size(dimensionResource(id = R.dimen.spacer_horizontal1)))
@@ -57,11 +65,11 @@ fun MovieItemHorizontalUI(
             )
             Spacer(
                 modifier = Modifier
-                    .size(dimensionResource(id = R.dimen.spacer_vertical1).value.dp)
+                    .size(dimensionResource(id = R.dimen.spacer_vertical0).value.dp)
             )
             Text(
                 text = movie.releaseDate,
-                fontSize = dimensionResource(id = R.dimen.item_title).value.sp,
+                fontSize = dimensionResource(id = R.dimen.sub_item_title).value.sp,
                 fontWeight = FontWeight.Normal
             )
             Spacer(
@@ -77,6 +85,7 @@ fun MovieItemHorizontalUI(
 @Composable
 fun MovieItemHorizontalPreview() {
     MovieItemHorizontalUI(
-        movie = Define.MOVIE_SAMPLE
+        movie = Define.MOVIE_SAMPLE,
+        onclick = {}
     )
 }

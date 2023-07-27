@@ -5,10 +5,10 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.pullrefresh.PullRefreshIndicator
-import androidx.compose.material.pullrefresh.pullRefresh
-import androidx.compose.material.pullrefresh.rememberPullRefreshState
+//import androidx.compose.material.ExperimentalMaterialApi
+//import androidx.compose.material.pullrefresh.PullRefreshIndicator
+//import androidx.compose.material.pullrefresh.pullRefresh
+//import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
@@ -22,7 +22,7 @@ import com.letsmovie.ui.component.SearchBarUI
 import com.letsmovie.ui.genre.GenreViewModel
 import com.letsmovie.ui.navigation.BaseScreen
 
-@OptIn(ExperimentalMaterialApi::class)
+//@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun MovieUI(
     modifier: Modifier = Modifier,
@@ -33,33 +33,37 @@ fun MovieUI(
     val trendingMovieResult = movieViewModel.trendingMovieStateFlow.collectAsState()
     val popularMovieResult = movieViewModel.popularMovieStateFlow.collectAsState()
     val topRatedMovieResult = movieViewModel.topRatedMovieStateFlow.collectAsState()
+    val upComingMovieResult = movieViewModel.upComingMovie.collectAsState()
     val movieGenreList = genreViewModel.movieGenre.collectAsState()
 
-    val pullState = rememberPullRefreshState(
-        refreshing = movieViewModel.refreshing.value,
-        onRefresh = { movieViewModel.pullRefresh() }
-    )
+//    val pullState = rememberPullRefreshState(
+//        refreshing = movieViewModel.refreshing.value,
+//        onRefresh = { movieViewModel.pullRefresh() }
+//    )
     Box(
         modifier = Modifier
-            .pullRefresh(
-                state = pullState,
-                enabled = true
-            )
+//            .pullRefresh(
+//                state = pullState,
+//                enabled = true
+//            )
             .fillMaxSize(),
         contentAlignment = Alignment.TopCenter
     ) {
         Column(
             modifier = Modifier.verticalScroll(state = rememberScrollState())
         ) {
-            PullRefreshIndicator(
-                refreshing = movieViewModel.refreshing.value,
-                state = pullState,
-                modifier = Modifier.align(Alignment.CenterHorizontally)
-            )
+//            PullRefreshIndicator(
+//                refreshing = movieViewModel.refreshing.value,
+//                state = pullState,
+//                modifier = Modifier.align(Alignment.CenterHorizontally)
+//            )
             HeaderUserInfoUI()
             SearchBarUI()
             ImageCarousel(
-                topRatedMovieResult.value
+                result = topRatedMovieResult.value,
+                onClick = { movieId ->
+                    navHostController.navigate(BaseScreen.MovieDetailScreen.route + "/" + movieId)
+                }
             )
             ListGenreUI(listGenreResult = movieGenreList.value)
             ListItemWithData(
@@ -82,7 +86,17 @@ fun MovieUI(
             )
             ListMovieDetailUI(
                 categoryType = "Top rated",
-                listMovieResult = topRatedMovieResult.value
+                listMovieResult = topRatedMovieResult.value,
+                onclick = { movieId ->
+                    navHostController.navigate(BaseScreen.MovieDetailScreen.route + "/" + movieId)
+                }
+            )
+            ListMovieDetailUI(
+                categoryType = "Up coming",
+                listMovieResult = upComingMovieResult.value,
+                onclick = { movieId ->
+                    navHostController.navigate(BaseScreen.MovieDetailScreen.route + "/" + movieId)
+                }
             )
         }
     }

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Let\'s Movie</string>
+    <string name="common_error">Ối! Có lỗi gì đó ahyhy!</string>
+    <string name="view_more">Xem thêm</string>
+</resources>

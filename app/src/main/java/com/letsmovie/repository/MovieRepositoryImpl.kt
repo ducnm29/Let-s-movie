@@ -13,8 +13,11 @@ import javax.inject.Inject
 
 class MovieRepositoryImpl @Inject constructor(
     private val movieApi: MovieApi
-): MovieRepository {
-    override fun getTrendingMovie(language: String, apiKey: String): Flow<Result<DataListResponse<Movie>>> {
+) : MovieRepository {
+    override fun getTrendingMovie(
+        language: String,
+        apiKey: String
+    ): Flow<Result<DataListResponse<Movie>>> {
         return flow {
             emit(Result.Loading)
             val data = movieApi.getTrendingMovie(language, apiKey)
@@ -22,7 +25,10 @@ class MovieRepositoryImpl @Inject constructor(
         }.catch { throwable -> emit(Result.Error(throwable.toString())) }
     }
 
-    override fun getPopularMovie(language: String, apiKey: String): Flow<Result<DataListResponse<Movie>>> {
+    override fun getPopularMovie(
+        language: String,
+        apiKey: String
+    ): Flow<Result<DataListResponse<Movie>>> {
         return flow {
             emit(Result.Loading)
             val data = movieApi.getPopularMovie(language, apiKey)
@@ -40,10 +46,26 @@ class MovieRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun getTopRatedMovie(language: String, apiKey: String): Flow<Result<DataListResponse<Movie>>> {
+    override fun getTopRatedMovie(
+        language: String,
+        apiKey: String
+    ): Flow<Result<DataListResponse<Movie>>> {
         return flow {
             emit(Result.Loading)
             val data = movieApi.getTopRatedMovie(language, apiKey)
+            emit(Result.Success(data))
+        }.catch {
+            emit(Result.Error(it.toString()))
+        }
+    }
+
+    override fun getUpComingMovie(
+        language: String,
+        apiKey: String
+    ): Flow<Result<DataListResponse<Movie>>> {
+        return flow {
+            emit(Result.Loading)
+            val data = movieApi.getUpComingMovie(language, apiKey)
             emit(Result.Success(data))
         }.catch {
             emit(Result.Error(it.toString()))

@@ -10,6 +10,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.core.view.WindowCompat
 import com.letsmovie.ui.main.MainUI
 import com.letsmovie.ui.theme.LetsMovieTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -18,6 +19,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        WindowCompat.setDecorFitsSystemWindows(window, false)
         setContent {
             LetsMovieTheme {
                 // A surface container using the 'background' color from the theme

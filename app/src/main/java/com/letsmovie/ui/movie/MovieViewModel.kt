@@ -31,6 +31,8 @@ class MovieViewModel @Inject constructor(
         MutableStateFlow(Result.Loading)
     private val _topRatedMovieStateFlow: MutableStateFlow<Result<DataListResponse<Movie>>> =
         MutableStateFlow(Result.Loading)
+    private val _upComingMovieStateFlow: MutableStateFlow<Result<DataListResponse<Movie>>> =
+        MutableStateFlow(Result.Loading)
     private val _movieDetail: MutableStateFlow<Result<Movie>> = MutableStateFlow(Result.Loading)
     val trendingMovieStateFlow: StateFlow<Result<DataListResponse<Movie>>> =
         _trendingMovieStateFlow.asStateFlow()
@@ -38,6 +40,8 @@ class MovieViewModel @Inject constructor(
         _popularMovieStateFlow.asStateFlow()
     val topRatedMovieStateFlow: StateFlow<Result<DataListResponse<Movie>>> =
         _topRatedMovieStateFlow.asStateFlow()
+    val upComingMovie: StateFlow<Result<DataListResponse<Movie>>> =
+        _upComingMovieStateFlow.asStateFlow()
     val movieDetail: StateFlow<Result<Movie>> = _movieDetail.asStateFlow()
 
     // Pull to refresh
@@ -64,10 +68,18 @@ class MovieViewModel @Inject constructor(
         }
     }
 
-    fun getTopRatedMovie(language: String, apiKey: String){
+    fun getTopRatedMovie(language: String, apiKey: String) {
         viewModelScope.launch {
             movieRepository.getTopRatedMovie(language, apiKey).collectLatest {
                 _topRatedMovieStateFlow.value = it
+            }
+        }
+    }
+
+    fun getUpComingMovie(language: String, apiKey: String) {
+        viewModelScope.launch {
+            movieRepository.getUpComingMovie(language, apiKey).collectLatest {
+                _upComingMovieStateFlow.value = it
             }
         }
     }
@@ -86,7 +98,7 @@ class MovieViewModel @Inject constructor(
         }
     }
 
-    fun pullRefresh(){
+    fun pullRefresh() {
         viewModelScope.launch {
             _refreshing.value = true
             delay(1500)
@@ -94,10 +106,12 @@ class MovieViewModel @Inject constructor(
             _refreshing.value = false
         }
     }
-    private fun refreshData(){
-        getTrendingMovie("vi", Define.API_KEY)
-        getPopularMovie("vi", Define.API_KEY)
-        getTopRatedMovie("vi", Define.API_KEY)
+
+    private fun refreshData() {
+        getTrendingMovie(Define.LANGUAGE_DEFAULT, Define.API_KEY)
+        getPopularMovie(Define.LANGUAGE_DEFAULT, Define.API_KEY)
+        getTopRatedMovie(Define.LANGUAGE_DEFAULT, Define.API_KEY)
+        getUpComingMovie(Define.LANGUAGE_DEFAULT, Define.API_KEY)
     }
 
 }

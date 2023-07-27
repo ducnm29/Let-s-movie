@@ -57,7 +57,7 @@ fun TvDetailUI(
     LaunchedEffect(true){
         tvViewModel.getTvDetail(
             tvId = tvId,
-            language = "vi",
+            language = Define.LANGUAGE_DEFAULT,
             apiKey = Define.API_KEY
         )
     }

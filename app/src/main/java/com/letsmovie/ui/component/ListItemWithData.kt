@@ -19,7 +19,6 @@ import com.letsmovie.R
 import com.letsmovie.model.DataListResponse
 import com.letsmovie.model.Result
 import com.letsmovie.ui.movie.ListItemUI
-import com.letsmovie.ui.navigation.BaseScreen
 
 @Composable
 fun <T : Any> ListItemWithData(
@@ -29,16 +28,16 @@ fun <T : Any> ListItemWithData(
     categoryName: String,
     onClick: (itemId: String) -> Unit
 ) {
-    when(result){
+    when (result) {
         is Result.Loading -> {
             Box(
-                modifier = modifier
-                    .fillMaxSize(),
+                modifier = modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center
             ) {
                 CircularProgressIndicator()
             }
         }
+
         is Result.Success -> {
             ListItemUI(
                 listName = categoryName,
@@ -46,6 +45,7 @@ fun <T : Any> ListItemWithData(
                 listItem = result.data.dataList
             )
         }
+
         is Result.Error -> {
             Column(
                 modifier = modifier

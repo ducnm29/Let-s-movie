@@ -21,6 +21,7 @@ fun RatingBar(
     val halfStar = rating-rating.toInt() != 0f
     Row (
         modifier = modifier
+
     ){
         repeat(rating.toInt()){
             Icon(

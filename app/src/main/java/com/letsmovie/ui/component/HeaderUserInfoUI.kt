@@ -50,9 +50,9 @@ fun HeaderUserInfoUI(
             painter = painterResource(id = R.drawable.pepe),
             contentDescription = null,
             modifier = Modifier
+                .padding(end = 16.dp)
                 .size(56.dp)
-                .clip(CircleShape)
-                .padding(end = 16.dp),
+                .clip(CircleShape),
         )
     }
 }

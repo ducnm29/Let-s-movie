@@ -33,7 +33,7 @@ class TvViewModel @Inject constructor(
     fun getTrendingTv(){
         viewModelScope.launch {
             _trendingTvStateFlow.value = Result.Loading
-            tvRepository.getTrendingTv("en", Define.API_KEY)
+            tvRepository.getTrendingTv(Define.LANGUAGE_DEFAULT, Define.API_KEY)
                 .catch {error ->
                     _trendingTvStateFlow.emit(Result.Error(error.toString()))
                 }
@@ -45,7 +45,7 @@ class TvViewModel @Inject constructor(
     fun getPopularTv(){
         viewModelScope.launch {
             _popularTvStateFlow.value = Result.Loading
-            tvRepository.getPopularTv("vi", Define.API_KEY)
+            tvRepository.getPopularTv(Define.LANGUAGE_DEFAULT, Define.API_KEY)
                 .catch {error ->
                     _popularTvStateFlow.emit(Result.Error(error.toString()))
                 }
@@ -57,7 +57,7 @@ class TvViewModel @Inject constructor(
     fun getTvDetail(tvId: String, language: String, apiKey: String){
         viewModelScope.launch {
             _tvDetailStateFlow.emit(Result.Loading)
-            tvRepository.getTvDetail(tvId = tvId, language = "vi", apiKey = Define.API_KEY)
+            tvRepository.getTvDetail(tvId = tvId, language = Define.LANGUAGE_DEFAULT, apiKey = Define.API_KEY)
                 .catch { error ->
                     _tvDetailStateFlow.emit(Result.Error(error.toString()))
                 }

@@ -22,7 +22,7 @@ class GenreViewModel @Inject constructor(
     = MutableStateFlow(Result.Loading)
     val movieGenre: StateFlow<Result<DataGenreResponse>> = _movieGenre.asStateFlow()
     init {
-        getMovieGenreList("vi", Define.API_KEY)
+        getMovieGenreList(Define.LANGUAGE_DEFAULT, Define.API_KEY)
     }
 
     private fun getMovieGenreList(language: String, apiKey: String){

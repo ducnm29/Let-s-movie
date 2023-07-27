@@ -17,6 +17,7 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
@@ -44,33 +45,45 @@ import kotlinx.coroutines.launch
 import kotlin.math.absoluteValue
 
 @Composable
-fun <T : Any>ImageCarousel(
-    result: Result<DataListResponse<T>>
+fun <T : Any> ImageCarousel(
+    result: Result<DataListResponse<T>>,
+    onClick: (String) -> Unit
 ) {
-    when(result){
+    when (result) {
         is Result.Loading -> {
 
         }
+
         is Result.Error -> {
 
         }
+
         is Result.Success -> {
-            ImageCarouselBody(result.data.dataList)
+            ImageCarouselBody(
+                listData = result.data.dataList,
+                _itemNumber = 8,
+                onClick = onClick
+            )
         }
     }
 }
+
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun <T: Any>ImageCarouselBody(
-    listData: List<T>
+fun <T : Any> ImageCarouselBody(
+    listData: List<T>,
+    _itemNumber: Int,
+    onClick: (String) -> Unit
 ) {
     val pagerState = rememberPagerState(initialPage = 0)
     val scope = rememberCoroutineScope()
+    val itemNumber = if (listData.size > _itemNumber) _itemNumber else listData.size
 
     // Auto animate to next page
-    LaunchedEffect(pagerState.settledPage){
+    LaunchedEffect(pagerState.settledPage) {
         delay(2000)
-        val newPosition = if (pagerState.currentPage < listData.size - 1) pagerState.currentPage + 1 else 0
+        val newPosition =
+            if (pagerState.currentPage < itemNumber - 1) pagerState.currentPage + 1 else 0
         pagerState.animateScrollToPage(newPosition)
     }
     Column(
@@ -79,13 +92,13 @@ fun <T: Any>ImageCarouselBody(
             .padding(top = 16.dp)
     ) {
         HorizontalPager(
-            pageCount = listData.size,
+            pageCount = itemNumber,
             state = pagerState,
             pageSpacing = 10.dp,
             beyondBoundsPageCount = 2,
             contentPadding = PaddingValues(25.dp)
         ) { index ->
-            Card(
+            Surface(
                 shape = RoundedCornerShape(10.dp),
                 modifier = Modifier
                     .graphicsLayer {
@@ -98,8 +111,6 @@ fun <T: Any>ImageCarouselBody(
                             stop = 1f,
                             fraction = 1f - pageOffset.coerceIn(0f, 1f)
                         )
-
-                        //translationY = pageOffset.coerceIn(0f, 1f) * 10.dp.toPx()
                         translationY = lerp(
                             start = 0.dp.toPx(),
                             stop = 10.dp.toPx(),
@@ -110,17 +121,18 @@ fun <T: Any>ImageCarouselBody(
             ) {
                 val currentItem = listData[index]
                 CarouselItem(
-                    movieItem = currentItem as Movie
+                    movieItem = currentItem as Movie,
+                    onClick = onClick
                 )
             }
         }
-        Row (
+        Row(
             modifier = Modifier
                 .height(20.dp)
                 .fillMaxWidth(),
             horizontalArrangement = Arrangement.Center
-        ){
-            repeat(listData.size){ index ->
+        ) {
+            repeat(itemNumber) { index ->
                 val color = if (pagerState.currentPage == index) Color.DarkGray else Color.LightGray
                 Box(
                     modifier = Modifier

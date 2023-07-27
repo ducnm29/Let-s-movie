@@ -28,4 +28,9 @@ interface MovieApi {
         @Query("language") language: String,
         @Query("api_key") apiKey: String
     ): DataListResponse<Movie>
+    @GET("movie/upcoming")
+    suspend fun getUpComingMovie(
+        @Query("language") language: String,
+        @Query("api_key") apiKey: String
+    ): DataListResponse<Movie>
 }

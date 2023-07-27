@@ -57,7 +57,7 @@ fun MovieDetailUI(
     LaunchedEffect(true) {
         movieViewModel.getMovieDetail(
             movieId = movieId,
-            language = "vi",
+            language = Define.LANGUAGE_DEFAULT,
             apiKey = Define.API_KEY
         )
     }
@@ -82,131 +82,145 @@ fun MovieDetailUI(
         }
 
         is Result.Success -> {
-            Box(
-                modifier = modifier
-            ) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(520.dp),
+            DetailUI(
+                modifier = modifier,
+                movieResult = movieResult,
+                navHostController = navHostController
+            )
+        }
+    }
+}
+
+@Composable
+fun DetailUI(
+    modifier: Modifier = Modifier,
+    movieResult: Result.Success<Movie>,
+    navHostController: NavHostController
+) {
+    Box(
+        modifier = modifier
+    ) {
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(520.dp),
+        ) {
+            AsyncImage(
+                model = ImageRequest.Builder(LocalContext.current)
+                    .data(Define.BASE_IMG_URL_ORIGIN + movieResult.data.imgBackground)
+                    .scale(Scale.FILL)
+                    .crossfade(true)
+                    .build(),
+                contentDescription = null,
+                alpha = 0.4f,
+                contentScale = ContentScale.Crop
+            )
+        }
+        Column(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Row() {
+                IconButton(
+                    onClick = {
+                        navHostController.popBackStack()
+                    },
+                    modifier = Modifier.padding(
+                        top = 16.dp,
+                        start = 16.dp
+                    )
                 ) {
-                    AsyncImage(
-                        model = ImageRequest.Builder(LocalContext.current)
-                            .data(Define.BASE_IMG_URL_ORIGIN + movieResult.data.imgBackground)
-                            .crossfade(true)
-                            .build(),
+                    Icon(
+                        imageVector = Icons.Outlined.KeyboardArrowLeft,
                         contentDescription = null,
-                        alpha = 0.4f,
-                        contentScale = ContentScale.Crop
                     )
                 }
-                Column(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalAlignment = Alignment.CenterHorizontally
+                Text(
+                    text = movieResult.data.movieName,
+                    fontWeight = FontWeight.Medium,
+                    fontSize = 23.sp,
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(top = 16.dp),
+                    textAlign = TextAlign.Center
+                )
+                IconButton(
+                    onClick = {
+
+                    },
+                    modifier = Modifier.padding(
+                        top = 16.dp,
+                        end = 16.dp
+                    )
                 ) {
-                    Row() {
-                        IconButton(
-                            onClick = {
-                                navHostController.popBackStack()
-                            },
-                            modifier = Modifier.padding(
-                                top = 16.dp,
-                                start = 16.dp
-                            )
-                        ) {
-                            Icon(
-                                imageVector = Icons.Outlined.KeyboardArrowLeft,
-                                contentDescription = null,
-                            )
-                        }
-                        Text(
-                            text = movieResult.data.movieName,
-                            fontWeight = FontWeight.Medium,
-                            fontSize = 23.sp,
-                            modifier = Modifier
-                                .weight(1f)
-                                .padding(top = 16.dp),
-                            textAlign = TextAlign.Center
-                        )
-                        IconButton(
-                            onClick = {
-
-                            },
-                            modifier = Modifier.padding(
-                                top = 16.dp,
-                                end = 16.dp
-                            )
-                        ) {
-                            Icon(
-                                imageVector = Icons.Sharp.Favorite,
-                                contentDescription = null,
-                            )
-                        }
-                    }
-                    Card(
-                        shape = RoundedCornerShape(10.dp),
-                        modifier = Modifier
-                            .width(240.dp)
-                            .height(400.dp)
-                            .padding(top = 64.dp)
-                    ) {
-                        AsyncImage(
-                            model = ImageRequest
-                                .Builder(LocalContext.current)
-                                .data(Define.BASE_IMG_URL_ORIGIN + movieResult.data.imgPoster)
-                                .scale(Scale.FILL)
-                                .build(),
-                            contentDescription = null,
-                            contentScale = ContentScale.Crop
-                        )
-                    }
-                    Row(
-                        horizontalArrangement = Arrangement.Center
-                    ) {
-                        TagIconUI(
-                            tagIcon = TagIcon(
-                                tagName = movieResult.data.releaseDate,
-                                tagIconImageVector = Icons.Default.DateRange
-                            )
-                        )
-                        TagIconUI(
-                            tagIcon = TagIcon(
-                                tagName = movieResult.data.voteAverage.toString(),
-                                tagIconImageVector = Icons.Default.StarRate
-                            )
-                        )
-                        TagIconUI(
-                            tagIcon = TagIcon(
-                                tagName = movieResult.data.runtime.toString(),
-                                tagIconImageVector = Icons.Default.AccessTime
-                            )
-                        )
-                    }
-                    Text(
-                        text = "Story line",
-                        fontWeight = FontWeight.Medium,
-                        fontSize = 23.sp,
-                        modifier = Modifier
-                            .padding(
-                                top = 32.dp,
-                                start = 16.dp
-                            )
-                            .fillMaxWidth(),
-                        textAlign = TextAlign.Start
+                    Icon(
+                        imageVector = Icons.Sharp.Favorite,
+                        contentDescription = null,
                     )
-                    Text(
-                        text = movieResult.data.movieOverview,
-                        fontSize = 18.sp,
-                        modifier = Modifier
-                            .padding(
-                                start = 16.dp,
-                                end = 16.dp,
-                                top = 32.dp
-                            )
-                    )
-
                 }
             }
+            Card(
+                shape = RoundedCornerShape(10.dp),
+                modifier = Modifier
+                    .width(240.dp)
+                    .height(400.dp)
+                    .padding(top = 48.dp)
+            ) {
+                AsyncImage(
+                    model = ImageRequest
+                        .Builder(LocalContext.current)
+                        .data(Define.BASE_IMG_URL_ORIGIN + movieResult.data.imgPoster)
+                        .scale(Scale.FILL)
+                        .build(),
+                    contentDescription = null,
+                    contentScale = ContentScale.Crop
+                )
+            }
+            Row(
+                horizontalArrangement = Arrangement.Center
+            ) {
+                TagIconUI(
+                    tagIcon = TagIcon(
+                        tagName = movieResult.data.releaseDate,
+                        tagIconImageVector = Icons.Default.DateRange
+                    )
+                )
+                TagIconUI(
+                    tagIcon = TagIcon(
+                        tagName = movieResult.data.voteAverage.toString(),
+                        tagIconImageVector = Icons.Default.StarRate
+                    )
+                )
+                TagIconUI(
+                    tagIcon = TagIcon(
+                        tagName = movieResult.data.runtime.toString(),
+                        tagIconImageVector = Icons.Default.AccessTime
+                    )
+                )
+            }
+            Text(
+                text = "Story line",
+                fontWeight = FontWeight.Medium,
+                fontSize = 23.sp,
+                modifier = Modifier
+                    .padding(
+                        top = 32.dp,
+                        start = 16.dp
+                    )
+                    .fillMaxWidth(),
+                textAlign = TextAlign.Start
+            )
+            Text(
+                text = movieResult.data.movieOverview,
+                fontSize = 18.sp,
+                modifier = Modifier
+                    .padding(
+                        start = 16.dp,
+                        end = 16.dp,
+                        top = 32.dp
+                    )
+            )
+
         }
     }
 }
