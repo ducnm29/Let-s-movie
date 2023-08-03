@@ -30,7 +30,7 @@ fun SearchBarUI(
         shape = RoundedCornerShape(16.dp),
         modifier = Modifier
             .fillMaxWidth()
-            .padding(start = 16.dp, end = 16.dp)
+            .padding(start = 16.dp)
     ) {
         TextField(
             colors = TextFieldDefaults.textFieldColors(

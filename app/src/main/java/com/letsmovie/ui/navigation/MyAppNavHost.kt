@@ -82,6 +82,7 @@ fun NavGraphBuilder.tvGraph(navController: NavHostController) {
         composable(route = BaseScreen.TvDetailScreen.route + "/{tvId}") { backStackKEntry ->
             TvDetailUI(
                 navHostController = navController,
+                modifier = Modifier.verticalScroll(rememberScrollState()),
                 tvId = backStackKEntry.arguments?.getString("tvId") ?: "0",
                 tvViewModel = hiltViewModel()
             )

@@ -59,9 +59,7 @@ fun ListMovieDetailUI(
                 }
                 OutlinedButton(
                     onClick = { /*TODO*/ },
-                    modifier
-                        .fillMaxWidth()
-                        .padding(bottom = dimensionResource(id = R.dimen.spacer_vertical1).value.dp),
+                    modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(5.dp)
                 ) {
                     Text(text = stringResource(id = R.string.view_more))

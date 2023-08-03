@@ -10,36 +10,35 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
+import androidx.navigation.NavDestination
+import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
+import com.letsmovie.ui.navigation.BaseScreen
 import com.letsmovie.util.Define.Companion.LIST_SCREEN
 
 @Composable
-fun AppNavigation(
+fun  AppNavigation(
     modifier: Modifier,
-    navController: NavController
+    navDestination: NavDestination?,
+    onCLick: (BaseScreen) -> Unit
 ) {
     NavigationBar(
-        modifier = Modifier,
+        modifier = modifier,
         containerColor = containerColor
     ) {
-        val selectedItem = rememberSaveable {
-            mutableStateOf(0)
-        }
-        LIST_SCREEN.forEachIndexed { index, baseScreen ->
+
+        LIST_SCREEN.forEach { baseScreen ->
+            val selected = navDestination?.hierarchy?.any { destination ->
+                destination.route == baseScreen.route
+            } == true
+
             NavigationBarItem(
-                selected = index == selectedItem.value,
+                selected = selected,
                 onClick = {
-                    selectedItem.value = index
-                    navController.navigate(baseScreen.route) {
-                        popUpTo(navController.graph.findStartDestination().id) {
-                            saveState = true
-                        }
-                        launchSingleTop = true
-                        restoreState = true
-                    }
+                    onCLick(baseScreen)
                 },
                 icon = {
-                    if (index == selectedItem.value) {
+                    if (selected) {
                         Icon(
                             imageVector = baseScreen.iconSelected,
                             contentDescription = null

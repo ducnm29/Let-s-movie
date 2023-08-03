@@ -30,6 +30,10 @@ class TvViewModel @Inject constructor(
     val popularTvStateFlow: StateFlow<Result<DataListResponse<Tv>>> = _popularTvStateFlow.asStateFlow()
     val tvDetailStateFlow: StateFlow<Result<Tv>> = _tvDetailStateFlow.asStateFlow()
 
+    init {
+        getTrendingTv()
+        getPopularTv()
+    }
     fun getTrendingTv(){
         viewModelScope.launch {
             _trendingTvStateFlow.value = Result.Loading

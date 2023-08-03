@@ -21,10 +21,7 @@ fun TvUI(
 ) {
     val trendingTvResult = tvViewModel.trendingTvStateFlow.collectAsState()
     val popularTvResult = tvViewModel.popularTvStateFlow.collectAsState()
-    LaunchedEffect(true){
-        tvViewModel.getTrendingTv()
-        tvViewModel.getPopularTv()
-    }
+
     Column(
         modifier = Modifier.
         verticalScroll(rememberScrollState())

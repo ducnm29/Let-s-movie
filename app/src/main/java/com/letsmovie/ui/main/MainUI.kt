@@ -5,10 +5,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavGraph.Companion.findStartDestination
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.letsmovie.util.Define
 import com.letsmovie.ui.component.AppNavigation
 import com.letsmovie.ui.navigation.MyAppNavHost
+import com.letsmovie.util.Define
 
 @Composable
 fun MainUI(
@@ -19,16 +21,26 @@ fun MainUI(
         bottomBar = {
             AppNavigation(
                 modifier = modifier,
-                navController = navController,
+                navDestination = navController.currentBackStackEntryAsState().value?.destination,
+                onCLick = { baseScreen ->
+                    navController.navigate(baseScreen.route) {
+                        popUpTo(navController.graph.findStartDestination().id) {
+                            saveState = true
+                        }
+                        launchSingleTop = true
+                        restoreState = true
+                    }
+                }
             )
         }
-    ) {innerPadding ->
-        Box (
+    ) { innerPadding ->
+        Box(
             modifier = Modifier.padding(innerPadding)
-        ){
+        ) {
             MyAppNavHost(
                 navController = navController,
-                startDestination = Define.MOVIE_HOME)
+                startDestination = Define.MOVIE_HOME
+            )
         }
     }
 }

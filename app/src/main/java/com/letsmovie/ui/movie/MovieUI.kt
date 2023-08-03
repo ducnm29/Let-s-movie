@@ -2,7 +2,9 @@ package com.letsmovie.ui.movie
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 //import androidx.compose.material.ExperimentalMaterialApi
@@ -13,7 +15,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.dimensionResource
 import androidx.navigation.NavHostController
+import com.letsmovie.R
 import com.letsmovie.ui.component.HeaderUserInfoUI
 import com.letsmovie.ui.component.ImageCarousel
 import com.letsmovie.ui.component.ListGenreUI
@@ -98,6 +102,7 @@ fun MovieUI(
                     navHostController.navigate(BaseScreen.MovieDetailScreen.route + "/" + movieId)
                 }
             )
+            Spacer(modifier = Modifier.size(dimensionResource(id = R.dimen.spacer_vertical1)))
         }
     }
 }
