@@ -10,14 +10,14 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
-import com.letsmovie.util.Define
-import com.letsmovie.model.Movie
 import com.letsmovie.ui.favourite.FavouriteUI
 import com.letsmovie.ui.movie.MovieDetailUI
+import com.letsmovie.ui.movie.MovieInGenreUI
 import com.letsmovie.ui.movie.MovieUI
 import com.letsmovie.ui.setting.SettingUI
 import com.letsmovie.ui.tv.TvDetailUI
 import com.letsmovie.ui.tv.TvUI
+import com.letsmovie.util.Define
 
 @Composable
 fun MyAppNavHost(
@@ -54,7 +54,12 @@ fun NavGraphBuilder.movieGraph(navController: NavHostController) {
             MovieUI(
                 navHostController = navController,
                 movieViewModel = hiltViewModel(),
-                genreViewModel = hiltViewModel()
+                onMovieClickDetail = { movieId ->
+                    navController.navigate(BaseScreen.MovieDetailScreen.route + "/" + movieId)
+                },
+                onGenreClick = { genreId ->
+                    navController.navigate(BaseScreen.MovieInGenreScreen.route)
+                }
             )
         }
         composable(route = BaseScreen.MovieDetailScreen.route + "/{movieId}") { backStackEntry ->
@@ -63,6 +68,14 @@ fun NavGraphBuilder.movieGraph(navController: NavHostController) {
                 modifier = Modifier.verticalScroll(rememberScrollState()),
                 movieId = backStackEntry.arguments?.getString("movieId") ?: "0",
                 movieViewModel = hiltViewModel()
+            )
+        }
+        composable(route = BaseScreen.MovieInGenreScreen.route) {
+            MovieInGenreUI(
+                movieViewModel = hiltViewModel(),
+                onMovieClick = { movieId ->
+                    navController.navigate(BaseScreen.MovieDetailScreen.route + "/" + movieId)
+                }
             )
         }
     }

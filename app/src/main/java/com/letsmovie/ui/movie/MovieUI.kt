@@ -1,5 +1,9 @@
 package com.letsmovie.ui.movie
 
+//import androidx.compose.material.ExperimentalMaterialApi
+//import androidx.compose.material.pullrefresh.PullRefreshIndicator
+//import androidx.compose.material.pullrefresh.pullRefresh
+//import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -7,10 +11,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-//import androidx.compose.material.ExperimentalMaterialApi
-//import androidx.compose.material.pullrefresh.PullRefreshIndicator
-//import androidx.compose.material.pullrefresh.pullRefresh
-//import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
@@ -23,7 +23,6 @@ import com.letsmovie.ui.component.ImageCarousel
 import com.letsmovie.ui.component.ListGenreUI
 import com.letsmovie.ui.component.ListItemWithData
 import com.letsmovie.ui.component.SearchBarUI
-import com.letsmovie.ui.genre.GenreViewModel
 import com.letsmovie.ui.navigation.BaseScreen
 
 //@OptIn(ExperimentalMaterialApi::class)
@@ -32,13 +31,14 @@ fun MovieUI(
     modifier: Modifier = Modifier,
     navHostController: NavHostController,
     movieViewModel: MovieViewModel,
-    genreViewModel: GenreViewModel
+    onMovieClickDetail: (String) -> Unit,
+    onGenreClick: (String) -> Unit
 ) {
     val trendingMovieResult = movieViewModel.trendingMovieStateFlow.collectAsState()
     val popularMovieResult = movieViewModel.popularMovieStateFlow.collectAsState()
     val topRatedMovieResult = movieViewModel.topRatedMovieStateFlow.collectAsState()
     val upComingMovieResult = movieViewModel.upComingMovie.collectAsState()
-    val movieGenreList = genreViewModel.movieGenre.collectAsState()
+    val movieGenreList = movieViewModel.movieGenre.collectAsState()
 
 //    val pullState = rememberPullRefreshState(
 //        refreshing = movieViewModel.refreshing.value,
@@ -65,19 +65,18 @@ fun MovieUI(
             SearchBarUI()
             ImageCarousel(
                 result = topRatedMovieResult.value,
-                onClick = { movieId ->
-                    navHostController.navigate(BaseScreen.MovieDetailScreen.route + "/" + movieId)
-                }
+                onClick = onMovieClickDetail
             )
-            ListGenreUI(listGenreResult = movieGenreList.value)
+            ListGenreUI(
+                listGenreResult = movieGenreList.value,
+                onGenreClick = onGenreClick
+            )
             ListItemWithData(
                 result = trendingMovieResult.value,
                 modifier = modifier,
                 navHostController = navHostController,
                 categoryName = "Trending",
-                onClick = { movieId ->
-                    navHostController.navigate(BaseScreen.MovieDetailScreen.route + "/" + movieId)
-                }
+                onClick = onMovieClickDetail
             )
             ListItemWithData(
                 result = popularMovieResult.value,
@@ -91,16 +90,12 @@ fun MovieUI(
             ListMovieDetailUI(
                 categoryType = "Top rated",
                 listMovieResult = topRatedMovieResult.value,
-                onclick = { movieId ->
-                    navHostController.navigate(BaseScreen.MovieDetailScreen.route + "/" + movieId)
-                }
+                onclick = onMovieClickDetail
             )
             ListMovieDetailUI(
                 categoryType = "Up coming",
                 listMovieResult = upComingMovieResult.value,
-                onclick = { movieId ->
-                    navHostController.navigate(BaseScreen.MovieDetailScreen.route + "/" + movieId)
-                }
+                onclick = onMovieClickDetail
             )
             Spacer(modifier = Modifier.size(dimensionResource(id = R.dimen.spacer_vertical1)))
         }

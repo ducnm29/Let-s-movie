@@ -4,6 +4,8 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -17,11 +19,18 @@ fun MainUI(
     modifier: Modifier = Modifier
 ) {
     val navController = rememberNavController()
+    val destination = navController.currentBackStackEntryAsState().value?.destination
+    val bottomBarVisibleState = rememberSaveable {
+        mutableStateOf(true)
+    }
+    bottomBarVisibleState.value = Define.LIST_SCREEN.any {
+        it.route == destination?.route
+    }
     Scaffold(
         bottomBar = {
             AppNavigation(
                 modifier = modifier,
-                navDestination = navController.currentBackStackEntryAsState().value?.destination,
+                navDestination = destination,
                 onCLick = { baseScreen ->
                     navController.navigate(baseScreen.route) {
                         popUpTo(navController.graph.findStartDestination().id) {
@@ -30,7 +39,8 @@ fun MainUI(
                         launchSingleTop = true
                         restoreState = true
                     }
-                }
+                },
+                visibleState = bottomBarVisibleState
             )
         }
     ) { innerPadding ->

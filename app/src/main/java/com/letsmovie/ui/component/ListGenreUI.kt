@@ -22,7 +22,8 @@ import com.letsmovie.ui.genre.GenreUI
 @Composable
 fun ListGenreUI(
     modifier: Modifier = Modifier,
-    listGenreResult: Result<DataGenreResponse>
+    listGenreResult: Result<DataGenreResponse>,
+    onGenreClick: (String) -> Unit
 ) {
     when (listGenreResult) {
         is Result.Loading -> {
@@ -46,7 +47,10 @@ fun ListGenreUI(
                     contentPadding = PaddingValues(horizontal = dimensionResource(id = R.dimen.spacer_horizontal2))
                 ) {
                     items(listGenreResult.data.listGenre) { genre ->
-                        GenreUI(genre = genre)
+                        GenreUI(
+                            genre = genre,
+                            onGenreClick = onGenreClick
+                        )
                     }
                 }
             }

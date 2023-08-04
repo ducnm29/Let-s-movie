@@ -24,17 +24,17 @@ import com.letsmovie.util.Define
 fun HeaderUserInfoUI(
     modifier: Modifier = Modifier
 ) {
-    Row (
+    Row(
         modifier = modifier
             .fillMaxWidth()
             .height(156.dp),
         verticalAlignment = Alignment.CenterVertically
-    ){
-        Column (
+    ) {
+        Column(
             modifier = Modifier
                 .weight(1f)
                 .padding(start = 16.dp)
-        ){
+        ) {
             Text(
                 text = Define.HEADER_HELLO,
                 fontSize = 23.sp,

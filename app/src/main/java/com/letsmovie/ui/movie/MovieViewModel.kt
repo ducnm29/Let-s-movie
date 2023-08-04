@@ -5,9 +5,11 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.letsmovie.model.DataGenreResponse
 import com.letsmovie.model.DataListResponse
 import com.letsmovie.model.Movie
 import com.letsmovie.model.Result
+import com.letsmovie.repository.GenreRepository
 import com.letsmovie.repository.MovieRepository
 import com.letsmovie.util.Define
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -22,7 +24,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MovieViewModel @Inject constructor(
-    private val movieRepository: MovieRepository
+    private val movieRepository: MovieRepository,
+    private val genreRepository: GenreRepository
 ) : ViewModel() {
 
     private val _trendingMovieStateFlow: MutableStateFlow<Result<DataListResponse<Movie>>> =
@@ -34,6 +37,9 @@ class MovieViewModel @Inject constructor(
     private val _upComingMovieStateFlow: MutableStateFlow<Result<DataListResponse<Movie>>> =
         MutableStateFlow(Result.Loading)
     private val _movieDetail: MutableStateFlow<Result<Movie>> = MutableStateFlow(Result.Loading)
+    private val _movieGenre: MutableStateFlow<Result<DataGenreResponse>> =
+        MutableStateFlow(Result.Loading)
+    val movieGenre: StateFlow<Result<DataGenreResponse>> = _movieGenre.asStateFlow()
     val trendingMovieStateFlow: StateFlow<Result<DataListResponse<Movie>>> =
         _trendingMovieStateFlow.asStateFlow()
     val popularMovieStateFlow: StateFlow<Result<DataListResponse<Movie>>> =
@@ -98,6 +104,14 @@ class MovieViewModel @Inject constructor(
         }
     }
 
+    private fun getMovieGenreList(language: String, apiKey: String) {
+        viewModelScope.launch {
+            genreRepository.getMovieGenreList(language = language, apiKey = apiKey).collectLatest {
+                _movieGenre.value = it
+            }
+        }
+    }
+
     fun pullRefresh() {
         viewModelScope.launch {
             _refreshing.value = true
@@ -112,6 +126,7 @@ class MovieViewModel @Inject constructor(
         getPopularMovie(Define.LANGUAGE_DEFAULT, Define.API_KEY)
         getTopRatedMovie(Define.LANGUAGE_DEFAULT, Define.API_KEY)
         getUpComingMovie(Define.LANGUAGE_DEFAULT, Define.API_KEY)
+        getMovieGenreList(Define.LANGUAGE_DEFAULT, Define.API_KEY)
     }
 
 }

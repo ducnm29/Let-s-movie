@@ -15,10 +15,7 @@ import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.ViewModel
-import com.letsmovie.ui.movie.MovieViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -30,7 +27,10 @@ fun SearchBarUI(
         shape = RoundedCornerShape(16.dp),
         modifier = Modifier
             .fillMaxWidth()
-            .padding(start = 16.dp)
+            .padding(
+                start = 16.dp,
+                end = 16.dp
+            )
     ) {
         TextField(
             colors = TextFieldDefaults.textFieldColors(
@@ -45,7 +45,8 @@ fun SearchBarUI(
             leadingIcon = {
                 Icon(
                     imageVector = Icons.Default.Search,
-                    contentDescription = null)
+                    contentDescription = null
+                )
             },
             placeholder = {
                 Text(text = "Search")

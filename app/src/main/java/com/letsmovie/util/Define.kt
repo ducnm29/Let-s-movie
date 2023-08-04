@@ -4,7 +4,7 @@ import com.letsmovie.model.Movie
 import com.letsmovie.ui.navigation.BaseScreen
 
 class Define {
-    companion object{
+    companion object {
         /**
          * Route constant for navigation
          */
@@ -16,6 +16,7 @@ class Define {
         const val MOVIE_HOME = "movie_home"
         const val TV_DETAIL_ROUTE = "tv_detail_route"
         const val TV_HOME = "tv_home"
+        const val MOVIE_IN_GENRE_ROUTE = "movie_in_genre_route"
 
         /**
          * Name constant for navigation
@@ -26,11 +27,15 @@ class Define {
         const val TV_NAME = "Tv"
         const val MOVIE_DETAIL_NAME = "Movie Detail"
         const val TV_DETAIL_NAME = "Tv Detail"
+        const val MOVIE_IN_GENRE_NAME = "Movie In Genre"
+
         /**
          * List navigation view
          */
-         val LIST_SCREEN = listOf(BaseScreen.MovieScreen, BaseScreen.TvScreen,
-            BaseScreen.FavouriteScreen, BaseScreen.SettingScreen)
+        val LIST_SCREEN = listOf(
+            BaseScreen.MovieScreen, BaseScreen.TvScreen,
+            BaseScreen.FavouriteScreen, BaseScreen.SettingScreen
+        )
 
         /**
          *  Const variable

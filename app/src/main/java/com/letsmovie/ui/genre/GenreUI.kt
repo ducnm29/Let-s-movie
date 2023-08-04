@@ -1,13 +1,12 @@
 package com.letsmovie.ui.genre
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Category
 import androidx.compose.material3.Icon
@@ -17,7 +16,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -29,7 +27,8 @@ import com.letsmovie.model.Genre
 @Composable
 fun GenreUI(
     modifier: Modifier = Modifier,
-    genre: Genre
+    genre: Genre,
+    onGenreClick: (String) -> Unit
 ) {
     //val listColors = listOf(MaterialTheme.colorScheme.primary, MaterialTheme.colorScheme.)
     Row(
@@ -37,7 +36,10 @@ fun GenreUI(
             .width(dimensionResource(id = R.dimen.genre_width))
             .height(dimensionResource(id = R.dimen.genre_height))
             .clip(MaterialTheme.shapes.small)
-            .background(MaterialTheme.colorScheme.tertiary),
+            .background(MaterialTheme.colorScheme.tertiary)
+            .clickable {
+                onGenreClick(genre.id)
+            },
         horizontalArrangement = Arrangement.Start,
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -59,5 +61,5 @@ fun GenreUI(
 @Preview
 @Composable
 fun PreviewGenre() {
-    GenreUI(Modifier, Genre("1", "Detective"))
+    GenreUI(Modifier, Genre("1", "Detective"), {})
 }

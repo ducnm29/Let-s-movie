@@ -18,18 +18,18 @@ import com.letsmovie.util.Define
 fun MovieItem(
     movie: Movie,
     modifier: Modifier = Modifier,
-    onMovieClick : (movieId: String)-> Unit
+    onMovieClick: (movieId: String) -> Unit
 ) {
-    Card (
+    Card(
         shape = RoundedCornerShape(10.dp),
         modifier = modifier,
         onClick = {
             onMovieClick(movie.id)
         }
-    ){
+    ) {
         AsyncImage(
             model = ImageRequest.Builder(LocalContext.current)
-                .data(Define.BASE_IMG_URL+movie.imgPoster)
+                .data(Define.BASE_IMG_URL + movie.imgPoster)
                 .scale(Scale.FIT)
                 .crossfade(true)
                 .build(),
