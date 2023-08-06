@@ -1,16 +1,13 @@
 package com.letsmovie.ui.movie
 
 import android.util.Log
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -74,13 +71,19 @@ fun BodyMovieInGenreUI(
     Column(
         modifier = modifier
     ) {
-        SearchBarUI()
         LazyVerticalGrid(
+            modifier = Modifier.padding(top = dimensionResource(id = R.dimen.spacer_vertical3)),
             columns = GridCells.Fixed(2),
-            verticalArrangement = Arrangement.Center,
+            verticalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.spacer_vertical2)),
+            horizontalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.spacer_horizontal2)),
             contentPadding = PaddingValues(horizontal = dimensionResource(id = R.dimen.spacer_horizontal2))
 
         ) {
+            //Search Bar section
+            item(span = { GridItemSpan(2) }) {
+                SearchBarUI()
+            }
+            //List movie section
             items(movieList) { movie ->
                 MovieItem(
                     movie = movie,

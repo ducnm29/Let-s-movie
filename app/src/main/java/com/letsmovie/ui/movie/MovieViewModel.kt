@@ -14,11 +14,7 @@ import com.letsmovie.repository.MovieRepository
 import com.letsmovie.util.Define
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -39,6 +35,8 @@ class MovieViewModel @Inject constructor(
     private val _movieDetail: MutableStateFlow<Result<Movie>> = MutableStateFlow(Result.Loading)
     private val _movieGenre: MutableStateFlow<Result<DataGenreResponse>> =
         MutableStateFlow(Result.Loading)
+    private val _movieInGenre: MutableStateFlow<Result<DataListResponse<Movie>>> =
+        MutableStateFlow(Result.Loading)
     val movieGenre: StateFlow<Result<DataGenreResponse>> = _movieGenre.asStateFlow()
     val trendingMovieStateFlow: StateFlow<Result<DataListResponse<Movie>>> =
         _trendingMovieStateFlow.asStateFlow()
@@ -49,6 +47,7 @@ class MovieViewModel @Inject constructor(
     val upComingMovie: StateFlow<Result<DataListResponse<Movie>>> =
         _upComingMovieStateFlow.asStateFlow()
     val movieDetail: StateFlow<Result<Movie>> = _movieDetail.asStateFlow()
+    val movieInGenre: StateFlow<Result<DataListResponse<Movie>>> = _movieInGenre.asStateFlow()
 
     // Pull to refresh
     private val _refreshing = mutableStateOf(false)
@@ -118,6 +117,16 @@ class MovieViewModel @Inject constructor(
             delay(1500)
             refreshData()
             _refreshing.value = false
+        }
+    }
+
+    fun getMovieInGenre(language: String, apiKey: String, genreId: String) {
+        viewModelScope.launch {
+            movieRepository
+                .getMovieInGenre(language = language, apiKey = apiKey, genreId = genreId)
+                .collectLatest {
+                    _movieInGenre.value = it
+                }
         }
     }
 

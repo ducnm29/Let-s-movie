@@ -71,4 +71,18 @@ class MovieRepositoryImpl @Inject constructor(
             emit(Result.Error(it.toString()))
         }
     }
+
+    override fun getMovieInGenre(
+        language: String,
+        apiKey: String,
+        genreId: String
+    ): Flow<Result<DataListResponse<Movie>>> {
+        return flow {
+            emit(Result.Loading)
+            val data = movieApi.getMovieInGenre(language, apiKey, genreId)
+            emit(Result.Success(data))
+        }.catch {
+            emit(Result.Error(it.toString()))
+        }
+    }
 }
