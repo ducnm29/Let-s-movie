@@ -58,7 +58,7 @@ fun NavGraphBuilder.movieGraph(navController: NavHostController) {
                     navController.navigate(BaseScreen.MovieDetailScreen.route + "/" + movieId)
                 },
                 onGenreClick = { genreId ->
-                    navController.navigate(BaseScreen.MovieInGenreScreen.route)
+                    navController.navigate(BaseScreen.MovieInGenreScreen.route + "/" + genreId)
                 }
             )
         }
@@ -70,9 +70,10 @@ fun NavGraphBuilder.movieGraph(navController: NavHostController) {
                 movieViewModel = hiltViewModel()
             )
         }
-        composable(route = BaseScreen.MovieInGenreScreen.route) {
+        composable(route = BaseScreen.MovieInGenreScreen.route + "/{genreId}") { backStackEntry ->
             MovieInGenreUI(
                 movieViewModel = hiltViewModel(),
+                genreId = backStackEntry.arguments?.getString("genreId") ?: "0",
                 onMovieClick = { movieId ->
                     navController.navigate(BaseScreen.MovieDetailScreen.route + "/" + movieId)
                 }

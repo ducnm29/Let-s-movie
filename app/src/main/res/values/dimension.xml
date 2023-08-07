@@ -17,6 +17,7 @@
     <dimen name="spacer_horizontal1">12dp</dimen>
     <dimen name="spacer_horizontal2">16dp</dimen>
     <dimen name="spacer_horizontal3">32dp</dimen>
+    <dimen name="spacer_horizontal4">48dp</dimen>
     <dimen name="star_height">16dp</dimen>
 
 </resources>

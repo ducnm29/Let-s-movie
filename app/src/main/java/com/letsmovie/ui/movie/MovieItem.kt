@@ -1,10 +1,12 @@
 package com.letsmovie.ui.movie
 
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
@@ -30,10 +32,11 @@ fun MovieItem(
         AsyncImage(
             model = ImageRequest.Builder(LocalContext.current)
                 .data(Define.BASE_IMG_URL + movie.imgPoster)
-                .scale(Scale.FIT)
                 .crossfade(true)
                 .build(),
             contentDescription = null,
+            contentScale = ContentScale.Crop,
+            modifier = Modifier.fillMaxSize(1f)
         )
     }
 }

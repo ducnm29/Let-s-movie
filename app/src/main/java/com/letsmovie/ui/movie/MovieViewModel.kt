@@ -13,6 +13,9 @@ import com.letsmovie.repository.GenreRepository
 import com.letsmovie.repository.MovieRepository
 import com.letsmovie.util.Define
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -136,6 +139,22 @@ class MovieViewModel @Inject constructor(
         getTopRatedMovie(Define.LANGUAGE_DEFAULT, Define.API_KEY)
         getUpComingMovie(Define.LANGUAGE_DEFAULT, Define.API_KEY)
         getMovieGenreList(Define.LANGUAGE_DEFAULT, Define.API_KEY)
+        viewModelScope.launch {
+            Log.d("test_co", test().toString())
+        }
+    }
+
+    suspend fun test(): Int {
+        var count = 0
+        CoroutineScope(Dispatchers.IO).launch {
+            delay(1000)
+            count = 50
+        }
+        val def = CoroutineScope(Dispatchers.IO).async {
+            delay(3000)
+            70
+        }
+        return count + def.await()
     }
 
 }

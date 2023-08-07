@@ -11,6 +11,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -21,14 +22,23 @@ import com.letsmovie.R
 import com.letsmovie.model.Movie
 import com.letsmovie.model.Result
 import com.letsmovie.ui.component.SearchBarUI
+import com.letsmovie.util.Define
 
 @Composable
 fun MovieInGenreUI(
     modifier: Modifier = Modifier,
     movieViewModel: MovieViewModel,
+    genreId: String,
     onMovieClick: (String) -> Unit
 ) {
-    val movieResult = movieViewModel.popularMovieStateFlow.collectAsState().value
+    LaunchedEffect(true){
+        movieViewModel.getMovieInGenre(
+            Define.LANGUAGE_DEFAULT,
+            Define.API_KEY,
+            genreId
+        )
+    }
+    val movieResult = movieViewModel.movieInGenre.collectAsState().value
     when (movieResult) {
         is Result.Loading -> {
             Box(
@@ -72,20 +82,25 @@ fun BodyMovieInGenreUI(
         modifier = modifier
     ) {
         LazyVerticalGrid(
-            modifier = Modifier.padding(top = dimensionResource(id = R.dimen.spacer_vertical3)),
-            columns = GridCells.Fixed(2),
+            columns = GridCells.Adaptive(120.dp),
             verticalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.spacer_vertical2)),
-            horizontalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.spacer_horizontal2)),
-            contentPadding = PaddingValues(horizontal = dimensionResource(id = R.dimen.spacer_horizontal2))
+            horizontalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.spacer_horizontal3)),
+            contentPadding = PaddingValues(
+                horizontal = dimensionResource(id = R.dimen.spacer_horizontal2),
+                vertical = dimensionResource(id = R.dimen.spacer_vertical1)
+            )
 
         ) {
             //Search Bar section
-            item(span = { GridItemSpan(2) }) {
+            item(span = { GridItemSpan(5) }) {
                 SearchBarUI()
             }
             //List movie section
             items(movieList) { movie ->
                 MovieItem(
+//                    modifier = Modifier
+//                        .width( 140.dp)
+//                        .height(180.dp),
                     movie = movie,
                     onMovieClick = onMovieClick
                 )
