@@ -20,4 +20,8 @@
     <dimen name="spacer_horizontal4">48dp</dimen>
     <dimen name="star_height">16dp</dimen>
 
+    <dimen name="movie_item_width">144dp</dimen>
+    <dimen name="movie_item_height">216dp</dimen>
+    <dimen name="movie_item_horizontal_size">80dp</dimen>
+
 </resources>

@@ -1,17 +1,28 @@
 package com.letsmovie.ui.movie
 
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import coil.size.Scale
+import com.letsmovie.R
 import com.letsmovie.model.Movie
 import com.letsmovie.util.Define
 
@@ -22,12 +33,12 @@ fun MovieItem(
     modifier: Modifier = Modifier,
     onMovieClick: (movieId: String) -> Unit
 ) {
-    Card(
-        shape = RoundedCornerShape(10.dp),
-        modifier = modifier,
-        onClick = {
-            onMovieClick(movie.id)
-        }
+    Column(
+        modifier = modifier
+            .clickable {
+                onMovieClick(movie.id)
+            }
+            .width(dimensionResource(id = R.dimen.movie_item_width)),
     ) {
         AsyncImage(
             model = ImageRequest.Builder(LocalContext.current)
@@ -36,7 +47,24 @@ fun MovieItem(
                 .build(),
             contentDescription = null,
             contentScale = ContentScale.Crop,
-            modifier = Modifier.fillMaxSize(1f)
+            modifier = Modifier
+                .fillMaxSize(1f)
+                .height(dimensionResource(id = R.dimen.movie_item_height))
+                .clip(RoundedCornerShape(10.dp))
+        )
+        Spacer(modifier = Modifier.height(8.dp))
+        Text(
+            text = movie.movieName,
+            style = MaterialTheme.typography.titleMedium,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis
+        )
+        Spacer(modifier = Modifier.height(8.dp))
+        Text(
+            text = movie.releaseDate,
+            style = MaterialTheme.typography.bodyMedium,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis
         )
     }
 }

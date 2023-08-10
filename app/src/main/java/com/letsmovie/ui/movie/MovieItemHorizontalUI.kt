@@ -10,12 +10,14 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.material3.Card
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -51,7 +53,7 @@ fun MovieItemHorizontalUI(
                     .build(),
                 contentDescription = null,
                 contentScale = ContentScale.Crop,
-                modifier = Modifier.size(72.dp)
+                modifier = Modifier.size(dimensionResource(id = R.dimen.movie_item_horizontal_size))
             )
         }
         Spacer(modifier = Modifier.size(dimensionResource(id = R.dimen.spacer_horizontal1)))
@@ -60,8 +62,9 @@ fun MovieItemHorizontalUI(
         ) {
             Text(
                 text = movie.movieName,
-                fontSize = dimensionResource(id = R.dimen.item_title).value.sp,
-                fontWeight = FontWeight.Medium
+                style = MaterialTheme.typography.titleMedium,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
             )
             Spacer(
                 modifier = Modifier
@@ -69,8 +72,9 @@ fun MovieItemHorizontalUI(
             )
             Text(
                 text = movie.releaseDate,
-                fontSize = dimensionResource(id = R.dimen.sub_item_title).value.sp,
-                fontWeight = FontWeight.Normal
+                style = MaterialTheme.typography.bodyMedium,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
             )
             Spacer(
                 modifier = Modifier

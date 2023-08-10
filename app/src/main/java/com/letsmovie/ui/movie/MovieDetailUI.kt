@@ -21,6 +21,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -200,8 +201,7 @@ fun DetailUI(
             }
             Text(
                 text = "Story line",
-                fontWeight = FontWeight.Medium,
-                fontSize = 23.sp,
+                style = MaterialTheme.typography.titleLarge,
                 modifier = Modifier
                     .padding(
                         top = 32.dp,
@@ -212,7 +212,7 @@ fun DetailUI(
             )
             Text(
                 text = movieResult.data.movieOverview,
-                fontSize = 18.sp,
+                style = MaterialTheme.typography.bodyLarge,
                 modifier = Modifier
                     .padding(
                         start = 16.dp,
