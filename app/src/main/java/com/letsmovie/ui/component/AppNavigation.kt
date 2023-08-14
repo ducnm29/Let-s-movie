@@ -14,7 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
 import com.letsmovie.ui.navigation.BaseScreen
-import com.letsmovie.util.Define.Companion.LIST_SCREEN
+import com.letsmovie.util.Define.Companion.LIST_HOME_SCREEN
 
 @Composable
 fun AppNavigation(
@@ -33,31 +33,31 @@ fun AppNavigation(
             containerColor = containerColor
         ) {
 
-            LIST_SCREEN.forEach { baseScreen ->
+            LIST_HOME_SCREEN.forEach { screen ->
                 val selected = navDestination?.hierarchy?.any { destination ->
-                    destination.route == baseScreen.route
+                    destination.route == screen.route
                 } == true
 
                 NavigationBarItem(
                     selected = selected,
                     onClick = {
-                        onCLick(baseScreen)
+                        onCLick(screen)
                     },
                     icon = {
                         if (selected) {
                             Icon(
-                                imageVector = baseScreen.iconSelected,
+                                imageVector = screen.iconSelected,
                                 contentDescription = null
                             )
                         } else {
                             Icon(
-                                imageVector = baseScreen.iconNormal,
+                                imageVector = screen.iconNormal,
                                 contentDescription = null
                             )
                         }
                     },
                     label = {
-                        Text(text = baseScreen.name)
+                        Text(text = screen.name)
                     }
                 )
             }

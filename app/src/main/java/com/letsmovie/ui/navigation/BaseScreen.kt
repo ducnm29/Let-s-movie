@@ -25,6 +25,13 @@ sealed class BaseScreen(
         Icons.Outlined.Movie
     )
 
+    object MovieHomeScreen : BaseScreen(
+        Define.MOVIE_HOME,
+        Define.MOVIE_NAME,
+        Icons.Default.Movie,
+        Icons.Outlined.Movie
+    )
+
     object FavouriteScreen : BaseScreen(
         Define.FAVOURITE_ROUTE,
         Define.FAVOURITE_NAME,
@@ -34,6 +41,13 @@ sealed class BaseScreen(
 
     object TvScreen : BaseScreen(
         Define.TV_ROUTE,
+        Define.TV_NAME,
+        Icons.Filled.Tv,
+        Icons.Outlined.Tv
+    )
+
+    object TvHomeScreen : BaseScreen(
+        Define.TV_HOME,
         Define.TV_NAME,
         Icons.Filled.Tv,
         Icons.Outlined.Tv

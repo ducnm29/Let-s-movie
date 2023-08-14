@@ -18,15 +18,16 @@ import com.letsmovie.ui.tv.TvViewModel
 @Composable
 fun FavouriteUI(
     modifier: Modifier = Modifier,
-    navHostController: NavHostController,
     movieViewModel: MovieViewModel,
-    tvViewModel: TvViewModel
+    tvViewModel: TvViewModel,
+    onMovieClick: (String) -> Unit,
+    onTvClick: (String) -> Unit
 ) {
     val pagerState = rememberPagerState(initialPage = 0)
 
 
     Column(
-        modifier = Modifier
+        modifier = modifier
     ) {
         Tabs(
             pagerState = pagerState,
@@ -37,9 +38,10 @@ fun FavouriteUI(
         )
         TabContent(
             pagerState = pagerState,
-            navHostController = navHostController,
             movieViewModel = movieViewModel,
-            tvViewModel = tvViewModel
+            tvViewModel = tvViewModel,
+            onMovieClick = onMovieClick,
+            onTvClick = onTvClick
         )
     }
 }

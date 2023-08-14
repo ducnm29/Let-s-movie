@@ -24,7 +24,6 @@ import com.letsmovie.ui.movie.ListItemUI
 fun <T : Any> ListItemWithData(
     result: Result<DataListResponse<T>>,
     modifier: Modifier = Modifier,
-    navHostController: NavHostController,
     categoryName: String,
     onClick: (itemId: String) -> Unit
 ) {

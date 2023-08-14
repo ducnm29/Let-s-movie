@@ -49,10 +49,10 @@ import com.letsmovie.util.Define
 
 @Composable
 fun MovieDetailUI(
-    navHostController: NavHostController,
     modifier: Modifier = Modifier,
     movieId: String,
-    movieViewModel: MovieViewModel
+    movieViewModel: MovieViewModel,
+    onClickBack: () -> Unit
 ) {
     val movieResult: Result<Movie> = movieViewModel.movieDetail.collectAsState().value
     LaunchedEffect(true) {
@@ -86,7 +86,7 @@ fun MovieDetailUI(
             DetailUI(
                 modifier = modifier,
                 movieResult = movieResult,
-                navHostController = navHostController
+                onClickBack = onClickBack
             )
         }
     }
@@ -96,7 +96,7 @@ fun MovieDetailUI(
 fun DetailUI(
     modifier: Modifier = Modifier,
     movieResult: Result.Success<Movie>,
-    navHostController: NavHostController
+    onClickBack: () -> Unit
 ) {
     Box(
         modifier = modifier
@@ -123,11 +123,9 @@ fun DetailUI(
         ) {
             Row() {
                 IconButton(
-                    onClick = {
-                        navHostController.popBackStack()
-                    },
+                    onClick = onClickBack,
                     modifier = Modifier.padding(
-                        top = 16.dp,
+                        top = 12.dp,
                         start = 16.dp
                     )
                 ) {
@@ -150,7 +148,7 @@ fun DetailUI(
 
                     },
                     modifier = Modifier.padding(
-                        top = 16.dp,
+                        top = 12.dp,
                         end = 16.dp
                     )
                 ) {

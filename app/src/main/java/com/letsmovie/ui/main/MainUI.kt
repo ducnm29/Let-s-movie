@@ -13,6 +13,7 @@ import androidx.navigation.compose.rememberNavController
 import com.letsmovie.ui.component.AppNavigation
 import com.letsmovie.ui.navigation.MyAppNavHost
 import com.letsmovie.util.Define
+import com.letsmovie.util.Define.Companion.LIST_SCREEN
 
 @Composable
 fun MainUI(
@@ -23,7 +24,7 @@ fun MainUI(
     val bottomBarVisibleState = rememberSaveable {
         mutableStateOf(true)
     }
-    bottomBarVisibleState.value = Define.LIST_SCREEN.any {
+    bottomBarVisibleState.value = LIST_SCREEN.any {
         it.route == destination?.route
     }
     Scaffold(
@@ -31,8 +32,8 @@ fun MainUI(
             AppNavigation(
                 modifier = modifier,
                 navDestination = destination,
-                onCLick = { baseScreen ->
-                    navController.navigate(baseScreen.route) {
+                onCLick = { screen ->
+                    navController.navigate(screen.route) {
                         popUpTo(navController.graph.findStartDestination().id) {
                             saveState = true
                         }

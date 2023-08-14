@@ -34,9 +34,14 @@ fun MyAppNavHost(
         tvGraph(navController)
         composable(BaseScreen.FavouriteScreen.route) {
             FavouriteUI(
-                navHostController = navController,
                 movieViewModel = hiltViewModel(),
-                tvViewModel = hiltViewModel()
+                tvViewModel = hiltViewModel(),
+                onTvClick = { tvId ->
+                    navController.navigate(BaseScreen.TvDetailScreen.route + "/"+tvId)
+                },
+                onMovieClick = { movieId ->
+                    navController.navigate(BaseScreen.MovieDetailScreen.route + "/"+movieId)
+                }
             )
         }
         composable(BaseScreen.SettingScreen.route) {
@@ -52,7 +57,6 @@ fun NavGraphBuilder.movieGraph(navController: NavHostController) {
     ) {
         composable(route = BaseScreen.MovieScreen.route) {
             MovieUI(
-                navHostController = navController,
                 movieViewModel = hiltViewModel(),
                 onMovieClickDetail = { movieId ->
                     navController.navigate(BaseScreen.MovieDetailScreen.route + "/" + movieId)
@@ -64,10 +68,12 @@ fun NavGraphBuilder.movieGraph(navController: NavHostController) {
         }
         composable(route = BaseScreen.MovieDetailScreen.route + "/{movieId}") { backStackEntry ->
             MovieDetailUI(
-                navHostController = navController,
                 modifier = Modifier.verticalScroll(rememberScrollState()),
                 movieId = backStackEntry.arguments?.getString("movieId") ?: "0",
-                movieViewModel = hiltViewModel()
+                movieViewModel = hiltViewModel(),
+                onClickBack = {
+                    navController.popBackStack()
+                }
             )
         }
         composable(route = BaseScreen.MovieInGenreScreen.route + "/{genreId}") { backStackEntry ->
@@ -89,8 +95,10 @@ fun NavGraphBuilder.tvGraph(navController: NavHostController) {
     ) {
         composable(route = BaseScreen.TvScreen.route) {
             TvUI(
-                navHostController = navController,
-                tvViewModel = hiltViewModel()
+                tvViewModel = hiltViewModel(),
+                onTvClick = { tvId ->
+                    navController.navigate(BaseScreen.TvDetailScreen.route + "/"+tvId)
+                }
             )
         }
         composable(route = BaseScreen.TvDetailScreen.route + "/{tvId}") { backStackKEntry ->

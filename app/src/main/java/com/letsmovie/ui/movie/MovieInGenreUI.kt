@@ -1,13 +1,19 @@
 package com.letsmovie.ui.movie
 
 import android.util.Log
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
+import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -31,7 +37,8 @@ fun MovieInGenreUI(
     genreId: String,
     onMovieClick: (String) -> Unit
 ) {
-    LaunchedEffect(true){
+    val listState = rememberLazyGridState()
+    LaunchedEffect(true) {
         movieViewModel.getMovieInGenre(
             Define.LANGUAGE_DEFAULT,
             Define.API_KEY,
@@ -65,6 +72,7 @@ fun MovieInGenreUI(
         is Result.Success -> {
             BodyMovieInGenreUI(
                 modifier = modifier,
+                state = listState,
                 onMovieClick = onMovieClick,
                 movieList = movieResult.data.dataList
             )
@@ -76,13 +84,15 @@ fun MovieInGenreUI(
 fun BodyMovieInGenreUI(
     modifier: Modifier,
     onMovieClick: (String) -> Unit,
-    movieList: List<Movie>
+    movieList: List<Movie>,
+    state: LazyGridState = rememberLazyGridState()
 ) {
     Column(
         modifier = modifier
     ) {
         LazyVerticalGrid(
             columns = GridCells.Adaptive(120.dp),
+            state = state,
             verticalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.spacer_vertical2)),
             horizontalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.spacer_horizontal3)),
             contentPadding = PaddingValues(

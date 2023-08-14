@@ -29,7 +29,6 @@ import com.letsmovie.ui.navigation.BaseScreen
 @Composable
 fun MovieUI(
     modifier: Modifier = Modifier,
-    navHostController: NavHostController,
     movieViewModel: MovieViewModel,
     onMovieClickDetail: (String) -> Unit,
     onGenreClick: (String) -> Unit
@@ -74,18 +73,14 @@ fun MovieUI(
             ListItemWithData(
                 result = trendingMovieResult.value,
                 modifier = modifier,
-                navHostController = navHostController,
                 categoryName = "Trending",
                 onClick = onMovieClickDetail
             )
             ListItemWithData(
                 result = popularMovieResult.value,
                 modifier = modifier,
-                navHostController = navHostController,
                 categoryName = "Popular",
-                onClick = { movieId ->
-                    navHostController.navigate(BaseScreen.MovieDetailScreen.route + "/" + movieId)
-                }
+                onClick = onMovieClickDetail
             )
             ListMovieDetailUI(
                 categoryType = "Top rated",

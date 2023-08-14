@@ -18,7 +18,7 @@ import com.letsmovie.util.Define
 fun FavouriteMovieUI(
     modifier: Modifier = Modifier,
     movieViewModel: MovieViewModel,
-    navHostController: NavHostController
+    onMovieClick: (String) -> Unit
 ) {
     val trendingMovieResult = movieViewModel.trendingMovieStateFlow.collectAsState()
     Column(
@@ -28,11 +28,8 @@ fun FavouriteMovieUI(
         ListItemWithData(
             result =  trendingMovieResult.value,
             modifier = modifier,
-            navHostController = navHostController,
             categoryName = "Trending",
-            onClick = {movieId ->
-                navHostController.navigate(BaseScreen.MovieDetailScreen.route + "/"+movieId)
-            }
+            onClick = onMovieClick
         )
     }
 }

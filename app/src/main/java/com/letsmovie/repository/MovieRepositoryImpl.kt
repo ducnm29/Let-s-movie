@@ -1,14 +1,12 @@
 package com.letsmovie.repository
 
 import com.letsmovie.data.api.MovieApi
-import com.letsmovie.model.Movie
 import com.letsmovie.model.DataListResponse
+import com.letsmovie.model.Movie
 import com.letsmovie.model.Result
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
 class MovieRepositoryImpl @Inject constructor(
@@ -39,10 +37,17 @@ class MovieRepositoryImpl @Inject constructor(
 
     }
 
-    override fun getMovieDetail(movieId: String, language: String, apiKey: String): Flow<Movie> {
+    override fun getMovieDetail(
+        movieId: String,
+        language: String,
+        apiKey: String
+    ): Flow<Result<Movie>> {
         return flow {
-
-            emit(movieApi.getMovieDetail(movieId, language, apiKey))
+            emit(Result.Loading)
+            val data = movieApi.getMovieDetail(movieId, language, apiKey)
+            emit(Result.Success(data))
+        }.catch {
+            emit(Result.Error(it.toString()))
         }
     }
 

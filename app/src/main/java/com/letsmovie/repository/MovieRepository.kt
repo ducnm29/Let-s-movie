@@ -20,7 +20,7 @@ interface MovieRepository {
         movieId: String,
         language: String,
         apiKey: String
-    ): Flow<Movie>
+    ): Flow<Result<Movie>>
 
     fun getTopRatedMovie(
         language: String,

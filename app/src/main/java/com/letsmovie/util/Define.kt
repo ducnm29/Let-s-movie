@@ -36,6 +36,10 @@ class Define {
             BaseScreen.MovieScreen, BaseScreen.TvScreen,
             BaseScreen.FavouriteScreen, BaseScreen.SettingScreen
         )
+        val LIST_HOME_SCREEN = listOf(
+            BaseScreen.MovieHomeScreen, BaseScreen.TvHomeScreen,
+            BaseScreen.FavouriteScreen, BaseScreen.SettingScreen
+        )
 
         /**
          *  Const variable

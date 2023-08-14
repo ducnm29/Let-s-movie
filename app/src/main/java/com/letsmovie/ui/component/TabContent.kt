@@ -4,10 +4,8 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.runtime.Composable
-import androidx.navigation.NavHostController
 import com.letsmovie.ui.favourite.FavouriteMovieUI
 import com.letsmovie.ui.favourite.FavouriteTvUI
-import com.letsmovie.ui.movie.MovieUI
 import com.letsmovie.ui.movie.MovieViewModel
 import com.letsmovie.ui.tv.TvViewModel
 
@@ -15,22 +13,24 @@ import com.letsmovie.ui.tv.TvViewModel
 @Composable
 fun TabContent(
     pagerState: PagerState,
-    navHostController: NavHostController,
     movieViewModel: MovieViewModel,
-    tvViewModel: TvViewModel
+    tvViewModel: TvViewModel,
+    onMovieClick: (String) -> Unit,
+    onTvClick: (String) -> Unit
 ) {
     HorizontalPager(
         state = pagerState,
         pageCount = 2
-    ) {page ->
-        when(page){
+    ) { page ->
+        when (page) {
             0 -> FavouriteMovieUI(
-               navHostController = navHostController,
-               movieViewModel = movieViewModel)
+                movieViewModel = movieViewModel,
+                onMovieClick = onMovieClick
+            )
 
             1 -> FavouriteTvUI(
-                navHostController = navHostController,
-                tvViewModel = tvViewModel
+                tvViewModel = tvViewModel,
+                onTvClick = onTvClick
             )
         }
     }

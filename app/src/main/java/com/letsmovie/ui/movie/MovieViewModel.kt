@@ -1,6 +1,5 @@
 package com.letsmovie.ui.movie
 
-import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -17,7 +16,10 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -94,14 +96,10 @@ class MovieViewModel @Inject constructor(
 
     fun getMovieDetail(movieId: String, language: String, apiKey: String) {
         viewModelScope.launch {
-            _movieDetail.emit(Result.Loading)
-            movieRepository.getMovieDetail(movieId = movieId, language = language, apiKey = apiKey)
-                .catch {
-                    _movieDetail.emit(Result.Error(it.toString()))
-                    Log.w(Define.ERROR_TAG, it.toString())
-                }
-                .collect { data ->
-                    _movieDetail.emit(Result.Success(data))
+            movieRepository
+                .getMovieDetail(movieId = movieId, language = language, apiKey = apiKey)
+                .collectLatest {
+                    _movieDetail.value = it
                 }
         }
     }
@@ -139,9 +137,6 @@ class MovieViewModel @Inject constructor(
         getTopRatedMovie(Define.LANGUAGE_DEFAULT, Define.API_KEY)
         getUpComingMovie(Define.LANGUAGE_DEFAULT, Define.API_KEY)
         getMovieGenreList(Define.LANGUAGE_DEFAULT, Define.API_KEY)
-        viewModelScope.launch {
-            Log.d("test_co", test().toString())
-        }
     }
 
     suspend fun test(): Int {
