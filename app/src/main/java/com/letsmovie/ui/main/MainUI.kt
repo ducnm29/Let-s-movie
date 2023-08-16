@@ -12,8 +12,8 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.letsmovie.ui.component.AppNavigation
 import com.letsmovie.ui.navigation.MyAppNavHost
+import com.letsmovie.ui.navigation.TopLevelDestination
 import com.letsmovie.util.Define
-import com.letsmovie.util.Define.Companion.LIST_SCREEN
 
 @Composable
 fun MainUI(
@@ -24,8 +24,8 @@ fun MainUI(
     val bottomBarVisibleState = rememberSaveable {
         mutableStateOf(true)
     }
-    bottomBarVisibleState.value = LIST_SCREEN.any {
-        it.route == destination?.route
+    bottomBarVisibleState.value = TopLevelDestination.values().map { it.startDestination }.any {
+        it == destination?.route
     }
     Scaffold(
         bottomBar = {

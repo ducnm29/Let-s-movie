@@ -1,4 +1,4 @@
-package com.letsmovie.ui.movie
+package com.letsmovie.ui.movie.moveingenre
 
 import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
@@ -17,7 +17,6 @@ import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -28,24 +27,17 @@ import com.letsmovie.R
 import com.letsmovie.model.Movie
 import com.letsmovie.model.Result
 import com.letsmovie.ui.component.SearchBarUI
-import com.letsmovie.util.Define
+import com.letsmovie.ui.movie.MovieItem
 
 @Composable
 fun MovieInGenreUI(
     modifier: Modifier = Modifier,
-    movieViewModel: MovieViewModel,
-    genreId: String,
+    movieInGenreViewModel: MovieInGenreViewModel,
     onMovieClick: (String) -> Unit
 ) {
     val listState = rememberLazyGridState()
-    LaunchedEffect(true) {
-        movieViewModel.getMovieInGenre(
-            Define.LANGUAGE_DEFAULT,
-            Define.API_KEY,
-            genreId
-        )
-    }
-    val movieResult = movieViewModel.movieInGenre.collectAsState().value
+
+    val movieResult = movieInGenreViewModel.movieInGenre.collectAsState().value
     when (movieResult) {
         is Result.Loading -> {
             Box(

@@ -11,13 +11,12 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.letsmovie.ui.favourite.FavouriteUI
-import com.letsmovie.ui.movie.MovieDetailUI
-import com.letsmovie.ui.movie.MovieInGenreUI
 import com.letsmovie.ui.movie.MovieUI
+import com.letsmovie.ui.movie.moveingenre.MovieInGenreUI
+import com.letsmovie.ui.movie.moviedetail.MovieDetailUI
 import com.letsmovie.ui.setting.SettingUI
-import com.letsmovie.ui.tv.TvDetailUI
 import com.letsmovie.ui.tv.TvUI
-import com.letsmovie.util.Define
+import com.letsmovie.ui.tv.tvdetail.TvDetailUI
 
 @Composable
 fun MyAppNavHost(
@@ -32,56 +31,51 @@ fun MyAppNavHost(
     ) {
         movieGraph(navController)
         tvGraph(navController)
-        composable(BaseScreen.FavouriteScreen.route) {
-            FavouriteUI(
-                movieViewModel = hiltViewModel(),
-                tvViewModel = hiltViewModel(),
-                onTvClick = { tvId ->
-                    navController.navigate(BaseScreen.TvDetailScreen.route + "/"+tvId)
-                },
-                onMovieClick = { movieId ->
-                    navController.navigate(BaseScreen.MovieDetailScreen.route + "/"+movieId)
-                }
-            )
-        }
-        composable(BaseScreen.SettingScreen.route) {
-            SettingUI()
-        }
+        favGraph(navController)
+        settingGraph(navController)
     }
 }
 
 fun NavGraphBuilder.movieGraph(navController: NavHostController) {
     navigation(
-        startDestination = BaseScreen.MovieScreen.route,
-        route = Define.MOVIE_HOME
+        startDestination = TopLevelDestination.MOVIE.startDestination,
+        route = TopLevelDestination.MOVIE.route
     ) {
-        composable(route = BaseScreen.MovieScreen.route) {
+        composable(route = MovieDestination.route) {
             MovieUI(
                 movieViewModel = hiltViewModel(),
                 onMovieClickDetail = { movieId ->
-                    navController.navigate(BaseScreen.MovieDetailScreen.route + "/" + movieId)
+                    navController.navigate(
+                        MovieDetailDestination.createNavRoute(movieId)
+                    )
                 },
                 onGenreClick = { genreId ->
-                    navController.navigate(BaseScreen.MovieInGenreScreen.route + "/" + genreId)
+                    navController.navigate(
+                        MovieInGenreDestination.createNavRoute(genreId)
+                    )
                 }
             )
         }
-        composable(route = BaseScreen.MovieDetailScreen.route + "/{movieId}") { backStackEntry ->
+        composable(
+            route = MovieDetailDestination.route,
+            arguments = MovieDetailDestination.listArgument
+        ) {
             MovieDetailUI(
                 modifier = Modifier.verticalScroll(rememberScrollState()),
-                movieId = backStackEntry.arguments?.getString("movieId") ?: "0",
-                movieViewModel = hiltViewModel(),
+                movieDetailViewModel = hiltViewModel(),
                 onClickBack = {
                     navController.popBackStack()
                 }
             )
         }
-        composable(route = BaseScreen.MovieInGenreScreen.route + "/{genreId}") { backStackEntry ->
+        composable(
+            route = MovieInGenreDestination.route,
+            arguments = MovieInGenreDestination.listArgument
+        ) {
             MovieInGenreUI(
-                movieViewModel = hiltViewModel(),
-                genreId = backStackEntry.arguments?.getString("genreId") ?: "0",
+                movieInGenreViewModel = hiltViewModel(),
                 onMovieClick = { movieId ->
-                    navController.navigate(BaseScreen.MovieDetailScreen.route + "/" + movieId)
+                    navController.navigate(MovieDetailDestination.createNavRoute(movieId))
                 }
             )
         }
@@ -90,24 +84,56 @@ fun NavGraphBuilder.movieGraph(navController: NavHostController) {
 
 fun NavGraphBuilder.tvGraph(navController: NavHostController) {
     navigation(
-        startDestination = BaseScreen.TvScreen.route,
-        route = Define.TV_HOME
+        startDestination = TopLevelDestination.TV.startDestination,
+        route = TopLevelDestination.TV.route
     ) {
-        composable(route = BaseScreen.TvScreen.route) {
+        composable(route = TvDestination.route) {
             TvUI(
                 tvViewModel = hiltViewModel(),
                 onTvClick = { tvId ->
-                    navController.navigate(BaseScreen.TvDetailScreen.route + "/"+tvId)
+                    navController.navigate(TvDetailDestination.createNavRoute(tvId))
                 }
             )
         }
-        composable(route = BaseScreen.TvDetailScreen.route + "/{tvId}") { backStackKEntry ->
+        composable(route = TvDetailDestination.route) {
             TvDetailUI(
-                navHostController = navController,
                 modifier = Modifier.verticalScroll(rememberScrollState()),
-                tvId = backStackKEntry.arguments?.getString("tvId") ?: "0",
-                tvViewModel = hiltViewModel()
+                tvViewModel = hiltViewModel(),
+                onClickBack = {
+                    navController.popBackStack()
+                }
             )
+        }
+    }
+}
+
+fun NavGraphBuilder.favGraph(navController: NavHostController) {
+    navigation(
+        startDestination = TopLevelDestination.FAVOURITE.startDestination,
+        route = TopLevelDestination.FAVOURITE.route
+    ) {
+        composable(FavoriteDestination.route) {
+            FavouriteUI(
+                movieViewModel = hiltViewModel(),
+                tvViewModel = hiltViewModel(),
+                onTvClick = { tvId ->
+                    navController.navigate(TvDetailDestination.createNavRoute(tvId))
+                },
+                onMovieClick = { movieId ->
+                    navController.navigate(MovieDetailDestination.createNavRoute(movieId))
+                }
+            )
+        }
+    }
+}
+
+fun NavGraphBuilder.settingGraph(navController: NavHostController) {
+    navigation(
+        startDestination = TopLevelDestination.SETTING.startDestination,
+        route = TopLevelDestination.SETTING.route
+    ) {
+        composable(SettingDestination.route) {
+            SettingUI()
         }
     }
 }

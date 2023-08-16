@@ -11,16 +11,16 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
-import com.letsmovie.ui.navigation.BaseScreen
-import com.letsmovie.util.Define.Companion.LIST_HOME_SCREEN
+import com.letsmovie.ui.navigation.TopLevelDestination
 
 @Composable
 fun AppNavigation(
     modifier: Modifier,
     navDestination: NavDestination?,
-    onCLick: (BaseScreen) -> Unit,
+    onCLick: (TopLevelDestination) -> Unit,
     visibleState: MutableState<Boolean>
 ) {
     AnimatedVisibility(
@@ -32,8 +32,7 @@ fun AppNavigation(
             modifier = modifier,
             containerColor = containerColor
         ) {
-
-            LIST_HOME_SCREEN.forEach { screen ->
+            TopLevelDestination.values().forEach { screen ->
                 val selected = navDestination?.hierarchy?.any { destination ->
                     destination.route == screen.route
                 } == true
@@ -46,18 +45,18 @@ fun AppNavigation(
                     icon = {
                         if (selected) {
                             Icon(
-                                imageVector = screen.iconSelected,
+                                imageVector = screen.selectedIcon,
                                 contentDescription = null
                             )
                         } else {
                             Icon(
-                                imageVector = screen.iconNormal,
+                                imageVector = screen.unselectedIcon,
                                 contentDescription = null
                             )
                         }
                     },
                     label = {
-                        Text(text = screen.name)
+                        Text(text = stringResource(id = screen.label))
                     }
                 )
             }

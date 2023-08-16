@@ -29,13 +29,13 @@ fun <T : Any> ListItemUI(
     listItem: List<T>
 ) {
     Column(
-        modifier = Modifier
+        modifier = modifier
             .padding(top = 32.dp)
 
     ) {
         Text(
             text = listName,
-            style = MaterialTheme.typography.titleLarge,
+            style = MaterialTheme.typography.headlineSmall,
             modifier = Modifier.padding(start = 16.dp)
         )
         LazyRow(

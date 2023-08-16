@@ -10,7 +10,6 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import coil.size.Scale
-import com.letsmovie.model.Movie
 import com.letsmovie.model.Tv
 import com.letsmovie.util.Define
 
@@ -19,18 +18,18 @@ import com.letsmovie.util.Define
 fun TvItem(
     tv: Tv,
     modifier: Modifier = Modifier,
-    onTvClick : (tvId: String)-> Unit
+    onTvClick: (tvId: String) -> Unit
 ) {
-    Card (
+    Card(
         shape = RoundedCornerShape(10.dp),
         modifier = modifier,
         onClick = {
             onTvClick(tv.id)
         }
-    ){
+    ) {
         AsyncImage(
             model = ImageRequest.Builder(LocalContext.current)
-                .data(Define.BASE_IMG_URL+tv.imgPoster)
+                .data(Define.BASE_IMG_URL + tv.imgPoster)
                 .scale(Scale.FIT)
                 .crossfade(true)
                 .build(),

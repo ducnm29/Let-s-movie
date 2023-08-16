@@ -4,15 +4,11 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
-import androidx.navigation.NavHostController
-import com.letsmovie.ui.component.SearchBarUI
 import com.letsmovie.ui.component.ListItemWithData
+import com.letsmovie.ui.component.SearchBarUI
 import com.letsmovie.ui.movie.MovieViewModel
-import com.letsmovie.ui.navigation.BaseScreen
-import com.letsmovie.util.Define
 
 @Composable
 fun FavouriteMovieUI(
@@ -26,7 +22,7 @@ fun FavouriteMovieUI(
     ) {
         SearchBarUI()
         ListItemWithData(
-            result =  trendingMovieResult.value,
+            result = trendingMovieResult.value,
             modifier = modifier,
             categoryName = "Trending",
             onClick = onMovieClick

@@ -2,4 +2,8 @@
     <string name="app_name">Let\'s Movie</string>
     <string name="common_error">Oops! Something went wrong!</string>
     <string name="view_more">View more</string>
+    <string name="movie_label">Movie</string>
+    <string name="tv_label">Tv</string>
+    <string name="fav_label">Favourite</string>
+    <string name="setting_label">Setting</string>
 </resources>

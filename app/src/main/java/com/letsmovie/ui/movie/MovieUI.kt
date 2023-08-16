@@ -16,14 +16,12 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
-import androidx.navigation.NavHostController
 import com.letsmovie.R
 import com.letsmovie.ui.component.HeaderUserInfoUI
 import com.letsmovie.ui.component.ImageCarousel
 import com.letsmovie.ui.component.ListGenreUI
 import com.letsmovie.ui.component.ListItemWithData
 import com.letsmovie.ui.component.SearchBarUI
-import com.letsmovie.ui.navigation.BaseScreen
 
 //@OptIn(ExperimentalMaterialApi::class)
 @Composable

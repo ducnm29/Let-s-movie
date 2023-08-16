@@ -3,4 +3,8 @@
     <string name="app_name">Let\'s Movie</string>
     <string name="common_error">Ối! Có lỗi gì đó ahyhy!</string>
     <string name="view_more">Xem thêm</string>
+    <string name="movie_label">Phim</string>
+    <string name="tv_label">Tv</string>
+    <string name="fav_label">Yêu thích</string>
+    <string name="setting_label">Cài đặt</string>
 </resources>
