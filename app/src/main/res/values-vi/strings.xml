@@ -7,4 +7,9 @@
     <string name="tv_label">Tv</string>
     <string name="fav_label">Yêu thích</string>
     <string name="setting_label">Cài đặt</string>
+    <string name="trending_title">Xu hướng</string>
+    <string name="popular_title">Phổ biến</string>
+    <string name="top_rated_title">Hàng đầu</string>
+    <string name="up_coming_title">Sắp chiếu</string>
+    <string name="search_title">Tìm kiếm</string>
 </resources>

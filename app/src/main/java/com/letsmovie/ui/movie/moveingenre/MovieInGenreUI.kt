@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyGridState
@@ -57,7 +58,7 @@ fun MovieInGenreUI(
             ) {
                 Text(text = stringResource(id = R.string.common_error))
                 Spacer(modifier = Modifier.height(8.dp))
-                Log.e("ex", movieResult.exception)
+                Log.e("MovieInGenreUI", movieResult.exception)
             }
         }
 
@@ -80,7 +81,7 @@ fun BodyMovieInGenreUI(
     state: LazyGridState = rememberLazyGridState()
 ) {
     Column(
-        modifier = modifier
+        modifier = modifier.padding(top = dimensionResource(id = R.dimen.spacer_vertical2))
     ) {
         LazyVerticalGrid(
             columns = GridCells.Adaptive(120.dp),

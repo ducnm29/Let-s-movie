@@ -32,6 +32,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
@@ -95,7 +96,7 @@ fun MovieDetailBodyUI(
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(520.dp),
+                .height(500.dp),
         ) {
             AsyncImage(
                 model = ImageRequest.Builder(LocalContext.current)
@@ -129,11 +130,13 @@ fun MovieDetailBodyUI(
                 Text(
                     text = movieResult.data.movieName,
                     fontWeight = FontWeight.Medium,
-                    fontSize = 23.sp,
+                    fontSize = 22.sp,
                     modifier = Modifier
                         .weight(1f)
                         .padding(top = 16.dp),
-                    textAlign = TextAlign.Center
+                    textAlign = TextAlign.Center,
+                    maxLines = 3,
+                    overflow = TextOverflow.Ellipsis
                 )
                 IconButton(
                     onClick = {
@@ -153,8 +156,8 @@ fun MovieDetailBodyUI(
             Card(
                 shape = RoundedCornerShape(10.dp),
                 modifier = Modifier
-                    .width(240.dp)
-                    .height(400.dp)
+                    .width(220.dp)
+                    .height(360.dp)
                     .padding(top = 12.dp)
             ) {
                 AsyncImage(

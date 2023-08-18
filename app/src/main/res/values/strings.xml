@@ -6,4 +6,9 @@
     <string name="tv_label">Tv</string>
     <string name="fav_label">Favourite</string>
     <string name="setting_label">Setting</string>
+    <string name="trending_title">Trending</string>
+    <string name="popular_title">Popular</string>
+    <string name="top_rated_title">Top rated</string>
+    <string name="up_coming_title">Up coming</string>
+    <string name="search_title">Search</string>
 </resources>

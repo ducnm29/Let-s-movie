@@ -2,7 +2,6 @@ package com.letsmovie.ui.movie
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.letsmovie.model.DataGenreResponse

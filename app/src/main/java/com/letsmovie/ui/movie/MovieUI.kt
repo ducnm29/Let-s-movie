@@ -16,6 +16,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.stringResource
 import com.letsmovie.R
 import com.letsmovie.ui.component.HeaderUserInfoUI
 import com.letsmovie.ui.component.ImageCarousel
@@ -71,22 +72,22 @@ fun MovieUI(
             ListItemWithData(
                 result = trendingMovieResult.value,
                 modifier = modifier,
-                categoryName = "Trending",
+                categoryName = stringResource(id = R.string.trending_title),
                 onClick = onMovieClickDetail
             )
             ListItemWithData(
                 result = popularMovieResult.value,
                 modifier = modifier,
-                categoryName = "Popular",
+                categoryName = stringResource(id = R.string.popular_title),
                 onClick = onMovieClickDetail
             )
             ListMovieDetailUI(
-                categoryType = "Top rated",
+                categoryType = stringResource(id = R.string.top_rated_title),
                 listMovieResult = topRatedMovieResult.value,
                 onclick = onMovieClickDetail
             )
             ListMovieDetailUI(
-                categoryType = "Up coming",
+                categoryType = stringResource(id = R.string.up_coming_title),
                 listMovieResult = upComingMovieResult.value,
                 onclick = onMovieClickDetail
             )

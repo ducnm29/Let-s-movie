@@ -6,6 +6,8 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import com.letsmovie.R
 import com.letsmovie.ui.component.HeaderUserInfoUI
 import com.letsmovie.ui.component.ListItemWithData
 import com.letsmovie.ui.component.SearchBarUI
@@ -27,13 +29,13 @@ fun TvUI(
         ListItemWithData(
             result = trendingTvResult.value,
             modifier = modifier,
-            categoryName = "Trending",
+            categoryName = stringResource(id = R.string.trending_title),
             onClick = onTvClick
         )
         ListItemWithData(
             result = popularTvResult.value,
             modifier = modifier,
-            categoryName = "Popular",
+            categoryName = stringResource(id = R.string.popular_title),
             onClick = onTvClick
         )
     }

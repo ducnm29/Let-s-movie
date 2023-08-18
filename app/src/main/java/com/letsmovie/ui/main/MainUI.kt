@@ -1,12 +1,14 @@
 package com.letsmovie.ui.main
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
@@ -46,7 +48,11 @@ fun MainUI(
         }
     ) { innerPadding ->
         Box(
-            modifier = Modifier.padding(innerPadding)
+            modifier = Modifier.padding(
+                end = innerPadding.calculateRightPadding(LocalLayoutDirection.current),
+                start = innerPadding.calculateStartPadding(LocalLayoutDirection.current),
+                bottom = innerPadding.calculateBottomPadding()
+            )
         ) {
             MyAppNavHost(
                 navController = navController,
