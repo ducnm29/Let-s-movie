@@ -33,14 +33,20 @@ class MovieInGenreViewModel @Inject constructor(
         getMovieInGenre(
             language = Define.LANGUAGE_DEFAULT,
             apiKey = Define.API_KEY,
-            genreId = genreId
+            genreId = genreId,
+            page = 1
         )
     }
 
-    fun getMovieInGenre(language: String, apiKey: String, genreId: String) {
+    fun getMovieInGenre(language: String, apiKey: String, genreId: String, page: Int) {
         viewModelScope.launch {
             movieRepository
-                .getMovieInGenre(language = language, apiKey = apiKey, genreId = genreId)
+                .getMovieInGenre(
+                    language = language,
+                    apiKey = apiKey,
+                    genreId = genreId,
+                    page = page
+                )
                 .collectLatest {
                     _movieInGenre.value = it
                 }

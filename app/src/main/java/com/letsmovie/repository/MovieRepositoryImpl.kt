@@ -77,17 +77,12 @@ class MovieRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun getMovieInGenre(
+    override suspend fun getMovieInGenre(
         language: String,
         apiKey: String,
-        genreId: String
-    ): Flow<Result<DataListResponse<Movie>>> {
-        return flow {
-            emit(Result.Loading)
-            val data = movieApi.getMovieInGenre(language, apiKey, genreId)
-            emit(Result.Success(data))
-        }.catch {
-            emit(Result.Error(it.toString()))
-        }
+        genreId: String,
+        page: Int
+    ): DataListResponse<Movie>{
+        return movieApi.getMovieInGenre(language, apiKey, genreId)
     }
 }

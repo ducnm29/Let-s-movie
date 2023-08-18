@@ -32,9 +32,10 @@ interface MovieRepository {
         apiKey: String
     ): Flow<Result<DataListResponse<Movie>>>
 
-    fun getMovieInGenre(
+    suspend fun getMovieInGenre(
         language: String,
         apiKey: String,
-        genreId: String
-    ): Flow<Result<DataListResponse<Movie>>>
+        genreId: String,
+        page: Int
+    ): DataListResponse<Movie>
 }
