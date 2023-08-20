@@ -3,9 +3,12 @@ package com.letsmovie.ui.movie.moveingenre
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.letsmovie.model.DataListResponse
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import com.letsmovie.model.Movie
-import com.letsmovie.model.Result
+import com.letsmovie.paging.DataListPagingSource
 import com.letsmovie.repository.MovieRepository
 import com.letsmovie.ui.navigation.MovieInGenreDestination
 import com.letsmovie.util.Define
@@ -25,31 +28,37 @@ class MovieInGenreViewModel @Inject constructor(
 
     private val genreId: String = savedStateHandle[MovieInGenreDestination.genreIDArg] ?: ""
 
-    private val _movieInGenre: MutableStateFlow<Result<DataListResponse<Movie>>> =
-        MutableStateFlow(Result.Loading)
-    val movieInGenre: StateFlow<Result<DataListResponse<Movie>>> = _movieInGenre.asStateFlow()
+    private val _movieInGenre: MutableStateFlow<PagingData<Movie>> =
+        MutableStateFlow(PagingData.empty())
+    val movieInGenre: StateFlow<PagingData<Movie>> = _movieInGenre.asStateFlow()
 
     init {
         getMovieInGenre(
             language = Define.LANGUAGE_DEFAULT,
             apiKey = Define.API_KEY,
-            genreId = genreId,
-            page = 1
+            genreId = genreId
         )
     }
 
-    fun getMovieInGenre(language: String, apiKey: String, genreId: String, page: Int) {
-        viewModelScope.launch {
-            movieRepository
-                .getMovieInGenre(
-                    language = language,
-                    apiKey = apiKey,
-                    genreId = genreId,
-                    page = page
-                )
-                .collectLatest {
-                    _movieInGenre.value = it
+    fun getMovieInGenre(language: String, apiKey: String, genreId: String) {
+        val movieInGenreData =
+            Pager(
+                config = PagingConfig(pageSize = Define.MAX_PAGING_SIZE),
+                pagingSourceFactory = {
+                    DataListPagingSource(
+                        movieRepository = movieRepository,
+                        language = language,
+                        apiKey = apiKey,
+                        genreId = genreId
+                    )
                 }
+            ).flow.cachedIn(viewModelScope)
+
+
+        viewModelScope.launch {
+            movieInGenreData.collectLatest {
+                _movieInGenre.value = it
+            }
         }
     }
 }

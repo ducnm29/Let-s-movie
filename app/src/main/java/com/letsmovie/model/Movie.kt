@@ -18,7 +18,7 @@ data class Movie(
     @SerializedName("popularity")
     val popularityPoint: Float,
     @SerializedName("release_date")
-    val releaseDate: String,
+    val releaseDate: String?,
     @SerializedName("vote_average")
     val voteAverage: Float,
     @SerializedName("vote_count")

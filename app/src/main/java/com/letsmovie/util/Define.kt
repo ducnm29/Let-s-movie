@@ -41,6 +41,8 @@ class Define {
         const val HEADER_HELLO = "Hello Duc NM ahyhy"
         const val HEADER_1 = "It's movie time ahyhy!"
         const val ERROR_TAG = "error_tag"
+        const val MAX_PAGING_SIZE = 5
+        const val PREFETCH_DISTANCE = 2
 
         /**
          * Movie object sample

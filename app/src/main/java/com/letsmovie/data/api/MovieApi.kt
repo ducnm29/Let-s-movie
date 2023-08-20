@@ -42,6 +42,7 @@ interface MovieApi {
     suspend fun getMovieInGenre(
         @Query("language") language: String,
         @Query("api_key") apiKey: String,
-        @Query("with_genres") genreId: String
+        @Query("with_genres") genreId: String,
+        @Query("page") page: Int
     ): DataListResponse<Movie>
 }

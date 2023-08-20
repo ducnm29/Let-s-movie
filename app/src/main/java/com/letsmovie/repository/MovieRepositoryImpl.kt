@@ -83,6 +83,6 @@ class MovieRepositoryImpl @Inject constructor(
         genreId: String,
         page: Int
     ): DataListResponse<Movie>{
-        return movieApi.getMovieInGenre(language, apiKey, genreId)
+        return movieApi.getMovieInGenre(language, apiKey, genreId, page)
     }
 }
