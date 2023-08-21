@@ -40,7 +40,7 @@ fun CarouselItem(
         )
         Spacer(modifier = Modifier.height(8.dp))
         Text(
-            text = movieItem.movieName,
+            text = movieItem.movieName ?: "",
             style = MaterialTheme.typography.titleMedium,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis
@@ -48,13 +48,15 @@ fun CarouselItem(
         Spacer(modifier = Modifier.height(4.dp))
         RatingBar(
             starNumber = 5,
-            rating = movieItem.voteAverage / 10 * 5,
+            rating = movieItem.voteAverage?.also {
+                it / 10 * 5
+            } ?: 0f ,
             modifier = Modifier
                 .height(dimensionResource(id = R.dimen.star_height))
         )
         Spacer(modifier = Modifier.height(8.dp))
         Text(
-            text = movieItem.movieOverview,
+            text = movieItem.movieOverview ?: "",
             style = MaterialTheme.typography.bodyMedium,
             maxLines = 3,
             overflow = TextOverflow.Ellipsis

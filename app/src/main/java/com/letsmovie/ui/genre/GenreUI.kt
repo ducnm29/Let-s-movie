@@ -49,7 +49,7 @@ fun GenreUI(
             modifier = Modifier.padding(start = dimensionResource(id = R.dimen.spacer_horizontal0))
         )
         Text(
-            text = genre.name,
+            text = genre.name ?: "",
             fontSize = dimensionResource(id = R.dimen.genre_title).value.sp,
             maxLines = 1,
             overflow = TextOverflow.Clip,

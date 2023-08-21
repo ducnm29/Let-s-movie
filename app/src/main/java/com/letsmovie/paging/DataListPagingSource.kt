@@ -1,5 +1,6 @@
 package com.letsmovie.paging
 
+import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.letsmovie.model.Movie
@@ -31,6 +32,7 @@ class DataListPagingSource(
                 nextKey = currentPage + 1
             )
         } catch (ex: Exception) {
+            Log.w("ex", ex.stackTraceToString())
             LoadResult.Error(ex)
         }
     }

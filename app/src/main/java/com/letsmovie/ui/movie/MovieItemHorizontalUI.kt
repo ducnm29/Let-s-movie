@@ -54,7 +54,7 @@ fun MovieItemHorizontalUI(
             modifier = Modifier.weight(1f)
         ) {
             Text(
-                text = movie.movieName,
+                text = movie.movieName ?: "",
                 style = MaterialTheme.typography.titleMedium,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis

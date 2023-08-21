@@ -48,7 +48,7 @@ fun MovieItem(
         )
         Spacer(modifier = Modifier.height(8.dp))
         Text(
-            text = movie.movieName,
+            text = movie.movieName ?: "",
             style = MaterialTheme.typography.titleMedium,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis

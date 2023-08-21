@@ -12,4 +12,6 @@
     <string name="top_rated_title">Hàng đầu</string>
     <string name="up_coming_title">Sắp chiếu</string>
     <string name="search_title">Tìm kiếm</string>
+    <string name="loading_movie">Đang tải phim…</string>
+    <string name="common_retry">Thử lại</string>
 </resources>

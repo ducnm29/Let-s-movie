@@ -11,4 +11,6 @@
     <string name="top_rated_title">Top rated</string>
     <string name="up_coming_title">Up coming</string>
     <string name="search_title">Search</string>
+    <string name="loading_movie">Loading movie…</string>
+    <string name="common_retry">Retry</string>
 </resources>

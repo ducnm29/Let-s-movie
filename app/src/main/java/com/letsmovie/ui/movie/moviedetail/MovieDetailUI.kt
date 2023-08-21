@@ -115,7 +115,7 @@ fun MovieDetailBodyUI(
                     )
                 }
                 Text(
-                    text = movieResult.data.movieName,
+                    text = movieResult.data.movieName ?: "",
                     fontWeight = FontWeight.Medium,
                     fontSize = 22.sp,
                     modifier = Modifier
@@ -192,7 +192,7 @@ fun MovieDetailBodyUI(
                 textAlign = TextAlign.Start
             )
             Text(
-                text = movieResult.data.movieOverview,
+                text = movieResult.data.movieOverview ?: "",
                 style = MaterialTheme.typography.bodyLarge,
                 modifier = Modifier
                     .padding(
