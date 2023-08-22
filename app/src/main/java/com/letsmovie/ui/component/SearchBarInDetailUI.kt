@@ -1,12 +1,11 @@
 package com.letsmovie.ui.component
 
 import androidx.compose.foundation.clickable
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Card
@@ -22,10 +21,9 @@ import androidx.compose.ui.unit.dp
 import com.letsmovie.R
 
 @Composable
-fun SearchBarUI(
+fun SearchBarInDetailUI(
     modifier: Modifier = Modifier,
-    onClick: () -> Unit
-    //viewModel: MovieViewModel
+    onBackClick: () -> Unit
 ) {
     Card(
         shape = RoundedCornerShape(16.dp),
@@ -46,15 +44,22 @@ fun SearchBarUI(
             onValueChange = {},
             modifier = modifier
                 .height(56.dp)
-                .clickable(onClick = onClick),
+                .fillMaxWidth(),
             leadingIcon = {
                 Icon(
-                    imageVector = Icons.Default.Search,
-                    contentDescription = null
+                    imageVector = Icons.Default.ArrowBack,
+                    contentDescription = null,
+                    modifier = Modifier.clickable(onClick = onBackClick)
                 )
             },
             placeholder = {
                 Text(text = stringResource(id = R.string.search_title))
+            },
+            trailingIcon = {
+                Icon(
+                    imageVector = Icons.Default.Search,
+                    contentDescription = null
+                )
             }
 
         )

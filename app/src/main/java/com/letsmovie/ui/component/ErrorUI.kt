@@ -1,6 +1,6 @@
 package com.letsmovie.ui.component
 
-import androidx.annotation.StringRes
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -16,34 +16,30 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.paging.compose.LazyPagingItems
 import com.letsmovie.R
+import com.letsmovie.model.Result
 
 @Composable
-fun <T : Any> ErrorAndRetryItem(
+fun ErrorUI(
     modifier: Modifier = Modifier,
-    @StringRes errRes: Int,
-    @StringRes retryRes: Int,
-    pagingData: LazyPagingItems<T>
+    onRetry: () -> Unit,
+    result: Result.Error
 ) {
     Column(
         modifier = modifier
             .fillMaxSize()
-            .padding(top = dimensionResource(id = R.dimen.spacer_vertical1)),
+            .padding(top = dimensionResource(id = R.dimen.spacer_vertical2)),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Text(
-            text = stringResource(id = errRes),
-            style = MaterialTheme.typography.titleMedium
+            text = stringResource(id = R.string.common_error),
+            style = MaterialTheme.typography.titleSmall
         )
         Spacer(modifier = Modifier.height(8.dp))
-        OutlinedButton(onClick = { pagingData.retry() }) {
-            Text(
-                text = stringResource(id = retryRes),
-                style = MaterialTheme.typography.titleMedium
-            )
+        OutlinedButton(onClick = onRetry) {
+            Text(text = stringResource(id = R.string.common_retry))
         }
+        Log.e("ex", result.exception)
     }
-
 }

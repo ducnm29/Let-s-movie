@@ -25,7 +25,7 @@ fun TvUI(
         modifier = Modifier.verticalScroll(rememberScrollState())
     ) {
         HeaderUserInfoUI()
-        SearchBarUI()
+        SearchBarUI(onClick = {})
         ListItemWithData(
             result = trendingTvResult.value,
             modifier = modifier,

@@ -12,7 +12,9 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.letsmovie.ui.favourite.FavouriteUI
 import com.letsmovie.ui.movie.MovieUI
-import com.letsmovie.ui.movie.moveingenre.MovieInGenreUI
+import com.letsmovie.ui.movie.movebygenre.MovieByGenreUI
+import com.letsmovie.ui.movie.moviebysearch.MovieBySearchUI
+import com.letsmovie.ui.movie.moviebytype.MovieByTypeUI
 import com.letsmovie.ui.movie.moviedetail.MovieDetailUI
 import com.letsmovie.ui.setting.SettingUI
 import com.letsmovie.ui.tv.TvUI
@@ -41,6 +43,8 @@ fun NavGraphBuilder.movieGraph(navController: NavHostController) {
         startDestination = TopLevelDestination.MOVIE.startDestination,
         route = TopLevelDestination.MOVIE.route
     ) {
+
+        // Movie home screen
         composable(route = MovieDestination.route) {
             MovieUI(
                 movieViewModel = hiltViewModel(),
@@ -51,11 +55,23 @@ fun NavGraphBuilder.movieGraph(navController: NavHostController) {
                 },
                 onGenreClick = { genreId ->
                     navController.navigate(
-                        MovieInGenreDestination.createNavRoute(genreId)
+                        MovieByGenreDestination.createNavRoute(genreId)
+                    )
+                },
+                onMovieViewMoreClick = { movieType ->
+                    navController.navigate(
+                        MovieByTypeDestination.createNavRoute(movieType)
+                    )
+                },
+                onSearchBarClick = {
+                    navController.navigate(
+                        MovieBySearchDestination.createNavRoute()
                     )
                 }
             )
         }
+
+        // Movie detail screen
         composable(
             route = MovieDetailDestination.route,
             arguments = MovieDetailDestination.listArgument
@@ -68,16 +84,43 @@ fun NavGraphBuilder.movieGraph(navController: NavHostController) {
                 }
             )
         }
+
+        // Movie by genre screen
         composable(
-            route = MovieInGenreDestination.route,
-            arguments = MovieInGenreDestination.listArgument
+            route = MovieByGenreDestination.route,
+            arguments = MovieByGenreDestination.listArgument
         ) {
-            MovieInGenreUI(
-                movieInGenreViewModel = hiltViewModel(),
+            MovieByGenreUI(
+                movieByGenreViewModel = hiltViewModel(),
                 onMovieClick = { movieId ->
                     navController.navigate(MovieDetailDestination.createNavRoute(movieId))
+                },
+                onBackClick = {
+                    navController.popBackStack()
                 }
             )
+        }
+
+        // Movie by type screen
+        composable(
+            route = MovieByTypeDestination.route,
+            arguments = MovieByTypeDestination.listArgument
+        ){
+            MovieByTypeUI(
+                movieByTypeViewModel = hiltViewModel(),
+                onMovieClick = { movieId ->
+                  navController.navigate(MovieDetailDestination.createNavRoute(movieId))
+                },
+                onBackClick = {
+                    navController.popBackStack()
+                }
+            )
+        }
+
+        composable(
+            route = MovieBySearchDestination.route
+        ){
+            MovieBySearchUI()
         }
     }
 }

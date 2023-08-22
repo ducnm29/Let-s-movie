@@ -16,31 +16,21 @@ import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Card
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.lerp
-import coil.compose.AsyncImage
-import coil.request.ImageRequest
-import coil.size.Scale
 import com.letsmovie.R
 import com.letsmovie.model.DataListResponse
 import com.letsmovie.model.Movie
 import com.letsmovie.model.Result
-import com.letsmovie.model.Tv
-import com.letsmovie.util.Define
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlin.math.absoluteValue
@@ -117,7 +107,6 @@ fun <T : Any> ImageCarouselBody(
                             stop = 10.dp.toPx(),
                             fraction = pageOffset.coerceIn(0f, 1f)
                         )
-
                     }
             ) {
                 val currentItem = listData[index]

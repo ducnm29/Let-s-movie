@@ -17,7 +17,9 @@ class Define {
         const val MOVIE_HOME = "movie_home"
         const val TV_DETAIL_ROUTE = "tv_detail_route"
         const val TV_HOME = "tv_home"
-        const val MOVIE_IN_GENRE_ROUTE = "movie_in_genre_route"
+        const val MOVIE_BY_GENRE_ROUTE = "movie_by_genre_route"
+        const val MOVIE_BY_TYPE_ROUTE = "movie_by_type_route"
+        const val MOVIE_BY_SEARCH_ROUTE = "movie_by_search_route"
 
         /**
          * Name constant for navigation
@@ -43,6 +45,8 @@ class Define {
         const val ERROR_TAG = "error_tag"
         const val MAX_PAGING_SIZE = 5
         const val PREFETCH_DISTANCE = 2
+        const val TOP_RATED_MOVIE = "TopRatedMovie"
+        const val UP_COMING_MOVIE = "UpComingMovie"
 
         /**
          * Movie object sample

@@ -109,7 +109,7 @@ class MovieViewModel @Inject constructor(
         }
     }
 
-    private fun refreshData() {
+    fun refreshData() {
         getTrendingMovie(Define.LANGUAGE_DEFAULT, Define.API_KEY)
         getPopularMovie(Define.LANGUAGE_DEFAULT, Define.API_KEY)
         getTopRatedMovie(Define.LANGUAGE_DEFAULT, Define.API_KEY)

@@ -1,4 +1,4 @@
-package com.letsmovie.ui.movie.moveingenre
+package com.letsmovie.ui.movie.movebygenre
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -32,22 +32,23 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import com.letsmovie.R
 import com.letsmovie.model.Movie
 import com.letsmovie.ui.component.ErrorAndRetryItem
-import com.letsmovie.ui.component.SearchBarUI
+import com.letsmovie.ui.component.SearchBarInDetailUI
 import com.letsmovie.ui.movie.MovieItem
 import com.letsmovie.util.Define
 import kotlinx.coroutines.launch
 
 @Composable
-fun MovieInGenreUI(
+fun MovieByGenreUI(
     modifier: Modifier = Modifier,
-    movieInGenreViewModel: MovieInGenreViewModel,
-    onMovieClick: (String) -> Unit
+    movieByGenreViewModel: MovieByGenreViewModel,
+    onMovieClick: (String) -> Unit,
+    onBackClick: () -> Unit
 ) {
     val listState = rememberLazyGridState()
-    val moviePaging = movieInGenreViewModel.movieInGenre.collectAsLazyPagingItems()
+    val moviePaging = movieByGenreViewModel.movieInGenre.collectAsLazyPagingItems()
     val scope = rememberCoroutineScope()
 
-    BodyMovieInGenreUI(
+    BodyMovieByGenreUI(
         modifier = modifier,
         state = listState,
         onMovieClick = onMovieClick,
@@ -56,17 +57,19 @@ fun MovieInGenreUI(
             scope.launch {
                 listState.animateScrollToItem(0, 0)
             }
-        }
+        },
+        onBackClick = onBackClick
     )
 }
 
 @Composable
-fun BodyMovieInGenreUI(
+fun BodyMovieByGenreUI(
     modifier: Modifier,
     onMovieClick: (String) -> Unit,
     movieList: LazyPagingItems<Movie>,
     state: LazyGridState = rememberLazyGridState(),
-    onFABClick: () -> Unit
+    onFABClick: () -> Unit,
+    onBackClick: () -> Unit
 ) {
     Box(
         modifier = modifier.padding(top = dimensionResource(id = R.dimen.spacer_vertical2))
@@ -83,8 +86,10 @@ fun BodyMovieInGenreUI(
 
         ) {
             //Search Bar section
-            item(span = { GridItemSpan(5) }) {
-                SearchBarUI()
+            item(span = { GridItemSpan(maxLineSpan) }) {
+                SearchBarInDetailUI(
+                    onBackClick = onBackClick
+                )
             }
             //List movie section
             items(
@@ -100,7 +105,7 @@ fun BodyMovieInGenreUI(
             when (movieList.loadState.refresh) {
                 is LoadState.Error -> {
                     item(
-                        span = { GridItemSpan(5) }
+                        span = { GridItemSpan(maxLineSpan) }
                     ) {
                         ErrorAndRetryItem(
                             errRes = R.string.common_error,
@@ -112,7 +117,7 @@ fun BodyMovieInGenreUI(
 
                 is LoadState.Loading -> { // Loading UI
                     item(
-                        span = { GridItemSpan(5) }
+                        span = { GridItemSpan(maxLineSpan) }
                     ) {
                         Column(
                             modifier = Modifier.fillMaxSize(),
@@ -127,6 +132,7 @@ fun BodyMovieInGenreUI(
                         }
                     }
                 }
+
                 else -> {}
             }
 
@@ -134,7 +140,7 @@ fun BodyMovieInGenreUI(
             when (movieList.loadState.append) {
                 is LoadState.Error -> {
                     item(
-                        span = { GridItemSpan(5) }
+                        span = { GridItemSpan(maxLineSpan) }
                     ) {
                         ErrorAndRetryItem(
                             errRes = R.string.common_error,
@@ -146,7 +152,7 @@ fun BodyMovieInGenreUI(
 
                 is LoadState.Loading -> { // Pagination Loading UI
                     item(
-                        span = { GridItemSpan(5) }
+                        span = { GridItemSpan(maxLineSpan) }
                     ) {
                         Column(
                             modifier = Modifier.fillMaxWidth(),

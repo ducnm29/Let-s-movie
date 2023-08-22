@@ -23,7 +23,8 @@ import com.letsmovie.ui.genre.GenreUI
 fun ListGenreUI(
     modifier: Modifier = Modifier,
     listGenreResult: Result<DataGenreResponse>,
-    onGenreClick: (String) -> Unit
+    onGenreClick: (String) -> Unit,
+    onRetry: () -> Unit
 ) {
     when (listGenreResult) {
         is Result.Loading -> {
@@ -31,7 +32,11 @@ fun ListGenreUI(
         }
 
         is Result.Error -> {
-
+            ErrorUI(
+                modifier = modifier,
+                onRetry = onRetry,
+                result = listGenreResult
+            )
         }
 
         is Result.Success -> {

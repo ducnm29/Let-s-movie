@@ -27,10 +27,22 @@ interface MovieRepository {
         apiKey: String
     ): Flow<Result<DataListResponse<Movie>>>
 
+    suspend fun getTopRatedMovie(
+        language: String,
+        apiKey: String,
+        page: Int
+    ): DataListResponse<Movie>
+
     fun getUpComingMovie(
         language: String,
         apiKey: String
     ): Flow<Result<DataListResponse<Movie>>>
+
+    suspend fun getUpComingMovie(
+        language: String,
+        apiKey: String,
+        page: Int
+    ): DataListResponse<Movie>
 
     suspend fun getMovieInGenre(
         language: String,

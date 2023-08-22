@@ -23,6 +23,7 @@ import com.letsmovie.ui.component.ImageCarousel
 import com.letsmovie.ui.component.ListGenreUI
 import com.letsmovie.ui.component.ListItemWithData
 import com.letsmovie.ui.component.SearchBarUI
+import com.letsmovie.util.Define
 
 //@OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -30,7 +31,9 @@ fun MovieUI(
     modifier: Modifier = Modifier,
     movieViewModel: MovieViewModel,
     onMovieClickDetail: (String) -> Unit,
-    onGenreClick: (String) -> Unit
+    onGenreClick: (String) -> Unit,
+    onMovieViewMoreClick: (String) -> Unit,
+    onSearchBarClick: () -> Unit
 ) {
     val trendingMovieResult = movieViewModel.trendingMovieStateFlow.collectAsState()
     val popularMovieResult = movieViewModel.popularMovieStateFlow.collectAsState()
@@ -60,14 +63,19 @@ fun MovieUI(
 //                modifier = Modifier.align(Alignment.CenterHorizontally)
 //            )
             HeaderUserInfoUI()
-            SearchBarUI()
+            SearchBarUI(
+                onClick = onSearchBarClick
+            )
             ImageCarousel(
                 result = topRatedMovieResult.value,
                 onClick = onMovieClickDetail
             )
             ListGenreUI(
                 listGenreResult = movieGenreList.value,
-                onGenreClick = onGenreClick
+                onGenreClick = onGenreClick,
+                onRetry = {
+                    movieViewModel.refreshData()
+                }
             )
             ListItemWithData(
                 result = trendingMovieResult.value,
@@ -84,12 +92,18 @@ fun MovieUI(
             ListMovieDetailUI(
                 categoryType = stringResource(id = R.string.top_rated_title),
                 listMovieResult = topRatedMovieResult.value,
-                onclick = onMovieClickDetail
+                onclick = onMovieClickDetail,
+                onViewMoreClick = {
+                    onMovieViewMoreClick(Define.TOP_RATED_MOVIE)
+                }
             )
             ListMovieDetailUI(
                 categoryType = stringResource(id = R.string.up_coming_title),
                 listMovieResult = upComingMovieResult.value,
-                onclick = onMovieClickDetail
+                onclick = onMovieClickDetail,
+                onViewMoreClick = {
+                    onMovieViewMoreClick(Define.UP_COMING_MOVIE)
+                }
             )
             Spacer(modifier = Modifier.size(dimensionResource(id = R.dimen.spacer_vertical1)))
         }

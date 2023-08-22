@@ -24,7 +24,8 @@ fun ListMovieDetailUI(
     modifier: Modifier = Modifier,
     categoryType: String,
     listMovieResult: Result<DataListResponse<Movie>>,
-    onclick: (String) -> Unit
+    onclick: (String) -> Unit,
+    onViewMoreClick: () -> Unit
 ) {
     when (listMovieResult) {
         is Result.Loading -> {
@@ -58,7 +59,7 @@ fun ListMovieDetailUI(
                     )
                 }
                 OutlinedButton(
-                    onClick = { /*TODO*/ },
+                    onClick = onViewMoreClick,
                     modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(5.dp)
                 ) {

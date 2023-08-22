@@ -6,7 +6,7 @@ import androidx.paging.PagingState
 import com.letsmovie.model.Movie
 import com.letsmovie.repository.MovieRepository
 
-class DataListPagingSource(
+class MovieByGenrePagingSource(
     private val movieRepository: MovieRepository,
     private val apiKey: String,
     private val genreId: String,

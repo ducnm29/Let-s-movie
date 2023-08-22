@@ -64,6 +64,14 @@ class MovieRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun getTopRatedMovie(
+        language: String,
+        apiKey: String,
+        page: Int
+    ): DataListResponse<Movie> {
+        return movieApi.getTopRatedMovie(language, apiKey, page)
+    }
+
     override fun getUpComingMovie(
         language: String,
         apiKey: String
@@ -75,6 +83,14 @@ class MovieRepositoryImpl @Inject constructor(
         }.catch {
             emit(Result.Error(it.toString()))
         }
+    }
+
+    override suspend fun getUpComingMovie(
+        language: String,
+        apiKey: String,
+        page: Int
+    ): DataListResponse<Movie> {
+        return movieApi.getUpComingMovie(language, apiKey, page)
     }
 
     override suspend fun getMovieInGenre(

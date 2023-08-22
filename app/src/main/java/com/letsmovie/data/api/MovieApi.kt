@@ -32,10 +32,24 @@ interface MovieApi {
         @Query("api_key") apiKey: String
     ): DataListResponse<Movie>
 
+    @GET("movie/top_rated")
+    suspend fun getTopRatedMovie(
+        @Query("language") language: String,
+        @Query("api_key") apiKey: String,
+        @Query("page") page: Int
+    ): DataListResponse<Movie>
+
     @GET("movie/upcoming")
     suspend fun getUpComingMovie(
         @Query("language") language: String,
         @Query("api_key") apiKey: String
+    ): DataListResponse<Movie>
+
+    @GET("movie/upcoming")
+    suspend fun getUpComingMovie(
+        @Query("language") language: String,
+        @Query("api_key") apiKey: String,
+        @Query("page") page: Int
     ): DataListResponse<Movie>
 
     @GET("discover/movie")
@@ -44,5 +58,14 @@ interface MovieApi {
         @Query("api_key") apiKey: String,
         @Query("with_genres") genreId: String,
         @Query("page") page: Int
+    ): DataListResponse<Movie>
+
+    @GET("search/movie")
+    suspend fun getSearchMovie(
+        @Query("language") language: String,
+        @Query("api_key") apiKey: String,
+        @Query("include_adult") includeAdult: Boolean,
+        @Query("page") page: Int,
+        @Query("query") query: String
     ): DataListResponse<Movie>
 }

@@ -1,4 +1,4 @@
-package com.letsmovie.ui.movie.moveingenre
+package com.letsmovie.ui.movie.movebygenre
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -8,9 +8,9 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.letsmovie.model.Movie
-import com.letsmovie.paging.DataListPagingSource
+import com.letsmovie.paging.MovieByGenrePagingSource
 import com.letsmovie.repository.MovieRepository
-import com.letsmovie.ui.navigation.MovieInGenreDestination
+import com.letsmovie.ui.navigation.MovieByGenreDestination
 import com.letsmovie.util.Define
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -21,12 +21,12 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MovieInGenreViewModel @Inject constructor(
+class MovieByGenreViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val movieRepository: MovieRepository,
 ) : ViewModel() {
 
-    private val genreId: String = savedStateHandle[MovieInGenreDestination.genreIDArg] ?: ""
+    private val genreId: String = savedStateHandle[MovieByGenreDestination.genreIDArg] ?: ""
 
     private val _movieInGenre: MutableStateFlow<PagingData<Movie>> =
         MutableStateFlow(PagingData.empty())
@@ -45,7 +45,7 @@ class MovieInGenreViewModel @Inject constructor(
             Pager(
                 config = PagingConfig(pageSize = Define.MAX_PAGING_SIZE),
                 pagingSourceFactory = {
-                    DataListPagingSource(
+                    MovieByGenrePagingSource(
                         movieRepository = movieRepository,
                         language = language,
                         apiKey = apiKey,
