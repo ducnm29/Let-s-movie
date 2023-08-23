@@ -23,6 +23,8 @@ import com.letsmovie.R
 @Composable
 fun SearchBarInDetailUI(
     modifier: Modifier = Modifier,
+    searchKeywordValue: String,
+    onValueChange: (String) -> Unit,
     onBackClick: () -> Unit
 ) {
     Card(
@@ -40,8 +42,8 @@ fun SearchBarInDetailUI(
                 unfocusedIndicatorColor = Color.Transparent,
                 disabledIndicatorColor = Color.Transparent
             ),
-            value = "",
-            onValueChange = {},
+            value = searchKeywordValue,
+            onValueChange = onValueChange,
             modifier = modifier
                 .height(56.dp)
                 .fillMaxWidth(),

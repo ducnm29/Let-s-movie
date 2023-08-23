@@ -28,7 +28,7 @@ import com.letsmovie.model.Genre
 fun GenreUI(
     modifier: Modifier = Modifier,
     genre: Genre,
-    onGenreClick: (String) -> Unit
+    onGenreClick: (String, String) -> Unit
 ) {
     //val listColors = listOf(MaterialTheme.colorScheme.primary, MaterialTheme.colorScheme.)
     Row(
@@ -38,7 +38,7 @@ fun GenreUI(
             .clip(MaterialTheme.shapes.small)
             .background(MaterialTheme.colorScheme.tertiary)
             .clickable {
-                onGenreClick(genre.id)
+                onGenreClick(genre.id, genre.name ?: "")
             },
         horizontalArrangement = Arrangement.Start,
         verticalAlignment = Alignment.CenterVertically
@@ -52,6 +52,7 @@ fun GenreUI(
             text = genre.name ?: "",
             fontSize = dimensionResource(id = R.dimen.genre_title).value.sp,
             maxLines = 1,
+            color = MaterialTheme.colorScheme.onTertiary,
             overflow = TextOverflow.Clip,
             modifier = Modifier.padding(start = 6.dp)
         )
@@ -61,5 +62,5 @@ fun GenreUI(
 @Preview
 @Composable
 fun PreviewGenre() {
-    GenreUI(Modifier, Genre("1", "Detective"), {})
+    GenreUI(Modifier, Genre("1", "Detective"), {t,h->})
 }

@@ -19,12 +19,7 @@ fun <T : Any> ListItemWithData(
 ) {
     when (result) {
         is Result.Loading -> {
-            Box(
-                modifier = modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center
-            ) {
-                CircularProgressIndicator()
-            }
+
         }
 
         is Result.Success -> {

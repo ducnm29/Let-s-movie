@@ -1,7 +1,6 @@
 package com.letsmovie.ui.movie.movebygenre
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -13,11 +12,14 @@ import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowDownward
 import androidx.compose.material.icons.filled.ArrowUpward
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
@@ -40,6 +42,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun MovieByGenreUI(
     modifier: Modifier = Modifier,
+    genreName: String,
     movieByGenreViewModel: MovieByGenreViewModel,
     onMovieClick: (String) -> Unit,
     onBackClick: () -> Unit
@@ -48,18 +51,35 @@ fun MovieByGenreUI(
     val moviePaging = movieByGenreViewModel.movieInGenre.collectAsLazyPagingItems()
     val scope = rememberCoroutineScope()
 
-    BodyMovieByGenreUI(
-        modifier = modifier,
-        state = listState,
-        onMovieClick = onMovieClick,
-        movieList = moviePaging,
-        onFABClick = {
-            scope.launch {
-                listState.animateScrollToItem(0, 0)
+    Scaffold(
+        floatingActionButton = {
+            FloatingActionButton(
+                onClick = {
+                    scope.launch {
+                        listState.animateScrollToItem(0, 0)
+                    }
+                },
+            ) {
+                if(listState.canScrollBackward){
+                    Icon(Icons.Filled.ArrowUpward, "Animate to start of page")
+                } else {
+                    Text(text = genreName)
+                }
+
             }
-        },
-        onBackClick = onBackClick
-    )
+        }
+    ) { innerPadding ->
+        BodyMovieByGenreUI(
+            modifier = modifier.padding(
+                top = innerPadding.calculateTopPadding()
+            ),
+            state = listState,
+            onMovieClick = onMovieClick,
+            movieList = moviePaging,
+            onBackClick = onBackClick
+        )
+    }
+
 }
 
 @Composable
@@ -68,12 +88,16 @@ fun BodyMovieByGenreUI(
     onMovieClick: (String) -> Unit,
     movieList: LazyPagingItems<Movie>,
     state: LazyGridState = rememberLazyGridState(),
-    onFABClick: () -> Unit,
     onBackClick: () -> Unit
 ) {
-    Box(
-        modifier = modifier.padding(top = dimensionResource(id = R.dimen.spacer_vertical2))
+    Column(
+        modifier = modifier
     ) {
+        SearchBarInDetailUI(
+            onBackClick = onBackClick,
+            searchKeywordValue = "",
+            onValueChange = {},
+        )
         LazyVerticalGrid(
             columns = GridCells.Adaptive(120.dp),
             state = state,
@@ -85,12 +109,6 @@ fun BodyMovieByGenreUI(
             )
 
         ) {
-            //Search Bar section
-            item(span = { GridItemSpan(maxLineSpan) }) {
-                SearchBarInDetailUI(
-                    onBackClick = onBackClick
-                )
-            }
             //List movie section
             items(
                 movieList.itemCount
@@ -168,16 +186,6 @@ fun BodyMovieByGenreUI(
 
                 else -> {}
             }
-        }
-        FloatingActionButton(
-            modifier = Modifier
-                .align(
-                    Alignment.BottomEnd
-                )
-                .padding(dimensionResource(id = R.dimen.spacer_vertical1)),
-            onClick = onFABClick,
-        ) {
-            Icon(Icons.Filled.ArrowUpward, "Animate to start of page")
         }
     }
 }

@@ -64,7 +64,7 @@ fun CarouselItem(
         Text(
             text = movieItem.movieOverview ?: "",
             style = MaterialTheme.typography.bodyMedium,
-            maxLines = 3,
+            maxLines = 2,
             overflow = TextOverflow.Ellipsis
         )
     }

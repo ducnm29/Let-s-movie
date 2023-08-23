@@ -14,7 +14,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.letsmovie.R
@@ -27,7 +29,7 @@ fun HeaderUserInfoUI(
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .height(156.dp),
+            .height(100.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Column(
@@ -36,13 +38,13 @@ fun HeaderUserInfoUI(
                 .padding(start = 16.dp)
         ) {
             Text(
-                text = Define.HEADER_HELLO,
-                fontSize = 23.sp,
+                text = stringResource(id = R.string.header_1),
+                fontSize = 20.sp,
                 fontWeight = FontWeight.Bold
             )
             Text(
-                text = Define.HEADER_1,
-                fontSize = 18.sp,
+                text = stringResource(id = R.string.header_2),
+                fontSize = 16.sp,
                 fontWeight = FontWeight.Light
             )
         }
@@ -51,8 +53,13 @@ fun HeaderUserInfoUI(
             contentDescription = null,
             modifier = Modifier
                 .padding(end = 16.dp)
-                .size(56.dp)
+                .size(48.dp)
                 .clip(CircleShape),
         )
     }
+}
+@Preview
+@Composable
+fun HeaderPreview() {
+    HeaderUserInfoUI()
 }

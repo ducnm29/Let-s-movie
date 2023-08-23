@@ -31,7 +31,7 @@ fun MovieUI(
     modifier: Modifier = Modifier,
     movieViewModel: MovieViewModel,
     onMovieClickDetail: (String) -> Unit,
-    onGenreClick: (String) -> Unit,
+    onGenreClick: (String, String) -> Unit,
     onMovieViewMoreClick: (String) -> Unit,
     onSearchBarClick: () -> Unit
 ) {
@@ -52,7 +52,7 @@ fun MovieUI(
 //                enabled = true
 //            )
             .fillMaxSize(),
-        contentAlignment = Alignment.TopCenter
+        //contentAlignment = Alignment.TopCenter
     ) {
         Column(
             modifier = Modifier.verticalScroll(state = rememberScrollState())

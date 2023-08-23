@@ -50,4 +50,12 @@ interface MovieRepository {
         genreId: String,
         page: Int
     ): DataListResponse<Movie>
+
+    suspend fun getSearchMovie(
+        language: String,
+        apiKey: String,
+        includeAdult: Boolean,
+        searchKey: String,
+        page: Int
+    ) : DataListResponse<Movie>
 }

@@ -53,9 +53,9 @@ fun NavGraphBuilder.movieGraph(navController: NavHostController) {
                         MovieDetailDestination.createNavRoute(movieId)
                     )
                 },
-                onGenreClick = { genreId ->
+                onGenreClick = { genreId, genreName ->
                     navController.navigate(
-                        MovieByGenreDestination.createNavRoute(genreId)
+                        MovieByGenreDestination.createNavRoute(genreId, genreName)
                     )
                 },
                 onMovieViewMoreClick = { movieType ->
@@ -89,9 +89,11 @@ fun NavGraphBuilder.movieGraph(navController: NavHostController) {
         composable(
             route = MovieByGenreDestination.route,
             arguments = MovieByGenreDestination.listArgument
-        ) {
+        ) { backStackEntry ->
             MovieByGenreUI(
                 movieByGenreViewModel = hiltViewModel(),
+                genreName = backStackEntry.arguments?.getString(MovieByGenreDestination.genreNameArg)
+                    ?: "",
                 onMovieClick = { movieId ->
                     navController.navigate(MovieDetailDestination.createNavRoute(movieId))
                 },
@@ -105,11 +107,11 @@ fun NavGraphBuilder.movieGraph(navController: NavHostController) {
         composable(
             route = MovieByTypeDestination.route,
             arguments = MovieByTypeDestination.listArgument
-        ){
+        ) {
             MovieByTypeUI(
                 movieByTypeViewModel = hiltViewModel(),
                 onMovieClick = { movieId ->
-                  navController.navigate(MovieDetailDestination.createNavRoute(movieId))
+                    navController.navigate(MovieDetailDestination.createNavRoute(movieId))
                 },
                 onBackClick = {
                     navController.popBackStack()
@@ -119,8 +121,16 @@ fun NavGraphBuilder.movieGraph(navController: NavHostController) {
 
         composable(
             route = MovieBySearchDestination.route
-        ){
-            MovieBySearchUI()
+        ) {
+            MovieBySearchUI(
+                movieBySearchViewModel = hiltViewModel(),
+                onBackClick = {
+                    navController.popBackStack()
+                },
+                onMovieDetailClick = { movieId ->
+                    navController.navigate(MovieDetailDestination.createNavRoute(movieId))
+                }
+            )
         }
     }
 }

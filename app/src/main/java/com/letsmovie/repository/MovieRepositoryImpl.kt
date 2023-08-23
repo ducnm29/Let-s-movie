@@ -101,4 +101,14 @@ class MovieRepositoryImpl @Inject constructor(
     ): DataListResponse<Movie>{
         return movieApi.getMovieInGenre(language, apiKey, genreId, page)
     }
+
+    override suspend fun getSearchMovie(
+        language: String,
+        apiKey: String,
+        includeAdult: Boolean,
+        searchKey: String,
+        page: Int
+    ): DataListResponse<Movie> {
+        return movieApi.getSearchMovie(language, apiKey, includeAdult, page, searchKey)
+    }
 }

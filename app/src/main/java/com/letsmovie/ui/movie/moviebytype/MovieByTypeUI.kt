@@ -48,7 +48,7 @@ fun MovieByTypeUI(
     val moviePaging = movieByTypeViewModel.movieByTypeStateFlow.collectAsLazyPagingItems()
     val scope = rememberCoroutineScope()
 
-    com.letsmovie.ui.movie.movebygenre.BodyMovieByGenreUI(
+    BodyMovieByGenreUI(
         modifier = modifier,
         state = listState,
         onMovieClick = onMovieClick,
@@ -88,7 +88,9 @@ fun BodyMovieByGenreUI(
             //Search Bar section
             item(span = { GridItemSpan(maxLineSpan) }) {
                 SearchBarInDetailUI(
-                    onBackClick = onBackClick
+                    onBackClick = onBackClick,
+                    searchKeywordValue = "",
+                    onValueChange = {}
                 )
             }
             //List movie section

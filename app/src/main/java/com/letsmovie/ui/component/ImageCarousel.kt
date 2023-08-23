@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -24,10 +25,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.lerp
-import com.letsmovie.R
 import com.letsmovie.model.DataListResponse
 import com.letsmovie.model.Movie
 import com.letsmovie.model.Result
@@ -80,23 +79,20 @@ fun <T : Any> ImageCarouselBody(
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(top = dimensionResource(id = R.dimen.spacer_vertical3))
     ) {
         HorizontalPager(
             pageCount = itemNumber,
             state = pagerState,
             pageSpacing = 10.dp,
             beyondBoundsPageCount = 2,
-            contentPadding = PaddingValues(25.dp)
+            contentPadding = PaddingValues(16.dp)
         ) { index ->
             Surface(
                 shape = RoundedCornerShape(10.dp),
                 modifier = Modifier
                     .graphicsLayer {
-                        val pageOffset = (
-                                (pagerState.currentPage - index) + pagerState
-                                    .currentPageOffsetFraction
-                                ).absoluteValue
+                        val pageOffset = ((pagerState.currentPage - index) + pagerState
+                            .currentPageOffsetFraction).absoluteValue
                         alpha = lerp(
                             start = 0.4f,
                             stop = 1f,
@@ -118,7 +114,7 @@ fun <T : Any> ImageCarouselBody(
         }
         Row(
             modifier = Modifier
-                .height(20.dp)
+                .height(10.dp)
                 .fillMaxWidth(),
             horizontalArrangement = Arrangement.Center
         ) {
@@ -126,7 +122,8 @@ fun <T : Any> ImageCarouselBody(
                 val color = if (pagerState.currentPage == index) Color.DarkGray else Color.LightGray
                 Box(
                     modifier = Modifier
-                        .padding(2.dp)
+                        .fillMaxHeight()
+                        .padding(start = 2.dp)
                         .clip(CircleShape)
                         .background(color)
                         .size(10.dp)
