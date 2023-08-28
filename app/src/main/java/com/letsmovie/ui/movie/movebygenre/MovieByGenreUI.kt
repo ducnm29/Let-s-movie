@@ -1,5 +1,6 @@
 package com.letsmovie.ui.movie.movebygenre
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -22,6 +23,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -60,10 +63,18 @@ fun MovieByGenreUI(
                     }
                 },
             ) {
-                if(listState.canScrollBackward){
+                // Button scroll to header
+                AnimatedVisibility(visible = listState.canScrollBackward) {
                     Icon(Icons.Filled.ArrowUpward, "Animate to start of page")
-                } else {
-                    Text(text = genreName)
+                }
+                AnimatedVisibility(visible = !listState.canScrollBackward) {
+                    Text(
+                        text = genreName,
+                        modifier = Modifier.padding(
+                            start = dimensionResource(id = R.dimen.spacer_horizontal2),
+                            end = dimensionResource(id = R.dimen.spacer_horizontal2)
+                        )
+                    )
                 }
 
             }

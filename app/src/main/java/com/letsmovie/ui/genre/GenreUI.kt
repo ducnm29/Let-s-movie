@@ -46,7 +46,8 @@ fun GenreUI(
         Icon(
             imageVector = Icons.Default.Category,
             contentDescription = null,
-            modifier = Modifier.padding(start = dimensionResource(id = R.dimen.spacer_horizontal0))
+            modifier = Modifier.padding(start = dimensionResource(id = R.dimen.spacer_horizontal0)),
+            tint =  MaterialTheme.colorScheme.onTertiary
         )
         Text(
             text = genre.name ?: "",

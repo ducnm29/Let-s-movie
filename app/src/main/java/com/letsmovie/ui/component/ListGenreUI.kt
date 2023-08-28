@@ -25,30 +25,20 @@ fun ListGenreUI(
     modifier: Modifier = Modifier,
     listGenreResult: Result<DataGenreResponse>,
     onGenreClick: (String, String) -> Unit,
-    onRetry: () -> Unit
 ) {
     when (listGenreResult) {
         is Result.Loading -> {
-            Box(
-                modifier = modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center
-            ) {
-                CircularProgressIndicator()
-            }
+
         }
 
         is Result.Error -> {
-            ErrorUI(
-                modifier = modifier,
-                onRetry = onRetry,
-                result = listGenreResult
-            )
+
         }
 
         is Result.Success -> {
             Box(
                 modifier = modifier
-                    .padding(top = dimensionResource(id = R.dimen.spacer_vertical2))
+                    .padding(top = dimensionResource(id = R.dimen.spacer_vertical3))
                     .height(96.dp)
             ) {
                 LazyHorizontalGrid(

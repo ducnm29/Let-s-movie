@@ -45,8 +45,8 @@ class Define {
         const val ERROR_TAG = "error_tag"
         const val MAX_PAGING_SIZE = 5
         const val PREFETCH_DISTANCE = 2
-        const val TOP_RATED_MOVIE = "TopRatedMovie"
-        const val UP_COMING_MOVIE = "UpComingMovie"
+        const val TOP_RATED_MOVIE = "Top Rated"
+        const val UP_COMING_MOVIE = "Up Coming"
 
         /**
          * Movie object sample

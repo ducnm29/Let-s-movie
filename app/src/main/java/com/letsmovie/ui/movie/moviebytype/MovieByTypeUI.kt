@@ -1,5 +1,6 @@
 package com.letsmovie.ui.movie.moviebytype
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -18,6 +19,7 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
@@ -34,12 +36,14 @@ import com.letsmovie.model.Movie
 import com.letsmovie.ui.component.ErrorAndRetryItem
 import com.letsmovie.ui.component.SearchBarInDetailUI
 import com.letsmovie.ui.movie.MovieItem
+import com.letsmovie.ui.movie.movebygenre.BodyMovieByGenreUI
 import com.letsmovie.util.Define
 import kotlinx.coroutines.launch
 
 @Composable
 fun MovieByTypeUI(
     modifier: Modifier = Modifier,
+    typeName: String,
     movieByTypeViewModel: MovieByTypeViewModel,
     onMovieClick: (String) -> Unit,
     onBackClick: () -> Unit
@@ -48,32 +52,60 @@ fun MovieByTypeUI(
     val moviePaging = movieByTypeViewModel.movieByTypeStateFlow.collectAsLazyPagingItems()
     val scope = rememberCoroutineScope()
 
-    BodyMovieByGenreUI(
-        modifier = modifier,
-        state = listState,
-        onMovieClick = onMovieClick,
-        movieList = moviePaging,
-        onFABClick = {
-            scope.launch {
-                listState.animateScrollToItem(0, 0)
+    Scaffold(
+        floatingActionButton = {
+            FloatingActionButton(
+                onClick = {
+                    scope.launch {
+                        listState.animateScrollToItem(0, 0)
+                    }
+                },
+            ) {
+                // Button scroll to header
+                AnimatedVisibility(visible = listState.canScrollBackward) {
+                    Icon(Icons.Filled.ArrowUpward, "Animate to start of page")
+                }
+                AnimatedVisibility(visible = !listState.canScrollBackward) {
+                    Text(
+                        text = typeName,
+                        modifier = Modifier.padding(
+                            start = dimensionResource(id = R.dimen.spacer_horizontal2),
+                            end = dimensionResource(id = R.dimen.spacer_horizontal2)
+                        )
+                    )
+                }
+
             }
-        },
-        onBackClick = onBackClick
-    )
+        }
+    ) { innerPadding ->
+        BodyMovieByTypeUI(
+            modifier = modifier.padding(
+                top = innerPadding.calculateTopPadding()
+            ),
+            state = listState,
+            onMovieClick = onMovieClick,
+            movieList = moviePaging,
+            onBackClick = onBackClick
+        )
+    }
 }
 
 @Composable
-fun BodyMovieByGenreUI(
+fun BodyMovieByTypeUI(
     modifier: Modifier,
     onMovieClick: (String) -> Unit,
     movieList: LazyPagingItems<Movie>,
     state: LazyGridState = rememberLazyGridState(),
-    onFABClick: () -> Unit,
     onBackClick: () -> Unit
 ) {
-    Box(
-        modifier = modifier.padding(top = dimensionResource(id = R.dimen.spacer_vertical2))
+    Column(
+        modifier = modifier
     ) {
+        SearchBarInDetailUI(
+            onBackClick = onBackClick,
+            searchKeywordValue = "",
+            onValueChange = {},
+        )
         LazyVerticalGrid(
             columns = GridCells.Adaptive(120.dp),
             state = state,
@@ -85,14 +117,6 @@ fun BodyMovieByGenreUI(
             )
 
         ) {
-            //Search Bar section
-            item(span = { GridItemSpan(maxLineSpan) }) {
-                SearchBarInDetailUI(
-                    onBackClick = onBackClick,
-                    searchKeywordValue = "",
-                    onValueChange = {}
-                )
-            }
             //List movie section
             items(
                 movieList.itemCount
@@ -170,16 +194,6 @@ fun BodyMovieByGenreUI(
 
                 else -> {}
             }
-        }
-        FloatingActionButton(
-            modifier = Modifier
-                .align(
-                    Alignment.BottomEnd
-                )
-                .padding(dimensionResource(id = R.dimen.spacer_vertical1)),
-            onClick = onFABClick,
-        ) {
-            Icon(Icons.Filled.ArrowUpward, "Animate to start of page")
         }
     }
 }

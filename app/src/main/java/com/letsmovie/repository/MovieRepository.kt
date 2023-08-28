@@ -58,4 +58,10 @@ interface MovieRepository {
         searchKey: String,
         page: Int
     ) : DataListResponse<Movie>
+
+    fun getNowPlayingMovie(
+        language: String,
+        apiKey: String,
+        page: Int
+    ): Flow<Result<DataListResponse<Movie>>>
 }

@@ -107,9 +107,11 @@ fun NavGraphBuilder.movieGraph(navController: NavHostController) {
         composable(
             route = MovieByTypeDestination.route,
             arguments = MovieByTypeDestination.listArgument
-        ) {
+        ) { backStackEntry ->
             MovieByTypeUI(
                 movieByTypeViewModel = hiltViewModel(),
+                typeName = backStackEntry.arguments?.getString(MovieByTypeDestination.movieType)
+                    ?: "",
                 onMovieClick = { movieId ->
                     navController.navigate(MovieDetailDestination.createNavRoute(movieId))
                 },

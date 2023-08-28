@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
@@ -18,6 +19,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import com.letsmovie.R
+import com.letsmovie.model.Result
+import com.letsmovie.ui.component.ErrorUI
 import com.letsmovie.ui.component.HeaderUserInfoUI
 import com.letsmovie.ui.component.ImageCarousel
 import com.letsmovie.ui.component.ListGenreUI
@@ -40,73 +43,84 @@ fun MovieUI(
     val topRatedMovieResult = movieViewModel.topRatedMovieStateFlow.collectAsState()
     val upComingMovieResult = movieViewModel.upComingMovie.collectAsState()
     val movieGenreList = movieViewModel.movieGenre.collectAsState()
+    val nowPlayingMovieResult = movieViewModel.nowPlayingMovieStateFlow.collectAsState()
 
 //    val pullState = rememberPullRefreshState(
 //        refreshing = movieViewModel.refreshing.value,
 //        onRefresh = { movieViewModel.pullRefresh() }
 //    )
-    Box(
-        modifier = Modifier
-//            .pullRefresh(
-//                state = pullState,
-//                enabled = true
-//            )
-            .fillMaxSize(),
-        //contentAlignment = Alignment.TopCenter
-    ) {
-        Column(
-            modifier = Modifier.verticalScroll(state = rememberScrollState())
-        ) {
-//            PullRefreshIndicator(
-//                refreshing = movieViewModel.refreshing.value,
-//                state = pullState,
-//                modifier = Modifier.align(Alignment.CenterHorizontally)
-//            )
-            HeaderUserInfoUI()
-            SearchBarUI(
-                onClick = onSearchBarClick
-            )
-            ImageCarousel(
-                result = topRatedMovieResult.value,
-                onClick = onMovieClickDetail
-            )
-            ListGenreUI(
-                listGenreResult = movieGenreList.value,
-                onGenreClick = onGenreClick,
+    when (nowPlayingMovieResult.value) {
+        is Result.Loading -> {
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                CircularProgressIndicator()
+            }
+        }
+
+        is Result.Error -> {
+            ErrorUI(
+                modifier = Modifier.fillMaxSize(),
                 onRetry = {
                     movieViewModel.refreshData()
+                },
+                result = nowPlayingMovieResult.value as Result.Error
+            )
+        }
+
+        is Result.Success -> {
+            Box(
+                modifier = Modifier.fillMaxSize(),
+            ) {
+                Column(
+                    modifier = Modifier.verticalScroll(state = rememberScrollState())
+                ) {
+                    HeaderUserInfoUI()
+                    SearchBarUI(
+                        onClick = onSearchBarClick
+                    )
+                    ImageCarousel(
+                        result = nowPlayingMovieResult.value,
+                        onClick = onMovieClickDetail
+                    )
+                    ListGenreUI(
+                        listGenreResult = movieGenreList.value,
+                        onGenreClick = onGenreClick
+                    )
+                    ListItemWithData(
+                        result = trendingMovieResult.value,
+                        modifier = modifier,
+                        categoryName = stringResource(id = R.string.trending_title),
+                        onClick = onMovieClickDetail
+                    )
+                    ListItemWithData(
+                        result = popularMovieResult.value,
+                        modifier = modifier,
+                        categoryName = stringResource(id = R.string.popular_title),
+                        onClick = onMovieClickDetail
+                    )
+                    ListMovieDetailUI(
+                        categoryType = stringResource(id = R.string.top_rated_title),
+                        listMovieResult = topRatedMovieResult.value,
+                        onclick = onMovieClickDetail,
+                        onViewMoreClick = {
+                            onMovieViewMoreClick(Define.TOP_RATED_MOVIE)
+                        }
+                    )
+                    ListMovieDetailUI(
+                        categoryType = stringResource(id = R.string.up_coming_title),
+                        listMovieResult = upComingMovieResult.value,
+                        onclick = onMovieClickDetail,
+                        onViewMoreClick = {
+                            onMovieViewMoreClick(Define.UP_COMING_MOVIE)
+                        }
+                    )
+                    Spacer(modifier = Modifier.size(dimensionResource(id = R.dimen.spacer_vertical1)))
                 }
-            )
-            ListItemWithData(
-                result = trendingMovieResult.value,
-                modifier = modifier,
-                categoryName = stringResource(id = R.string.trending_title),
-                onClick = onMovieClickDetail
-            )
-            ListItemWithData(
-                result = popularMovieResult.value,
-                modifier = modifier,
-                categoryName = stringResource(id = R.string.popular_title),
-                onClick = onMovieClickDetail
-            )
-            ListMovieDetailUI(
-                categoryType = stringResource(id = R.string.top_rated_title),
-                listMovieResult = topRatedMovieResult.value,
-                onclick = onMovieClickDetail,
-                onViewMoreClick = {
-                    onMovieViewMoreClick(Define.TOP_RATED_MOVIE)
-                }
-            )
-            ListMovieDetailUI(
-                categoryType = stringResource(id = R.string.up_coming_title),
-                listMovieResult = upComingMovieResult.value,
-                onclick = onMovieClickDetail,
-                onViewMoreClick = {
-                    onMovieViewMoreClick(Define.UP_COMING_MOVIE)
-                }
-            )
-            Spacer(modifier = Modifier.size(dimensionResource(id = R.dimen.spacer_vertical1)))
+            }
         }
     }
+
 }
 

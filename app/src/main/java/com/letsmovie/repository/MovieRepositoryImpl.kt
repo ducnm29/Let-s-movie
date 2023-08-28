@@ -98,7 +98,7 @@ class MovieRepositoryImpl @Inject constructor(
         apiKey: String,
         genreId: String,
         page: Int
-    ): DataListResponse<Movie>{
+    ): DataListResponse<Movie> {
         return movieApi.getMovieInGenre(language, apiKey, genreId, page)
     }
 
@@ -110,5 +110,19 @@ class MovieRepositoryImpl @Inject constructor(
         page: Int
     ): DataListResponse<Movie> {
         return movieApi.getSearchMovie(language, apiKey, includeAdult, page, searchKey)
+    }
+
+    override fun getNowPlayingMovie(
+        language: String,
+        apiKey: String,
+        page: Int
+    ): Flow<Result<DataListResponse<Movie>>> {
+        return flow {
+            emit(Result.Loading)
+            val data = movieApi.getNowPlayingMovie(language, apiKey, page)
+            emit(Result.Success(data))
+        }.catch {
+            emit(Result.Error(it.toString()))
+        }
     }
 }
