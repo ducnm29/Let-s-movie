@@ -20,7 +20,9 @@ fun FavouriteTvUI(
     Column(
         modifier = modifier.verticalScroll(rememberScrollState())
     ) {
-        SearchBarUI()
+        SearchBarUI(
+            onClick = {}
+        )
         ListItemWithData(
             result = trendingTvStateFlow.value,
             modifier = modifier,

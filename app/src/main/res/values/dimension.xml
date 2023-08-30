@@ -12,16 +12,18 @@
     <dimen name="spacer_vertical0">6dp</dimen>
     <dimen name="spacer_vertical1">12dp</dimen>
     <dimen name="spacer_vertical2">16dp</dimen>
-    <dimen name="spacer_vertical3">32dp</dimen>
+    <dimen name="spacer_vertical3">24dp</dimen>
+    <dimen name="spacer_vertical4">32dp</dimen>
     <dimen name="spacer_horizontal0">8dp</dimen>
     <dimen name="spacer_horizontal1">12dp</dimen>
     <dimen name="spacer_horizontal2">16dp</dimen>
-    <dimen name="spacer_horizontal3">32dp</dimen>
-    <dimen name="spacer_horizontal4">48dp</dimen>
+    <dimen name="spacer_horizontal3">24dp</dimen>
+    <dimen name="spacer_horizontal4">32dp</dimen>
     <dimen name="star_height">16dp</dimen>
 
     <dimen name="movie_item_width">144dp</dimen>
     <dimen name="movie_item_height">216dp</dimen>
     <dimen name="movie_item_horizontal_size">80dp</dimen>
+    <dimen name="carousel_image_height">200dp</dimen>
 
 </resources>

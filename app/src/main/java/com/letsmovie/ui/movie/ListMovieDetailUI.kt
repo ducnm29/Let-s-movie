@@ -24,7 +24,8 @@ fun ListMovieDetailUI(
     modifier: Modifier = Modifier,
     categoryType: String,
     listMovieResult: Result<DataListResponse<Movie>>,
-    onclick: (String) -> Unit
+    onclick: (String) -> Unit,
+    onViewMoreClick: () -> Unit
 ) {
     when (listMovieResult) {
         is Result.Loading -> {
@@ -38,9 +39,9 @@ fun ListMovieDetailUI(
         is Result.Success -> {
             Column(
                 modifier = modifier.padding(
-                    start = dimensionResource(id = R.dimen.spacer_horizontal1).value.dp,
-                    end = dimensionResource(id = R.dimen.spacer_horizontal1).value.dp,
-                    top = dimensionResource(id = R.dimen.spacer_horizontal3).value.dp
+                    start = dimensionResource(id = R.dimen.spacer_horizontal1),
+                    end = dimensionResource(id = R.dimen.spacer_horizontal1),
+                    top = dimensionResource(id = R.dimen.spacer_horizontal4)
                 )
             ) {
                 Text(
@@ -48,7 +49,7 @@ fun ListMovieDetailUI(
                     fontWeight = FontWeight.Medium,
                     fontSize = dimensionResource(id = R.dimen.category_title).value.sp,
                     modifier = Modifier.padding(
-                        bottom = dimensionResource(id = R.dimen.spacer_vertical3).value.dp
+                        bottom = dimensionResource(id = R.dimen.spacer_vertical4).value.dp
                     )
                 )
                 listMovieResult.data.dataList.subList(0, 5).forEach { movie ->
@@ -58,7 +59,7 @@ fun ListMovieDetailUI(
                     )
                 }
                 OutlinedButton(
-                    onClick = { /*TODO*/ },
+                    onClick = onViewMoreClick,
                     modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(5.dp)
                 ) {

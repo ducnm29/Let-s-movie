@@ -6,36 +6,36 @@ data class Tv(
     @SerializedName("id")
     val id: String,
     @SerializedName("name")
-    val tvName: String,
+    val tvName: String?,
     @SerializedName("original_name")
-    val originalName: String,
+    val originalName: String?,
     @SerializedName("poster_path")
-    val imgPoster: String,
+    val imgPoster: String?,
     @SerializedName("overview")
-    val tvOverview: String,
+    val tvOverview: String?,
     @SerializedName("backdrop_path")
-    val imgBackground: String,
+    val imgBackground: String?,
     @SerializedName("genre_ids")
-    val genreIdArr: List<Int>,
+    val genreIdArr: List<Int>?,
     @SerializedName("popularity")
-    val popularityPoint: Float,
+    val popularityPoint: Float?,
     @SerializedName("first_air_date")
-    val firstAirDate: String,
+    val firstAirDate: String?,
     @SerializedName("vote_average")
-    val voteAverage: Float,
+    val voteAverage: Float?,
     @SerializedName("vote_count")
-    val voteCount: Int,
+    val voteCount: Int?,
     @SerializedName("media_type")
-    val mediaType: String,
+    val mediaType: String?,
     @SerializedName("origin_country")
-    val originCountry: List<String>,
+    val originCountry: List<String>?,
     @SerializedName("created_by")
-    val createdBy: List<Producer>,
+    val createdBy: List<Producer>?,
     @SerializedName("genres")
-    val genreList: List<Genre>,
+    val genreList: List<Genre>?,
     @SerializedName("languages")
-    val languageList: List<String>,
+    val languageList: List<String>?,
     @SerializedName("status")
-    val status: String
+    val status: String?
 
 )

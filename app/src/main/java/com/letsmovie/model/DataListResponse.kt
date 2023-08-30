@@ -4,11 +4,11 @@ import com.google.gson.annotations.SerializedName
 
 data class DataListResponse<out T>(
     @SerializedName("page")
-    val currentPage: Int,
+    val currentPage: Int?,
     @SerializedName("results")
     val dataList: List<T>,
     @SerializedName("total_pages")
-    val totalPages: Int,
+    val totalPages: Int?,
     @SerializedName("total_results")
-    val totalResults: Int
+    val totalResults: Int?
 )

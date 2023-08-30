@@ -42,7 +42,7 @@ object TvDetailDestination : AppNavDestination {
 
     override val listArgument: List<NamedNavArgument>
         get() = listOf(
-            navArgument(MovieInGenreDestination.genreIDArg) { type = NavType.StringType }
+            navArgument(MovieByGenreDestination.genreIDArg) { type = NavType.StringType }
         )
 
     fun createNavRoute(tvId: String): String{
@@ -50,16 +50,37 @@ object TvDetailDestination : AppNavDestination {
     }
 }
 
-object MovieInGenreDestination : AppNavDestination {
+object MovieByGenreDestination : AppNavDestination {
     const val genreIDArg = "genreId"
-    override val route = Define.MOVIE_IN_GENRE_ROUTE + "/{$genreIDArg}"
+    const val genreNameArg = "genreName"
+    override val route = Define.MOVIE_BY_GENRE_ROUTE + "/{$genreIDArg}/{$genreNameArg}"
 
     override val listArgument: List<NamedNavArgument>
         get() = listOf(
             navArgument(genreIDArg) { type = NavType.StringType }
         )
 
-    fun createNavRoute(genreId: String): String {
-        return Define.MOVIE_IN_GENRE_ROUTE + "/$genreId"
+    fun createNavRoute(genreId: String, genreName: String): String {
+        return Define.MOVIE_BY_GENRE_ROUTE + "/$genreId/$genreName"
+    }
+}
+
+object MovieByTypeDestination: AppNavDestination{
+    const val movieType = "movieType"
+    override val route = Define.MOVIE_BY_TYPE_ROUTE + "/{$movieType}"
+
+    override val listArgument: List<NamedNavArgument>
+        get() = listOf(
+            navArgument(movieType){ type = NavType.StringType}
+        )
+    fun createNavRoute(movieType: String): String{
+        return Define.MOVIE_BY_TYPE_ROUTE + "/$movieType"
+    }
+}
+
+object MovieBySearchDestination: AppNavDestination{
+    override val route = Define.MOVIE_BY_SEARCH_ROUTE
+    fun createNavRoute(): String{
+        return Define.MOVIE_BY_SEARCH_ROUTE
     }
 }

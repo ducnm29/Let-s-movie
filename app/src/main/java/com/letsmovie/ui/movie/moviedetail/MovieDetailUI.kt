@@ -1,15 +1,7 @@
 package com.letsmovie.ui.movie.moviedetail
 
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccessTime
@@ -17,12 +9,7 @@ import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.StarRate
 import androidx.compose.material.icons.outlined.KeyboardArrowLeft
 import androidx.compose.material.icons.sharp.Favorite
-import androidx.compose.material3.Card
-import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
@@ -128,7 +115,7 @@ fun MovieDetailBodyUI(
                     )
                 }
                 Text(
-                    text = movieResult.data.movieName,
+                    text = movieResult.data.movieName ?: "",
                     fontWeight = FontWeight.Medium,
                     fontSize = 22.sp,
                     modifier = Modifier
@@ -176,7 +163,7 @@ fun MovieDetailBodyUI(
             ) {
                 TagIconUI(
                     tagIcon = TagIcon(
-                        tagName = movieResult.data.releaseDate,
+                        tagName = movieResult.data.releaseDate ?: "",
                         tagIconImageVector = Icons.Default.DateRange
                     )
                 )
@@ -205,7 +192,7 @@ fun MovieDetailBodyUI(
                 textAlign = TextAlign.Start
             )
             Text(
-                text = movieResult.data.movieOverview,
+                text = movieResult.data.movieOverview ?: "",
                 style = MaterialTheme.typography.bodyLarge,
                 modifier = Modifier
                     .padding(

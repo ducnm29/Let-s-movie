@@ -52,6 +52,11 @@ class MovieViewModel @Inject constructor(
         MutableStateFlow(Result.Loading)
     val movieGenre: StateFlow<Result<DataGenreResponse>> = _movieGenre.asStateFlow()
 
+    private val _nowPlayingMovieStateFlow: MutableStateFlow<Result<DataListResponse<Movie>>> =
+        MutableStateFlow(Result.Loading)
+    val nowPlayingMovieStateFlow: StateFlow<Result<DataListResponse<Movie>>> =
+        _nowPlayingMovieStateFlow.asStateFlow()
+
     // Pull to refresh
     private val _refreshing = mutableStateOf(false)
     var refreshing: State<Boolean> = _refreshing
@@ -100,6 +105,15 @@ class MovieViewModel @Inject constructor(
         }
     }
 
+    private fun getNowPlayingMovie(language: String, apiKey: String, page: Int) {
+        viewModelScope.launch {
+            movieRepository.getNowPlayingMovie(language = language, apiKey = apiKey, page = page)
+                .collectLatest {
+                    _nowPlayingMovieStateFlow.value = it
+                }
+        }
+    }
+
     fun pullRefresh() {
         viewModelScope.launch {
             _refreshing.value = true
@@ -109,12 +123,13 @@ class MovieViewModel @Inject constructor(
         }
     }
 
-    private fun refreshData() {
+    fun refreshData() {
         getTrendingMovie(Define.LANGUAGE_DEFAULT, Define.API_KEY)
         getPopularMovie(Define.LANGUAGE_DEFAULT, Define.API_KEY)
         getTopRatedMovie(Define.LANGUAGE_DEFAULT, Define.API_KEY)
         getUpComingMovie(Define.LANGUAGE_DEFAULT, Define.API_KEY)
         getMovieGenreList(Define.LANGUAGE_DEFAULT, Define.API_KEY)
+        getNowPlayingMovie(Define.LANGUAGE_DEFAULT, Define.API_KEY, 1)
     }
 
 }

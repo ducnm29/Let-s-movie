@@ -20,7 +20,9 @@ fun FavouriteMovieUI(
     Column(
         modifier = modifier.verticalScroll(rememberScrollState())
     ) {
-        SearchBarUI()
+        SearchBarUI(
+            onClick = {}
+        )
         ListItemWithData(
             result = trendingMovieResult.value,
             modifier = modifier,
