@@ -1,6 +1,7 @@
 package com.letsmovie.ui.movie.moviebysearch
 
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -26,7 +27,8 @@ class MovieBySearchViewModel @Inject constructor(
 ) : ViewModel() {
 
     // State hold search value in MovieBySearch screen
-    val keywordState: MutableState<String> = mutableStateOf("")
+    private val _keywordState: MutableState<String> = mutableStateOf("")
+    val keywordState: State<String> = _keywordState
 
     //
     private val _movieSearchStateFlow: MutableStateFlow<PagingData<Movie>> =
@@ -53,6 +55,10 @@ class MovieBySearchViewModel @Inject constructor(
                 _movieSearchStateFlow.value = it
             }
         }
+    }
+
+    fun setKeyWordSearch(keyWord: String){
+        _keywordState.value = keyWord
     }
 
 

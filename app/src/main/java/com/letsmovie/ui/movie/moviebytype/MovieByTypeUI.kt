@@ -105,12 +105,13 @@ fun BodyMovieByTypeUI(
             onBackClick = onBackClick,
             searchKeywordValue = "",
             onValueChange = {},
+            onCLearClick = {},
         )
         LazyVerticalGrid(
             columns = GridCells.Adaptive(120.dp),
             state = state,
             verticalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.spacer_vertical2)),
-            horizontalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.spacer_horizontal3)),
+            horizontalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.spacer_horizontal4)),
             contentPadding = PaddingValues(
                 horizontal = dimensionResource(id = R.dimen.spacer_horizontal2),
                 vertical = dimensionResource(id = R.dimen.spacer_vertical1)

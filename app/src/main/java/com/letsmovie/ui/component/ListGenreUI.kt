@@ -38,7 +38,7 @@ fun ListGenreUI(
         is Result.Success -> {
             Box(
                 modifier = modifier
-                    .padding(top = dimensionResource(id = R.dimen.spacer_vertical3))
+                    .padding(top = dimensionResource(id = R.dimen.spacer_vertical4))
                     .height(96.dp)
             ) {
                 LazyHorizontalGrid(

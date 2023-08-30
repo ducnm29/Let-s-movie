@@ -19,6 +19,7 @@ import com.letsmovie.ui.movie.moviedetail.MovieDetailUI
 import com.letsmovie.ui.setting.SettingUI
 import com.letsmovie.ui.tv.TvUI
 import com.letsmovie.ui.tv.tvdetail.TvDetailUI
+import com.letsmovie.util.Define
 
 @Composable
 fun MyAppNavHost(
@@ -131,6 +132,14 @@ fun NavGraphBuilder.movieGraph(navController: NavHostController) {
                 },
                 onMovieDetailClick = { movieId ->
                     navController.navigate(MovieDetailDestination.createNavRoute(movieId))
+                },
+                onSearchWithKeyWord = { movieBySearchViewModel, keyword ->
+                    movieBySearchViewModel.setKeyWordSearch(keyword)
+                    movieBySearchViewModel.getMovieSearch(
+                        language = Define.LANGUAGE_DEFAULT,
+                        apiKey = Define.API_KEY,
+                        includeAdult = false
+                    )
                 }
             )
         }
