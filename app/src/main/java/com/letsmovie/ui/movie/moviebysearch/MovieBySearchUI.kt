@@ -9,8 +9,10 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -19,8 +21,10 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.letsmovie.R
+import com.letsmovie.model.Movie
 import com.letsmovie.ui.component.SearchBarInDetailUI
 import com.letsmovie.ui.movie.MovieItemHorizontalUI
 import com.letsmovie.util.Define
@@ -37,13 +41,41 @@ fun MovieBySearchUI(
     val focusRequester = remember {
         FocusRequester()
     }
-    SideEffect {
+    LaunchedEffect(true) {
         focusRequester.requestFocus()
     }
+    Scaffold(
+
+    ) { innerPadding ->
+        MovieBySearchBodyUI(
+            modifier = modifier.padding(
+                top = innerPadding.calculateTopPadding()
+            ),
+            movieBySearchViewModel = movieBySearchViewModel,
+            onMovieDetailClick = onMovieDetailClick,
+            onBackClick = onBackClick,
+            focusRequester = focusRequester,
+            movieData = movieData,
+            onSearchWithKeyWord = onSearchWithKeyWord
+        )
+    }
+
+}
+
+@Composable
+fun MovieBySearchBodyUI(
+    modifier: Modifier = Modifier,
+    movieBySearchViewModel: MovieBySearchViewModel,
+    onMovieDetailClick: (String) -> Unit,
+    onBackClick: () -> Unit,
+    focusRequester: FocusRequester,
+    movieData: LazyPagingItems<Movie>,
+    onSearchWithKeyWord: (MovieBySearchViewModel, String) -> Unit
+) {
     Column(
         modifier = modifier
     ) {
-        Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.spacer_vertical3)))
+        //Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.spacer_vertical3)))
         SearchBarInDetailUI(
             onValueChange = { keyword ->
                 onSearchWithKeyWord(movieBySearchViewModel, keyword)
@@ -87,6 +119,4 @@ fun MovieBySearchUI(
 
         }
     }
-
-
 }

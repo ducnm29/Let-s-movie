@@ -3,19 +3,17 @@ package com.letsmovie.ui.movie
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.letsmovie.R
 import com.letsmovie.model.Movie
 import com.letsmovie.model.Tv
@@ -31,6 +29,8 @@ fun <T : Any> ListItemUI(
     Column(
         modifier = modifier
             .padding(top = 32.dp)
+            .fillMaxWidth(),
+        horizontalAlignment = Alignment.Start
 
     ) {
         Text(

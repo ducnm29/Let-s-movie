@@ -1,8 +1,11 @@
 package com.letsmovie.di
 
+import com.letsmovie.data.api.CastApi
 import com.letsmovie.data.api.GenreApi
 import com.letsmovie.data.api.MovieApi
 import com.letsmovie.data.api.TvApi
+import com.letsmovie.repository.CastRepository
+import com.letsmovie.repository.CastRepositoryImpl
 import com.letsmovie.repository.GenreRepository
 import com.letsmovie.repository.GenreRepositoryImpl
 import com.letsmovie.repository.MovieRepository
@@ -30,6 +33,11 @@ object RepositoryModule {
 
     @Singleton
     @Provides
-    fun provideGenreApi(genreApi: GenreApi): GenreRepository
+    fun provideGenreRepository(genreApi: GenreApi): GenreRepository
     = GenreRepositoryImpl(genreApi = genreApi)
+
+    @Singleton
+    @Provides
+    fun provideCastRepository(castApi: CastApi): CastRepository
+    = CastRepositoryImpl(castApi = castApi)
 }

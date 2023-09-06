@@ -82,6 +82,9 @@ fun NavGraphBuilder.movieGraph(navController: NavHostController) {
                 movieDetailViewModel = hiltViewModel(),
                 onClickBack = {
                     navController.popBackStack()
+                },
+                onMovieClickDetail = { movieId ->
+                    navController.navigate(MovieDetailDestination.createNavRoute(movieId))
                 }
             )
         }

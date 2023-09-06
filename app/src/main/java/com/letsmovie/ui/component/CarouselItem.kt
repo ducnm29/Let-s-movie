@@ -37,7 +37,7 @@ fun CarouselItem(
                 .crossfade(true)
                 .scale(Scale.FILL)
                 .build(),
-            placeholder = painterResource(id = R.drawable.loading),
+            placeholder = painterResource(id = R.drawable.loading_image),
             contentDescription = null,
             contentScale = ContentScale.Crop,
             modifier = Modifier

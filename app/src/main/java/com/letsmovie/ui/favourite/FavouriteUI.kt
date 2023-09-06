@@ -2,12 +2,16 @@ package com.letsmovie.ui.favourite
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountBox
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.dimensionResource
 import androidx.navigation.NavHostController
+import com.letsmovie.R
 import com.letsmovie.model.TagIcon
 import com.letsmovie.ui.component.TabContent
 import com.letsmovie.ui.component.Tabs
@@ -29,6 +33,7 @@ fun FavouriteUI(
     Column(
         modifier = modifier
     ) {
+        Spacer(modifier = Modifier.padding(top = dimensionResource(id = R.dimen.spacer_horizontal0)))
         Tabs(
             pagerState = pagerState,
             listTabs = listOf(

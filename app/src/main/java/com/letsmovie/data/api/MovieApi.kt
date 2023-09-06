@@ -2,7 +2,6 @@ package com.letsmovie.data.api
 
 import com.letsmovie.model.DataListResponse
 import com.letsmovie.model.Movie
-import kotlinx.coroutines.flow.Flow
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -72,6 +71,14 @@ interface MovieApi {
 
     @GET("movie/now_playing")
     suspend fun getNowPlayingMovie(
+        @Query("language") language: String,
+        @Query("api_key") apiKey: String,
+        @Query("page") page: Int
+    ): DataListResponse<Movie>
+
+    @GET("movie/{movie_id}/recommendations")
+    suspend fun getRecommendationMovie(
+        @Path("movie_id") movieId: String,
         @Query("language") language: String,
         @Query("api_key") apiKey: String,
         @Query("page") page: Int

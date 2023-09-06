@@ -17,4 +17,7 @@
     <string name="search_suggest_title">Tìm kiếm và tận hưởng các bộ phim đặc sắc ahyhy</string>
     <string name="header_1">Xin chào Ducnm</string>
     <string name="header_2">Nào cùng xem phim ahyhy!</string>
+    <string name="cast_title">Diễn viên</string>
+    <string name="story_line_title">Cốt truyện</string>
+    <string name="related_movie_title">Phim liên quan</string>
 </resources>

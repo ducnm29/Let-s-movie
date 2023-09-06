@@ -64,4 +64,11 @@ interface MovieRepository {
         apiKey: String,
         page: Int
     ): Flow<Result<DataListResponse<Movie>>>
+
+    fun getRecommendationMovie(
+        language: String,
+        apiKey: String,
+        movieId: String,
+        page: Int
+    ): Flow<Result<DataListResponse<Movie>>>
 }

@@ -16,4 +16,7 @@
     <string name="search_suggest_title">Let\'s search and discover the world of films\n Search some and enjoy!</string>
     <string name="header_1">Hello Ducnm ahyhy</string>
     <string name="header_2">It\'s movie time ahyhy!</string>
+    <string name="cast_title">Cast</string>
+    <string name="story_line_title">Story line</string>
+    <string name="related_movie_title">Related movies</string>
 </resources>

@@ -3,8 +3,11 @@ package com.letsmovie.ui.movie.moviedetail
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.letsmovie.model.DataCastResponse
+import com.letsmovie.model.DataListResponse
 import com.letsmovie.model.Movie
 import com.letsmovie.model.Result
+import com.letsmovie.repository.CastRepository
 import com.letsmovie.repository.MovieRepository
 import com.letsmovie.ui.navigation.MovieDetailDestination
 import com.letsmovie.util.Define
@@ -20,6 +23,7 @@ import javax.inject.Inject
 class MovieDetailViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val movieRepository: MovieRepository,
+    private val castRepository: CastRepository
 ) : ViewModel() {
 
     // Movie id for detail screen
@@ -28,11 +32,31 @@ class MovieDetailViewModel @Inject constructor(
     private val _movieDetail: MutableStateFlow<Result<Movie>> = MutableStateFlow(Result.Loading)
     val movieDetail: StateFlow<Result<Movie>> = _movieDetail.asStateFlow()
 
+    private val _castList: MutableStateFlow<Result<DataCastResponse>> =
+        MutableStateFlow(Result.Loading)
+    val castList: StateFlow<Result<DataCastResponse>> = _castList.asStateFlow()
+
+    private val _recommendationsMovie: MutableStateFlow<Result<DataListResponse<Movie>>> =
+        MutableStateFlow(Result.Loading)
+    val recommendationsMovie: StateFlow<Result<DataListResponse<Movie>>> =
+        _recommendationsMovie.asStateFlow()
+
     init {
         getMovieDetail(
             movieId = movieId,
             language = Define.LANGUAGE_DEFAULT,
             apiKey = Define.API_KEY
+        )
+        getCastsOfMovie(
+            movieId = movieId,
+            language = Define.LANGUAGE_DEFAULT,
+            apiKey = Define.API_KEY
+        )
+        getRecommendationsMovie(
+            movieId = movieId,
+            language = Define.LANGUAGE_DEFAULT,
+            apiKey = Define.API_KEY,
+            page = 1
         )
     }
 
@@ -42,6 +66,31 @@ class MovieDetailViewModel @Inject constructor(
                 .getMovieDetail(movieId = movieId, language = language, apiKey = apiKey)
                 .collectLatest {
                     _movieDetail.value = it
+                }
+        }
+    }
+
+    fun getCastsOfMovie(movieId: String, language: String, apiKey: String) {
+        viewModelScope.launch {
+            castRepository
+                .getCastsOfMovie(language, apiKey, movieId)
+                .collectLatest {
+                    _castList.value = it
+                }
+        }
+    }
+
+    fun getRecommendationsMovie(movieId: String, language: String, apiKey: String, page: Int) {
+        viewModelScope.launch {
+            movieRepository
+                .getRecommendationMovie(
+                    language = language,
+                    apiKey = apiKey,
+                    movieId = movieId,
+                    page = page
+                )
+                .collectLatest {
+                    _recommendationsMovie.value = it
                 }
         }
     }

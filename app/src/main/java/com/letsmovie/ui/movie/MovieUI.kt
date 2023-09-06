@@ -1,13 +1,10 @@
 package com.letsmovie.ui.movie
 
-//import androidx.compose.material.ExperimentalMaterialApi
-//import androidx.compose.material.pullrefresh.PullRefreshIndicator
-//import androidx.compose.material.pullrefresh.pullRefresh
-//import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -28,7 +25,6 @@ import com.letsmovie.ui.component.ListItemWithData
 import com.letsmovie.ui.component.SearchBarUI
 import com.letsmovie.util.Define
 
-//@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun MovieUI(
     modifier: Modifier = Modifier,
@@ -45,10 +41,6 @@ fun MovieUI(
     val movieGenreList = movieViewModel.movieGenre.collectAsState()
     val nowPlayingMovieResult = movieViewModel.nowPlayingMovieStateFlow.collectAsState()
 
-//    val pullState = rememberPullRefreshState(
-//        refreshing = movieViewModel.refreshing.value,
-//        onRefresh = { movieViewModel.pullRefresh() }
-//    )
     when (nowPlayingMovieResult.value) {
         is Result.Loading -> {
             Box(
@@ -76,6 +68,7 @@ fun MovieUI(
                 Column(
                     modifier = Modifier.verticalScroll(state = rememberScrollState())
                 ) {
+                    Spacer(modifier = Modifier.padding(top = dimensionResource(id = R.dimen.spacer_horizontal0)))
                     HeaderUserInfoUI()
                     SearchBarUI(
                         onClick = onSearchBarClick
