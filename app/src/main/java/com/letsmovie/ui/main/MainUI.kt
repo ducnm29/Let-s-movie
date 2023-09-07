@@ -1,5 +1,6 @@
 package com.letsmovie.ui.main
 
+import android.app.Activity
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -24,7 +25,8 @@ import com.letsmovie.util.Define
 
 @Composable
 fun MainUI(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    activity: Activity
 ) {
     val navController = rememberNavController()
     val destination = navController.currentBackStackEntryAsState().value?.destination
@@ -61,7 +63,8 @@ fun MainUI(
         ) {
             MyAppNavHost(
                 navController = navController,
-                startDestination = Define.MOVIE_HOME
+                startDestination = Define.MOVIE_HOME,
+                activity = activity
             )
         }
     }

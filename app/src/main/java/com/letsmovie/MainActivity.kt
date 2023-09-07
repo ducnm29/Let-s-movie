@@ -13,8 +13,10 @@ import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.view.WindowCompat
+import com.google.android.gms.ads.MobileAds
 import com.google.android.material.elevation.SurfaceColors
 import com.letsmovie.ui.main.MainUI
 import com.letsmovie.ui.theme.LetsMovieTheme
@@ -32,9 +34,15 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    MainUI(Modifier)
+                    MainUI(
+                        modifier = Modifier,
+                        activity = this
+                    )
                 }
             }
         }
+
+        // Init ad sdk
+        MobileAds.initialize(this)
     }
 }

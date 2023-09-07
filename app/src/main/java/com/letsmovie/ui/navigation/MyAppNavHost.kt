@@ -1,15 +1,18 @@
 package com.letsmovie.ui.navigation
 
+import android.app.Activity
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
+import com.letsmovie.ui.component.AdmobInterstitial
 import com.letsmovie.ui.favourite.FavouriteUI
 import com.letsmovie.ui.movie.MovieUI
 import com.letsmovie.ui.movie.movebygenre.MovieByGenreUI
@@ -25,21 +28,22 @@ import com.letsmovie.util.Define
 fun MyAppNavHost(
     modifier: Modifier = Modifier,
     navController: NavHostController,
-    startDestination: String
+    startDestination: String,
+    activity: Activity
 ) {
     NavHost(
         modifier = modifier,
         navController = navController,
         startDestination = startDestination
     ) {
-        movieGraph(navController)
+        movieGraph(navController, activity)
         tvGraph(navController)
         favGraph(navController)
         settingGraph(navController)
     }
 }
 
-fun NavGraphBuilder.movieGraph(navController: NavHostController) {
+fun NavGraphBuilder.movieGraph(navController: NavHostController, activity: Activity) {
     navigation(
         startDestination = TopLevelDestination.MOVIE.startDestination,
         route = TopLevelDestination.MOVIE.route
@@ -64,11 +68,17 @@ fun NavGraphBuilder.movieGraph(navController: NavHostController) {
                         MovieByTypeDestination.createNavRoute(movieType)
                     )
                 },
-                onSearchBarClick = {
+                onSearchBarClick = { context ->
+                    AdmobInterstitial(
+                        context = context,
+                        adId = "ca-app-pub-3940256099942544/8691691433",
+                        activity = activity
+                    )
                     navController.navigate(
                         MovieBySearchDestination.createNavRoute()
                     )
-                }
+                },
+                context = LocalContext.current
             )
         }
 

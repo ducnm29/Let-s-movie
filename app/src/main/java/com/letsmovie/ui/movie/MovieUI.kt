@@ -1,5 +1,6 @@
 package com.letsmovie.ui.movie
 
+import android.content.Context
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -13,10 +14,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import com.letsmovie.R
 import com.letsmovie.model.Result
+import com.letsmovie.ui.component.AdmobBanner
 import com.letsmovie.ui.component.ErrorUI
 import com.letsmovie.ui.component.HeaderUserInfoUI
 import com.letsmovie.ui.component.ImageCarousel
@@ -32,7 +35,8 @@ fun MovieUI(
     onMovieClickDetail: (String) -> Unit,
     onGenreClick: (String, String) -> Unit,
     onMovieViewMoreClick: (String) -> Unit,
-    onSearchBarClick: () -> Unit
+    onSearchBarClick: (Context) -> Unit,
+    context: Context
 ) {
     val trendingMovieResult = movieViewModel.trendingMovieStateFlow.collectAsState()
     val popularMovieResult = movieViewModel.popularMovieStateFlow.collectAsState()
@@ -71,7 +75,7 @@ fun MovieUI(
                     Spacer(modifier = Modifier.padding(top = dimensionResource(id = R.dimen.spacer_horizontal0)))
                     HeaderUserInfoUI()
                     SearchBarUI(
-                        onClick = onSearchBarClick
+                        onClick = {onSearchBarClick(context)}
                     )
                     ImageCarousel(
                         result = nowPlayingMovieResult.value,
@@ -110,6 +114,7 @@ fun MovieUI(
                         }
                     )
                     Spacer(modifier = Modifier.size(dimensionResource(id = R.dimen.spacer_vertical1)))
+                    AdmobBanner(adId = "ca-app-pub-3940256099942544/6300978111")
                 }
             }
         }
