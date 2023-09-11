@@ -12,6 +12,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
@@ -44,7 +45,8 @@ fun MovieItem(
             modifier = Modifier
                 .fillMaxSize(1f)
                 .height(dimensionResource(id = R.dimen.movie_item_height))
-                .clip(RoundedCornerShape(10.dp))
+                .clip(RoundedCornerShape(10.dp)),
+            error = painterResource(id = R.drawable.no_image_available)
         )
         Spacer(modifier = Modifier.height(8.dp))
         Text(

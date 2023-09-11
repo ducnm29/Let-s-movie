@@ -87,7 +87,8 @@ class MovieDetailViewModel @Inject constructor(
                     language = language,
                     apiKey = apiKey,
                     movieId = movieId,
-                    page = page
+                    page = page,
+                    includeAdult = false
                 )
                 .collectLatest {
                     _recommendationsMovie.value = it

@@ -31,6 +31,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -46,6 +47,7 @@ import com.letsmovie.model.DataListResponse
 import com.letsmovie.model.Movie
 import com.letsmovie.model.Result
 import com.letsmovie.model.TagIcon
+import com.letsmovie.ui.component.GenreListInDetailUI
 import com.letsmovie.ui.component.ListCastUI
 import com.letsmovie.ui.component.ListItemWithData
 import com.letsmovie.ui.component.TagIconUI
@@ -124,7 +126,8 @@ fun MovieDetailBodyUI(
                 contentDescription = null,
                 alpha = 0.4f,
                 contentScale = ContentScale.Crop,
-                modifier = Modifier.fillMaxSize()
+                modifier = Modifier.fillMaxSize(),
+                error = painterResource(id = R.drawable.no_image_available)
             )
         }
         Column(
@@ -185,7 +188,8 @@ fun MovieDetailBodyUI(
                         .build(),
                     contentDescription = null,
                     contentScale = ContentScale.Crop,
-                    modifier = Modifier.fillMaxSize()
+                    modifier = Modifier.fillMaxSize(),
+                    error = painterResource(id = R.drawable.no_image_available)
                 )
             }
             Row(
@@ -212,9 +216,15 @@ fun MovieDetailBodyUI(
             }
 
             TextSectionUI(
+                modifier = Modifier.padding(
+                    top = dimensionResource(id = R.dimen.spacer_vertical3),
+                    start = dimensionResource(id = R.dimen.spacer_vertical2)
+                ),
                 titleRes = R.string.story_line_title,
                 body = movieResult.data.movieOverview ?: ""
             )
+
+            GenreListInDetailUI(listGenre = movieResult.data.genreList ?: listOf())
 
             ListCastUI(dataResult = castResult)
 

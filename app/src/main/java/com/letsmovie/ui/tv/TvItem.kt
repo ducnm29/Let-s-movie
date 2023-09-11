@@ -6,10 +6,12 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import coil.size.Scale
+import com.letsmovie.R
 import com.letsmovie.model.Tv
 import com.letsmovie.util.Define
 
@@ -34,6 +36,7 @@ fun TvItem(
                 .crossfade(true)
                 .build(),
             contentDescription = null,
+            error = painterResource(id = R.drawable.no_image_available)
         )
     }
 }

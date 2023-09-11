@@ -42,7 +42,7 @@ fun CastUI(
                 .build(),
             contentDescription = null,
             contentScale = ContentScale.Crop,
-            error = painterResource(id = R.drawable.loading_image),
+            error = painterResource(id = R.drawable.no_image_available),
             modifier = Modifier
                 .size(dimensionResource(id = R.dimen.cast_image_item_size))
                 .clip(CircleShape)

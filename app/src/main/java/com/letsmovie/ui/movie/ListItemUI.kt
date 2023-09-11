@@ -28,7 +28,7 @@ fun <T : Any> ListItemUI(
 ) {
     Column(
         modifier = modifier
-            .padding(top = 32.dp)
+            .padding(top = 12.dp)
             .fillMaxWidth(),
         horizontalAlignment = Alignment.Start
 

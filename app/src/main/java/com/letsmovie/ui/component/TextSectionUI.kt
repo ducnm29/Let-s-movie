@@ -13,18 +13,14 @@ import com.letsmovie.R
 
 @Composable
 fun TextSectionUI(
+    modifier: Modifier = Modifier,
     titleRes: Int,
     body: String,
 ) {
     Text(
         text = stringResource(id = titleRes),
         style = MaterialTheme.typography.headlineSmall,
-        modifier = Modifier
-            .padding(
-                top = dimensionResource(id = R.dimen.spacer_vertical3),
-                start = dimensionResource(id = R.dimen.spacer_vertical2)
-            )
-            .fillMaxWidth(),
+        modifier = modifier.fillMaxWidth(),
         textAlign = TextAlign.Start
     )
     Text(

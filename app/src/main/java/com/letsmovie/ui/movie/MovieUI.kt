@@ -68,7 +68,7 @@ fun MovieUI(
                 Column(
                     modifier = Modifier.verticalScroll(state = rememberScrollState())
                 ) {
-                    Spacer(modifier = Modifier.padding(top = dimensionResource(id = R.dimen.spacer_horizontal0)))
+                    Spacer(modifier = Modifier.padding(top = dimensionResource(id = R.dimen.spacer_vertical1)))
                     HeaderUserInfoUI()
                     SearchBarUI(
                         onClick = onSearchBarClick

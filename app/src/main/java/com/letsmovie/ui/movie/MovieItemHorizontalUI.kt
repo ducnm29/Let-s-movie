@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -46,7 +47,8 @@ fun MovieItemHorizontalUI(
                     .build(),
                 contentDescription = null,
                 contentScale = ContentScale.Crop,
-                modifier = Modifier.size(dimensionResource(id = R.dimen.movie_item_horizontal_size))
+                modifier = Modifier.size(dimensionResource(id = R.dimen.movie_item_horizontal_size)),
+                error = painterResource(id = R.drawable.no_image_available)
             )
         }
         Spacer(modifier = Modifier.size(dimensionResource(id = R.dimen.spacer_horizontal1)))

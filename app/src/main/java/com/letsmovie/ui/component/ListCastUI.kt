@@ -13,7 +13,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
 import com.letsmovie.R
 import com.letsmovie.model.DataCastResponse
 import com.letsmovie.model.Result
@@ -33,26 +32,28 @@ fun ListCastUI(
         }
 
         is Result.Success -> {
-            Text(
-                text = stringResource(id = R.string.cast_title),
-                style = MaterialTheme.typography.headlineSmall,
-                modifier = Modifier
-                    .padding(
-                        top = dimensionResource(id = R.dimen.spacer_vertical1),
-                        start = dimensionResource(id = R.dimen.spacer_vertical2)
-                    )
-                    .fillMaxWidth(),
-                textAlign = TextAlign.Start
-            )
-            LazyRow(
-                modifier = modifier.padding(top = dimensionResource(id = R.dimen.spacer_vertical1)),
-                contentPadding = PaddingValues(
-                    horizontal = dimensionResource(id = R.dimen.spacer_vertical1)
-                ),
-                horizontalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.spacer_vertical0))
-            ) {
-                items(dataResult.data.listCast.filter { it.character.isNotEmpty() }) { castItem ->
-                    CastUI(cast = castItem)
+            if (dataResult.data.listCast.any { it.character.isNotEmpty() }) {
+                Text(
+                    text = stringResource(id = R.string.cast_title),
+                    style = MaterialTheme.typography.headlineSmall,
+                    modifier = Modifier
+                        .padding(
+                            top = dimensionResource(id = R.dimen.spacer_vertical1),
+                            start = dimensionResource(id = R.dimen.spacer_horizontal2)
+                        )
+                        .fillMaxWidth(),
+                    textAlign = TextAlign.Start
+                )
+                LazyRow(
+                    modifier = modifier.padding(top = dimensionResource(id = R.dimen.spacer_vertical1)),
+                    contentPadding = PaddingValues(
+                        horizontal = dimensionResource(id = R.dimen.spacer_horizontal2)
+                    ),
+                    horizontalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.spacer_vertical0))
+                ) {
+                    items(dataResult.data.listCast.filter { it.character.isNotEmpty() }) { castItem ->
+                        CastUI(cast = castItem)
+                    }
                 }
             }
         }

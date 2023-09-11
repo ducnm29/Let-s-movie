@@ -130,11 +130,12 @@ class MovieRepositoryImpl @Inject constructor(
         language: String,
         apiKey: String,
         movieId: String,
-        page: Int
+        page: Int,
+        includeAdult: Boolean
     ): Flow<Result<DataListResponse<Movie>>> {
         return flow {
             emit(Result.Loading)
-            val data = movieApi.getRecommendationMovie(movieId, language, apiKey, page)
+            val data = movieApi.getRecommendationMovie(movieId, language, apiKey, page, includeAdult)
             emit(Result.Success(data))
         }.catch {
             emit(Result.Error(it.toString()))

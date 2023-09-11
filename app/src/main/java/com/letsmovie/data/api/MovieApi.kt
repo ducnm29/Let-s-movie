@@ -81,6 +81,7 @@ interface MovieApi {
         @Path("movie_id") movieId: String,
         @Query("language") language: String,
         @Query("api_key") apiKey: String,
-        @Query("page") page: Int
+        @Query("page") page: Int,
+        @Query("include_adult") includeAdult: Boolean
     ): DataListResponse<Movie>
 }

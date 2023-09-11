@@ -42,7 +42,8 @@ fun CarouselItem(
             contentScale = ContentScale.Crop,
             modifier = Modifier
                 .height(dimensionResource(id = R.dimen.carousel_image_height))
-                .fillMaxWidth()
+                .fillMaxWidth(),
+            error = painterResource(id = R.drawable.no_image_available)
         )
         Spacer(modifier = Modifier.height(8.dp))
         Text(

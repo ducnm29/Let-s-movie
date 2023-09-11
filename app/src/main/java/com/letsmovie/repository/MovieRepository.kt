@@ -69,6 +69,7 @@ interface MovieRepository {
         language: String,
         apiKey: String,
         movieId: String,
-        page: Int
+        page: Int,
+        includeAdult: Boolean
     ): Flow<Result<DataListResponse<Movie>>>
 }

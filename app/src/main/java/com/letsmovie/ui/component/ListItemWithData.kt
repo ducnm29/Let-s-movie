@@ -19,11 +19,14 @@ fun <T : Any> ListItemWithData(
         }
 
         is Result.Success -> {
-            ListItemUI(
-                listName = categoryName,
-                onClick = onClick,
-                listItem = result.data.dataList
-            )
+            if(result.data.dataList.isNotEmpty()){
+                ListItemUI(
+                    //modifier = modifier,
+                    listName = categoryName,
+                    onClick = onClick,
+                    listItem = result.data.dataList
+                )
+            }
         }
 
         is Result.Error -> {

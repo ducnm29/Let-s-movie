@@ -20,4 +20,5 @@
     <string name="cast_title">Diễn viên</string>
     <string name="story_line_title">Cốt truyện</string>
     <string name="related_movie_title">Phim liên quan</string>
+    <string name="genre_title">Thể loại</string>
 </resources>
