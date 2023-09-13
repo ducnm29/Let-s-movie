@@ -1,10 +1,11 @@
 package com.letsmovie.ui.movie
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -40,8 +41,7 @@ fun ListMovieDetailUI(
             Column(
                 modifier = modifier.padding(
                     start = dimensionResource(id = R.dimen.spacer_horizontal1),
-                    end = dimensionResource(id = R.dimen.spacer_horizontal1),
-                    top = dimensionResource(id = R.dimen.spacer_horizontal4)
+                    end = dimensionResource(id = R.dimen.spacer_horizontal1)
                 )
             ) {
                 Text(
@@ -49,7 +49,7 @@ fun ListMovieDetailUI(
                     fontWeight = FontWeight.Medium,
                     fontSize = dimensionResource(id = R.dimen.category_title).value.sp,
                     modifier = Modifier.padding(
-                        bottom = dimensionResource(id = R.dimen.spacer_vertical4).value.dp
+                        bottom = dimensionResource(id = R.dimen.spacer_vertical2)
                     )
                 )
                 listMovieResult.data.dataList.subList(0, 5).forEach { movie ->
@@ -60,8 +60,11 @@ fun ListMovieDetailUI(
                 }
                 OutlinedButton(
                     onClick = onViewMoreClick,
-                    modifier.fillMaxWidth(),
-                    shape = RoundedCornerShape(5.dp)
+                    modifier = Modifier.fillMaxWidth(),
+                    shape = RoundedCornerShape(5.dp),
+                    colors = ButtonDefaults.outlinedButtonColors(
+                        contentColor = MaterialTheme.colorScheme.onBackground
+                    )
                 ) {
                     Text(text = stringResource(id = R.string.view_more))
                 }

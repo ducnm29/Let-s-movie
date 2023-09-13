@@ -1,4 +1,4 @@
-package com.letsmovie.ui.component
+package com.letsmovie.ui.cast
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer

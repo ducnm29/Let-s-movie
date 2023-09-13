@@ -20,4 +20,8 @@
     <string name="story_line_title">Story line</string>
     <string name="related_movie_title">Related movies</string>
     <string name="genre_title">Genre</string>
+    <string name="language_title">Language</string>
+    <string name="homepage_title">Homepage</string>
+    <string name="production_company">Production company</string>
+    <string name="status">Status</string>
 </resources>

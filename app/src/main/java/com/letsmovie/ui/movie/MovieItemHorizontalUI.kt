@@ -62,8 +62,7 @@ fun MovieItemHorizontalUI(
                 overflow = TextOverflow.Ellipsis
             )
             Spacer(
-                modifier = Modifier
-                    .size(dimensionResource(id = R.dimen.spacer_vertical0).value.dp)
+                modifier = Modifier.size(dimensionResource(id = R.dimen.spacer_vertical0))
             )
             Text(
                 text = movie.releaseDate ?: "",
@@ -72,8 +71,7 @@ fun MovieItemHorizontalUI(
                 overflow = TextOverflow.Ellipsis
             )
             Spacer(
-                modifier = Modifier
-                    .size(dimensionResource(id = R.dimen.spacer_vertical1).value.dp)
+                modifier = Modifier.size(dimensionResource(id = R.dimen.spacer_vertical1))
             )
 
         }

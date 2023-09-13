@@ -18,7 +18,7 @@ import androidx.compose.material.icons.filled.AccessTime
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.StarRate
 import androidx.compose.material.icons.outlined.KeyboardArrowLeft
-import androidx.compose.material.icons.sharp.Favorite
+import androidx.compose.material.icons.twotone.Favorite
 import androidx.compose.material3.Card
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
@@ -47,12 +47,14 @@ import com.letsmovie.model.DataListResponse
 import com.letsmovie.model.Movie
 import com.letsmovie.model.Result
 import com.letsmovie.model.TagIcon
+import com.letsmovie.ui.component.FooterMovieDetailUI
 import com.letsmovie.ui.component.GenreListInDetailUI
 import com.letsmovie.ui.component.ListCastUI
 import com.letsmovie.ui.component.ListItemWithData
 import com.letsmovie.ui.component.TagIconUI
 import com.letsmovie.ui.component.TextSectionUI
 import com.letsmovie.util.Define
+import com.letsmovie.util.Util.openLinkInBrowser
 
 @Composable
 fun MovieDetailUI(
@@ -65,6 +67,7 @@ fun MovieDetailUI(
     val castResult: Result<DataCastResponse> = movieDetailViewModel.castList.collectAsState().value
     val recommendationsMovie: Result<DataListResponse<Movie>> =
         movieDetailViewModel.recommendationsMovie.collectAsState().value
+    val currentContext = LocalContext.current
 
     when (movieResult) {
         is Result.Loading -> {
@@ -94,7 +97,10 @@ fun MovieDetailUI(
                 castResult = castResult,
                 recommendationsResult = recommendationsMovie,
                 onClickBack = onClickBack,
-                onMovieClickDetail = onMovieClickDetail
+                onMovieClickDetail = onMovieClickDetail,
+                onClickOpenLink = { link ->
+                    currentContext.openLinkInBrowser(link = link)
+                }
             )
         }
     }
@@ -107,9 +113,10 @@ fun MovieDetailBodyUI(
     castResult: Result<DataCastResponse>,
     recommendationsResult: Result<DataListResponse<Movie>>,
     onClickBack: () -> Unit,
-    onMovieClickDetail: (String) -> Unit
+    onMovieClickDetail: (String) -> Unit,
+    onClickOpenLink: (String) -> Unit
 ) {
-    Box(
+    Column(
         modifier = modifier
     ) {
         Box(
@@ -129,112 +136,129 @@ fun MovieDetailBodyUI(
                 modifier = Modifier.fillMaxSize(),
                 error = painterResource(id = R.drawable.no_image_available)
             )
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Row {
+                    IconButton(
+                        onClick = onClickBack,
+                        modifier = Modifier.padding(
+                            top = dimensionResource(id = R.dimen.spacer_vertical2),
+                            start = dimensionResource(id = R.dimen.spacer_horizontal2)
+                        )
+                    ) {
+                        Icon(
+                            imageVector = Icons.Outlined.KeyboardArrowLeft,
+                            contentDescription = null,
+                        )
+                    }
+                    Text(
+                        text = movieResult.data.movieName ?: "",
+                        fontWeight = FontWeight.Medium,
+                        fontSize = 22.sp,
+                        modifier = Modifier
+                            .weight(1f)
+                            .padding(top = dimensionResource(id = R.dimen.spacer_vertical3)),
+                        textAlign = TextAlign.Center,
+                        maxLines = 3,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                    IconButton(
+                        onClick = {
+
+                        },
+                        modifier = Modifier.padding(
+                            top = dimensionResource(id = R.dimen.spacer_vertical2),
+                            end = dimensionResource(id = R.dimen.spacer_horizontal2)
+                        )
+                    ) {
+                        Icon(
+                            imageVector = Icons.TwoTone.Favorite,
+                            contentDescription = null,
+                        )
+                    }
+                }
+                Card(
+                    shape = RoundedCornerShape(10.dp),
+                    modifier = Modifier
+                        .width(220.dp)
+                        .height(360.dp)
+                        .padding(top = 12.dp)
+                ) {
+                    AsyncImage(
+                        model = ImageRequest
+                            .Builder(LocalContext.current)
+                            .data(Define.BASE_IMG_URL_ORIGIN + movieResult.data.imgPoster)
+                            .scale(Scale.FILL)
+                            .build(),
+                        contentDescription = null,
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier.fillMaxSize(),
+                        error = painterResource(id = R.drawable.no_image_available)
+                    )
+                }
+                Row(
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    TagIconUI(
+                        tagIcon = TagIcon(
+                            tagName = movieResult.data.releaseDate ?: "",
+                            tagIconImageVector = Icons.Default.DateRange
+                        )
+                    )
+                    TagIconUI(
+                        tagIcon = TagIcon(
+                            tagName = movieResult.data.voteAverage.toString(),
+                            tagIconImageVector = Icons.Default.StarRate
+                        )
+                    )
+                    TagIconUI(
+                        tagIcon = TagIcon(
+                            tagName = movieResult.data.runtime.toString(),
+                            tagIconImageVector = Icons.Default.AccessTime
+                        )
+                    )
+                }
+            }
         }
         Column(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalAlignment = Alignment.CenterHorizontally
+            modifier = Modifier.fillMaxWidth()
         ) {
-            Row {
-                IconButton(
-                    onClick = onClickBack,
-                    modifier = Modifier.padding(
-                        top = dimensionResource(id = R.dimen.spacer_vertical2),
-                        start = dimensionResource(id = R.dimen.spacer_horizontal2)
-                    )
-                ) {
-                    Icon(
-                        imageVector = Icons.Outlined.KeyboardArrowLeft,
-                        contentDescription = null,
-                    )
-                }
-                Text(
-                    text = movieResult.data.movieName ?: "",
-                    fontWeight = FontWeight.Medium,
-                    fontSize = 22.sp,
-                    modifier = Modifier
-                        .weight(1f)
-                        .padding(top = dimensionResource(id = R.dimen.spacer_vertical3)),
-                    textAlign = TextAlign.Center,
-                    maxLines = 3,
-                    overflow = TextOverflow.Ellipsis
-                )
-                IconButton(
-                    onClick = {
-
-                    },
-                    modifier = Modifier.padding(
-                        top = dimensionResource(id = R.dimen.spacer_vertical2),
-                        end = dimensionResource(id = R.dimen.spacer_horizontal2)
-                    )
-                ) {
-                    Icon(
-                        imageVector = Icons.Sharp.Favorite,
-                        contentDescription = null,
-                    )
-                }
-            }
-            Card(
-                shape = RoundedCornerShape(10.dp),
-                modifier = Modifier
-                    .width(220.dp)
-                    .height(360.dp)
-                    .padding(top = 12.dp)
-            ) {
-                AsyncImage(
-                    model = ImageRequest
-                        .Builder(LocalContext.current)
-                        .data(Define.BASE_IMG_URL_ORIGIN + movieResult.data.imgPoster)
-                        .scale(Scale.FILL)
-                        .build(),
-                    contentDescription = null,
-                    contentScale = ContentScale.Crop,
-                    modifier = Modifier.fillMaxSize(),
-                    error = painterResource(id = R.drawable.no_image_available)
-                )
-            }
-            Row(
-                horizontalArrangement = Arrangement.Center
-            ) {
-                TagIconUI(
-                    tagIcon = TagIcon(
-                        tagName = movieResult.data.releaseDate ?: "",
-                        tagIconImageVector = Icons.Default.DateRange
-                    )
-                )
-                TagIconUI(
-                    tagIcon = TagIcon(
-                        tagName = movieResult.data.voteAverage.toString(),
-                        tagIconImageVector = Icons.Default.StarRate
-                    )
-                )
-                TagIconUI(
-                    tagIcon = TagIcon(
-                        tagName = movieResult.data.runtime.toString(),
-                        tagIconImageVector = Icons.Default.AccessTime
-                    )
-                )
-            }
-
             TextSectionUI(
                 modifier = Modifier.padding(
-                    top = dimensionResource(id = R.dimen.spacer_vertical3),
-                    start = dimensionResource(id = R.dimen.spacer_vertical2)
+                    top = dimensionResource(id = R.dimen.spacer_vertical2),
+                    start = dimensionResource(id = R.dimen.spacer_horizontal2),
+                    end = dimensionResource(id = R.dimen.spacer_horizontal2)
                 ),
                 titleRes = R.string.story_line_title,
                 body = movieResult.data.movieOverview ?: ""
             )
 
-            GenreListInDetailUI(listGenre = movieResult.data.genreList ?: listOf())
+            GenreListInDetailUI(
+                listGenre = movieResult.data.genreList ?: listOf(),
+                modifier = Modifier.padding(top = dimensionResource(id = R.dimen.spacer_vertical2))
+            )
 
-            ListCastUI(dataResult = castResult)
+            ListCastUI(
+                dataResult = castResult,
+                modifier = Modifier.padding(top = dimensionResource(id = R.dimen.spacer_vertical2))
+            )
 
             ListItemWithData(
                 result = recommendationsResult,
-                modifier = modifier,
+                modifier = Modifier.padding(top = dimensionResource(id = R.dimen.spacer_vertical2)),
                 categoryName = stringResource(id = R.string.related_movie_title),
                 onClick = onMovieClickDetail
             )
-            Spacer(modifier = Modifier.size(dimensionResource(id = R.dimen.spacer_vertical1)))
+
+            FooterMovieDetailUI(
+                modifier = Modifier.padding(top = dimensionResource(id = R.dimen.spacer_vertical3)),
+                movie = movieResult.data,
+                onCLickOpenLink = onClickOpenLink
+            )
+
+            Spacer(modifier = Modifier.size(dimensionResource(id = R.dimen.spacer_vertical2)))
         }
     }
 }

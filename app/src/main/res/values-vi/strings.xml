@@ -21,4 +21,8 @@
     <string name="story_line_title">Cốt truyện</string>
     <string name="related_movie_title">Phim liên quan</string>
     <string name="genre_title">Thể loại</string>
+    <string name="language_title">Ngôn ngữ</string>
+    <string name="homepage_title">Trang chủ</string>
+    <string name="production_company">Nhà sản xuất</string>
+    <string name="status">Trạng thái</string>
 </resources>

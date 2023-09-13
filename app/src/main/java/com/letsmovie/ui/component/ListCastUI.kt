@@ -2,7 +2,6 @@ package com.letsmovie.ui.component
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
@@ -12,10 +11,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextAlign
 import com.letsmovie.R
 import com.letsmovie.model.DataCastResponse
 import com.letsmovie.model.Result
+import com.letsmovie.ui.cast.CastUI
 
 @Composable
 fun ListCastUI(
@@ -36,16 +35,10 @@ fun ListCastUI(
                 Text(
                     text = stringResource(id = R.string.cast_title),
                     style = MaterialTheme.typography.headlineSmall,
-                    modifier = Modifier
-                        .padding(
-                            top = dimensionResource(id = R.dimen.spacer_vertical1),
-                            start = dimensionResource(id = R.dimen.spacer_horizontal2)
-                        )
-                        .fillMaxWidth(),
-                    textAlign = TextAlign.Start
+                    modifier = modifier.padding(start = dimensionResource(id = R.dimen.spacer_horizontal2))
                 )
                 LazyRow(
-                    modifier = modifier.padding(top = dimensionResource(id = R.dimen.spacer_vertical1)),
+                    modifier = Modifier.padding(top = dimensionResource(id = R.dimen.spacer_vertical2)),
                     contentPadding = PaddingValues(
                         horizontal = dimensionResource(id = R.dimen.spacer_horizontal2)
                     ),

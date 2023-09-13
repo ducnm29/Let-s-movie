@@ -30,21 +30,16 @@ fun GenreListInDetailUI(
             Text(
                 text = stringResource(id = R.string.genre_title),
                 style = MaterialTheme.typography.headlineSmall,
-                modifier = Modifier.padding(
-                    top = dimensionResource(id = R.dimen.spacer_vertical1),
-                    start = dimensionResource(id = R.dimen.spacer_horizontal2)
-                ).fillMaxWidth(),
-                textAlign = TextAlign.Start
+                modifier = Modifier.padding(start = dimensionResource(id = R.dimen.spacer_horizontal2))
             )
             LazyRow(
-                modifier = Modifier.padding(top = dimensionResource(id = R.dimen.spacer_vertical1)),
+                modifier = Modifier.padding(top = dimensionResource(id = R.dimen.spacer_vertical2)),
                 contentPadding = PaddingValues(horizontal = dimensionResource(id = R.dimen.spacer_horizontal2)),
                 horizontalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.spacer_horizontal2))
             ) {
                 items(listGenre) { genre ->
                     GenreInDetailUI(genre = genre)
                 }
-
             }
         }
     }

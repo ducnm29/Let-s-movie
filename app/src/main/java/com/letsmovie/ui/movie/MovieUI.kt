@@ -74,6 +74,7 @@ fun MovieUI(
                         onClick = onSearchBarClick
                     )
                     ImageCarousel(
+                        modifier = Modifier.padding(top = dimensionResource(id = R.dimen.spacer_vertical0)),
                         result = nowPlayingMovieResult.value,
                         onClick = onMovieClickDetail
                     )
@@ -83,17 +84,18 @@ fun MovieUI(
                     )
                     ListItemWithData(
                         result = trendingMovieResult.value,
-                        modifier = modifier,
+                        modifier = Modifier.padding(top = dimensionResource(id = R.dimen.spacer_vertical3)),
                         categoryName = stringResource(id = R.string.trending_title),
                         onClick = onMovieClickDetail
                     )
                     ListItemWithData(
                         result = popularMovieResult.value,
-                        modifier = modifier,
+                        modifier = Modifier.padding(top = dimensionResource(id = R.dimen.spacer_vertical3)),
                         categoryName = stringResource(id = R.string.popular_title),
                         onClick = onMovieClickDetail
                     )
                     ListMovieDetailUI(
+                        modifier = Modifier.padding(top = dimensionResource(id = R.dimen.spacer_vertical3)),
                         categoryType = stringResource(id = R.string.top_rated_title),
                         listMovieResult = topRatedMovieResult.value,
                         onclick = onMovieClickDetail,
@@ -102,6 +104,7 @@ fun MovieUI(
                         }
                     )
                     ListMovieDetailUI(
+                        modifier = Modifier.padding(top = dimensionResource(id = R.dimen.spacer_vertical3)),
                         categoryType = stringResource(id = R.string.up_coming_title),
                         listMovieResult = upComingMovieResult.value,
                         onclick = onMovieClickDetail,

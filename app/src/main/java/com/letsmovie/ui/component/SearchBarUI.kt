@@ -14,6 +14,7 @@ import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
@@ -27,13 +28,13 @@ fun SearchBarUI(
     onClick: () -> Unit
 ) {
     Card(
-        shape = RoundedCornerShape(16.dp),
         modifier = Modifier
             .fillMaxWidth()
             .padding(
                 start = dimensionResource(id = R.dimen.spacer_horizontal2),
                 end = dimensionResource(id = R.dimen.spacer_horizontal2)
             )
+            .clip(RoundedCornerShape(16.dp))
             .clickable(onClick = onClick)
     ) {
         TextField(

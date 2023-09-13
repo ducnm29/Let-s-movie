@@ -8,7 +8,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.unit.dp
 import com.letsmovie.R
@@ -16,12 +15,16 @@ import com.letsmovie.model.Genre
 
 @Composable
 fun GenreInDetailUI(
-    modifier: Modifier= Modifier,
+    modifier: Modifier = Modifier,
     genre: Genre
 ) {
     Column(
         modifier = modifier
-            .border(width = 1.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(6.dp))
+            .border(
+                width = dimensionResource(id = R.dimen.border_line_size),
+                color = MaterialTheme.colorScheme.outline,
+                shape = RoundedCornerShape(6.dp)
+            )
     ) {
         Text(
             text = genre.name ?: "",

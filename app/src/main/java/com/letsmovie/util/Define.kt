@@ -47,13 +47,15 @@ class Define {
         const val PREFETCH_DISTANCE = 2
         const val TOP_RATED_MOVIE = "Top Rated"
         const val UP_COMING_MOVIE = "Up Coming"
+        const val MIN_LINES = 3
+        const val MAX_LINES = 99
 
         /**
          * Movie object sample
          */
         val MOVIE_SAMPLE = Movie(
             id = "1",
-            movieName = "",
+            movieName = "Test Name",
             imgPoster = "/gPbM0MK8CP8A174rmUwGsADNYKD.jpg",
             movieOverview = "",
             imgBackground = "",
@@ -65,7 +67,10 @@ class Define {
             mediaType = "",
             genreList = listOf(),
             homePage = "",
-            runtime = 0
+            runtime = 0,
+            originalLanguage = "",
+            productionCompanies = listOf(),
+            status = ""
 
         )
     }

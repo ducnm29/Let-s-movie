@@ -38,6 +38,7 @@ import kotlin.math.absoluteValue
 
 @Composable
 fun <T : Any> ImageCarousel(
+    modifier: Modifier = Modifier,
     result: Result<DataListResponse<T>>,
     onClick: (String) -> Unit
 ) {
@@ -52,6 +53,7 @@ fun <T : Any> ImageCarousel(
 
         is Result.Success -> {
             ImageCarouselBody(
+                modifier = modifier,
                 listData = result.data.dataList,
                 _itemNumber = 8,
                 onClick = onClick
@@ -63,6 +65,7 @@ fun <T : Any> ImageCarousel(
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun <T : Any> ImageCarouselBody(
+    modifier: Modifier = Modifier,
     listData: List<T>,
     _itemNumber: Int,
     onClick: (String) -> Unit
@@ -79,8 +82,7 @@ fun <T : Any> ImageCarouselBody(
         pagerState.animateScrollToPage(newPosition)
     }
     Column(
-        modifier = Modifier
-            .fillMaxWidth()
+        modifier = modifier.fillMaxWidth()
     ) {
         HorizontalPager(
             pageCount = itemNumber,

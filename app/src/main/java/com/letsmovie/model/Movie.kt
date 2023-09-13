@@ -30,5 +30,11 @@ data class Movie(
     @SerializedName("homepage")
     val homePage: String?,
     @SerializedName("runtime")
-    val runtime: Int?
+    val runtime: Int?,
+    @SerializedName("original_language")
+    val originalLanguage: String?,
+    @SerializedName("production_companies")
+    val productionCompanies: List<ProductionCompany>,
+    @SerializedName("status")
+    val status: String?,
 )

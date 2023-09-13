@@ -21,7 +21,7 @@ fun <T : Any> ListItemWithData(
         is Result.Success -> {
             if(result.data.dataList.isNotEmpty()){
                 ListItemUI(
-                    //modifier = modifier,
+                    modifier = modifier,
                     listName = categoryName,
                     onClick = onClick,
                     listItem = result.data.dataList

@@ -27,9 +27,7 @@ fun <T : Any> ListItemUI(
     listItem: List<T>
 ) {
     Column(
-        modifier = modifier
-            .padding(top = 12.dp)
-            .fillMaxWidth(),
+        modifier = modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.Start
 
     ) {
@@ -39,7 +37,7 @@ fun <T : Any> ListItemUI(
             modifier = Modifier.padding(start = 16.dp)
         )
         LazyRow(
-            modifier = Modifier.padding(top = 32.dp),
+            modifier = Modifier.padding(top = dimensionResource(id = R.dimen.spacer_vertical2)),
             contentPadding = PaddingValues(
                 horizontal = dimensionResource(id = R.dimen.spacer_horizontal2)
             ),
