@@ -1,6 +1,7 @@
 package com.letsmovie.ui.genre
 
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -16,7 +17,8 @@ import com.letsmovie.model.Genre
 @Composable
 fun GenreInDetailUI(
     modifier: Modifier = Modifier,
-    genre: Genre
+    genre: Genre,
+    onGenreClick: (String, String) -> Unit
 ) {
     Column(
         modifier = modifier
@@ -25,10 +27,13 @@ fun GenreInDetailUI(
                 color = MaterialTheme.colorScheme.outline,
                 shape = RoundedCornerShape(6.dp)
             )
+            .clickable {
+                onGenreClick(genre.id, genre.name ?: "")
+            }
     ) {
         Text(
             text = genre.name ?: "",
-            style = MaterialTheme.typography.titleMedium,
+            style = MaterialTheme.typography.labelLarge,
             modifier = Modifier.padding(
                 horizontal = dimensionResource(id = R.dimen.spacer_horizontal2),
                 vertical = dimensionResource(id = R.dimen.spacer_vertical1)

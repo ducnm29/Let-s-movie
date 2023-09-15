@@ -36,6 +36,7 @@ fun TvItem(
                 .crossfade(true)
                 .build(),
             contentDescription = null,
+            placeholder = painterResource(id = R.drawable.loading_image),
             error = painterResource(id = R.drawable.no_image_available)
         )
     }

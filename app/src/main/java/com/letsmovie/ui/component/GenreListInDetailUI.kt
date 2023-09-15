@@ -21,7 +21,8 @@ import com.letsmovie.ui.genre.GenreInDetailUI
 @Composable
 fun GenreListInDetailUI(
     modifier: Modifier = Modifier,
-    listGenre: List<Genre>
+    listGenre: List<Genre>,
+    onGenreClick: (String, String) -> Unit
 ) {
     if (listGenre.isNotEmpty()) {
         Column(
@@ -38,7 +39,10 @@ fun GenreListInDetailUI(
                 horizontalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.spacer_horizontal2))
             ) {
                 items(listGenre) { genre ->
-                    GenreInDetailUI(genre = genre)
+                    GenreInDetailUI(
+                        genre = genre,
+                        onGenreClick = onGenreClick
+                    )
                 }
             }
         }

@@ -42,6 +42,7 @@ fun MovieItem(
                 .build(),
             contentDescription = null,
             contentScale = ContentScale.Crop,
+            placeholder = painterResource(id = R.drawable.loading_image),
             modifier = Modifier
                 .fillMaxSize(1f)
                 .height(dimensionResource(id = R.dimen.movie_item_height))

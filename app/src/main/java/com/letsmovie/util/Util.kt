@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import androidx.compose.ui.text.intl.Locale
+import com.letsmovie.R
 
 object Util {
 
@@ -16,5 +17,15 @@ object Util {
         } catch (ex: Exception) {
             ex.printStackTrace()
         }
+    }
+
+    /**
+     * Simplify url string
+     */
+    fun Context.shorterUrl(url: String): String {
+        if (url.trim().isEmpty()) {
+            return getString(R.string.no_value_data)
+        }
+        return url.slice(url.indexOf(".") + 1 until url.lastIndexOf("."))
     }
 }

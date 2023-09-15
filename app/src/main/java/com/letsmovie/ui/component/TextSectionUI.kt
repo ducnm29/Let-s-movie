@@ -43,8 +43,8 @@ fun TextSectionUI(
             style = MaterialTheme.typography.headlineSmall,
         )
         Text(
-            text = body,
-            style = MaterialTheme.typography.bodyMedium,
+            text = if (body.trim().isEmpty()) stringResource(id = R.string.no_value_data) else body,
+            style = MaterialTheme.typography.bodyLarge,
             modifier = Modifier
                 .padding(top = dimensionResource(id = R.dimen.spacer_vertical1))
                 .animateContentSize(),

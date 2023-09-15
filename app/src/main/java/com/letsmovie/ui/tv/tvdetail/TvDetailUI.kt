@@ -107,6 +107,7 @@ fun TvDetailBodyUI(
                 alpha = 0.4f,
                 contentScale = ContentScale.Crop,
                 modifier = Modifier.fillMaxSize(),
+                placeholder = painterResource(id = R.drawable.loading_image),
                 error = painterResource(id = R.drawable.no_image_available)
             )
         }
@@ -169,6 +170,7 @@ fun TvDetailBodyUI(
                     contentDescription = null,
                     contentScale = ContentScale.Crop,
                     modifier = Modifier.fillMaxSize(),
+                    placeholder = painterResource(id = R.drawable.loading_image),
                     error = painterResource(id = R.drawable.no_image_available)
                 )
             }

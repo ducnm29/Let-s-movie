@@ -42,6 +42,7 @@ fun CastUI(
                 .build(),
             contentDescription = null,
             contentScale = ContentScale.Crop,
+            placeholder = painterResource(id = R.drawable.loading_image),
             error = painterResource(id = R.drawable.no_image_available),
             modifier = Modifier
                 .size(dimensionResource(id = R.dimen.cast_image_item_size))
@@ -49,15 +50,15 @@ fun CastUI(
         )
         Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.spacer_vertical0)))
         Text(
-            text = cast.character,
+            text = cast.name,
             style = MaterialTheme.typography.titleSmall,
             overflow = TextOverflow.Ellipsis,
             maxLines = 1
         )
         Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.spacer_vertical0)))
         Text(
-            text = cast.name,
-            style = MaterialTheme.typography.titleSmall,
+            text = cast.character,
+            style = MaterialTheme.typography.bodySmall,
             overflow = TextOverflow.Ellipsis,
             maxLines = 1
         )

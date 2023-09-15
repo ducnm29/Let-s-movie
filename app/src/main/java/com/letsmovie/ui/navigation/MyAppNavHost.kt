@@ -85,6 +85,11 @@ fun NavGraphBuilder.movieGraph(navController: NavHostController) {
                 },
                 onMovieClickDetail = { movieId ->
                     navController.navigate(MovieDetailDestination.createNavRoute(movieId))
+                },
+                onGenreClick = {genreId, genreName ->
+                    navController.navigate(
+                        MovieByGenreDestination.createNavRoute(genreId, genreName)
+                    )
                 }
             )
         }

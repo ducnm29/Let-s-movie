@@ -24,4 +24,5 @@
     <string name="homepage_title">Homepage</string>
     <string name="production_company">Production company</string>
     <string name="status">Status</string>
+    <string name="no_value_data">No description</string>
 </resources>

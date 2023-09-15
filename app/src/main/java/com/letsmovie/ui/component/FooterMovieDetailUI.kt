@@ -16,11 +16,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import com.letsmovie.R
 import com.letsmovie.model.Movie
 import com.letsmovie.util.Util
+import com.letsmovie.util.Util.shorterUrl
 
 @Composable
 fun FooterMovieDetailUI(
@@ -39,7 +41,6 @@ fun FooterMovieDetailUI(
             end = dimensionResource(id = R.dimen.spacer_vertical2)
         )
     ) {
-        Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.spacer_vertical1)))
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween
@@ -90,12 +91,12 @@ fun TextElementUI(
     ) {
         Text(
             text = stringResource(id = titleRes),
-            style = MaterialTheme.typography.titleSmall
+            style = MaterialTheme.typography.titleMedium
         )
         Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.spacer_vertical0)))
         Text(
             text = body,
-            style = MaterialTheme.typography.bodySmall,
+            style = MaterialTheme.typography.bodyMedium,
             maxLines = 2
         )
     }
@@ -108,17 +109,18 @@ fun ClickAbleTextElementUI(
     body: String,
     onCLickOpenLink: (String) -> Unit
 ) {
+    val currentContext = LocalContext.current
     Column(
         modifier = modifier
     ) {
         Text(
             text = stringResource(id = titleRes),
-            style = MaterialTheme.typography.titleSmall
+            style = MaterialTheme.typography.titleMedium
         )
         Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.spacer_vertical0)))
         Text(
-            text = body,
-            style = MaterialTheme.typography.bodySmall,
+            text = currentContext.shorterUrl(body),
+            style = MaterialTheme.typography.bodyMedium,
             maxLines = 2,
             modifier = Modifier.clickable {
                 onCLickOpenLink(body)

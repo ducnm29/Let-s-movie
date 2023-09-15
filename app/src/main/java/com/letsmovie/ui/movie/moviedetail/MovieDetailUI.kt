@@ -61,7 +61,8 @@ fun MovieDetailUI(
     modifier: Modifier = Modifier,
     movieDetailViewModel: MovieDetailViewModel,
     onClickBack: () -> Unit,
-    onMovieClickDetail: (String) -> Unit
+    onMovieClickDetail: (String) -> Unit,
+    onGenreClick: (String, String) -> Unit
 ) {
     val movieResult: Result<Movie> = movieDetailViewModel.movieDetail.collectAsState().value
     val castResult: Result<DataCastResponse> = movieDetailViewModel.castList.collectAsState().value
@@ -100,7 +101,8 @@ fun MovieDetailUI(
                 onMovieClickDetail = onMovieClickDetail,
                 onClickOpenLink = { link ->
                     currentContext.openLinkInBrowser(link = link)
-                }
+                },
+                onGenreClick = onGenreClick
             )
         }
     }
@@ -114,7 +116,8 @@ fun MovieDetailBodyUI(
     recommendationsResult: Result<DataListResponse<Movie>>,
     onClickBack: () -> Unit,
     onMovieClickDetail: (String) -> Unit,
-    onClickOpenLink: (String) -> Unit
+    onClickOpenLink: (String) -> Unit,
+    onGenreClick: (String, String) -> Unit
 ) {
     Column(
         modifier = modifier
@@ -131,6 +134,7 @@ fun MovieDetailBodyUI(
                     .crossfade(true)
                     .build(),
                 contentDescription = null,
+                placeholder = painterResource(id = R.drawable.loading_image),
                 alpha = 0.4f,
                 contentScale = ContentScale.Crop,
                 modifier = Modifier.fillMaxSize(),
@@ -193,6 +197,7 @@ fun MovieDetailBodyUI(
                             .scale(Scale.FILL)
                             .build(),
                         contentDescription = null,
+                        placeholder = painterResource(id = R.drawable.loading_image),
                         contentScale = ContentScale.Crop,
                         modifier = Modifier.fillMaxSize(),
                         error = painterResource(id = R.drawable.no_image_available)
@@ -237,7 +242,8 @@ fun MovieDetailBodyUI(
 
             GenreListInDetailUI(
                 listGenre = movieResult.data.genreList ?: listOf(),
-                modifier = Modifier.padding(top = dimensionResource(id = R.dimen.spacer_vertical2))
+                modifier = Modifier.padding(top = dimensionResource(id = R.dimen.spacer_vertical1)),
+                onGenreClick = onGenreClick
             )
 
             ListCastUI(

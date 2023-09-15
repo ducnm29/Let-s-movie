@@ -47,6 +47,7 @@ fun MovieItemHorizontalUI(
                     .build(),
                 contentDescription = null,
                 contentScale = ContentScale.Crop,
+                placeholder = painterResource(id = R.drawable.loading_image),
                 modifier = Modifier.size(dimensionResource(id = R.dimen.movie_item_horizontal_size)),
                 error = painterResource(id = R.drawable.no_image_available)
             )

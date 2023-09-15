@@ -48,7 +48,7 @@ class Define {
         const val TOP_RATED_MOVIE = "Top Rated"
         const val UP_COMING_MOVIE = "Up Coming"
         const val MIN_LINES = 3
-        const val MAX_LINES = 99
+        const val MAX_LINES = Int.MAX_VALUE
 
         /**
          * Movie object sample
