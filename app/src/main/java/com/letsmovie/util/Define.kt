@@ -22,27 +22,12 @@ class Define {
         const val MOVIE_BY_SEARCH_ROUTE = "movie_by_search_route"
 
         /**
-         * Name constant for navigation
-         */
-        const val MOVIE_NAME = "Movie"
-        const val FAVOURITE_NAME = "Favourite"
-        const val SETTING_NAME = "Setting"
-        const val TV_NAME = "Tv"
-        const val MOVIE_DETAIL_NAME = "Movie Detail"
-        const val TV_DETAIL_NAME = "Tv Detail"
-        const val MOVIE_IN_GENRE_NAME = "Movie In Genre"
-
-        /**
          *  Const variable
          */
         const val BASE_URL = "https://api.themoviedb.org/3/"
         const val BASE_IMG_URL = "https://image.tmdb.org/t/p/w500/"
         const val BASE_IMG_URL_ORIGIN = "https://image.tmdb.org/t/p/original/"
-        const val API_KEY = "f39c7e6b303df4c5106ab18f41b95c54"
         var LANGUAGE_DEFAULT = Util.getDeviceLanguage()
-        const val HEADER_HELLO = "Hello Duc NM ahyhy"
-        const val HEADER_1 = "It's movie time ahyhy!"
-        const val ERROR_TAG = "error_tag"
         const val MAX_PAGING_SIZE = 5
         const val PREFETCH_DISTANCE = 2
         const val TOP_RATED_MOVIE = "Top Rated"

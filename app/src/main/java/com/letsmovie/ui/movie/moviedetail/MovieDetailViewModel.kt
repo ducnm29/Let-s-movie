@@ -3,6 +3,7 @@ package com.letsmovie.ui.movie.moviedetail
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.letsmovie.BuildConfig
 import com.letsmovie.model.DataCastResponse
 import com.letsmovie.model.DataListResponse
 import com.letsmovie.model.Movie
@@ -45,17 +46,17 @@ class MovieDetailViewModel @Inject constructor(
         getMovieDetail(
             movieId = movieId,
             language = Define.LANGUAGE_DEFAULT,
-            apiKey = Define.API_KEY
+            apiKey = BuildConfig.API_KEY
         )
         getCastsOfMovie(
             movieId = movieId,
             language = Define.LANGUAGE_DEFAULT,
-            apiKey = Define.API_KEY
+            apiKey = BuildConfig.API_KEY
         )
         getRecommendationsMovie(
             movieId = movieId,
             language = Define.LANGUAGE_DEFAULT,
-            apiKey = Define.API_KEY,
+            apiKey = BuildConfig.API_KEY,
             page = 1
         )
     }

@@ -2,6 +2,7 @@ package com.letsmovie.ui.tv
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.letsmovie.BuildConfig
 import com.letsmovie.model.DataListResponse
 import com.letsmovie.model.Result
 import com.letsmovie.model.Tv
@@ -38,7 +39,7 @@ class TvViewModel @Inject constructor(
 
     fun getTrendingTv() {
         viewModelScope.launch {
-            tvRepository.getTrendingTv(Define.LANGUAGE_DEFAULT, Define.API_KEY).collectLatest {
+            tvRepository.getTrendingTv(Define.LANGUAGE_DEFAULT, BuildConfig.API_KEY).collectLatest {
                 _trendingTvStateFlow.value = it
             }
         }
@@ -46,7 +47,7 @@ class TvViewModel @Inject constructor(
 
     fun getPopularTv() {
         viewModelScope.launch {
-            tvRepository.getPopularTv(Define.LANGUAGE_DEFAULT, Define.API_KEY).collectLatest {
+            tvRepository.getPopularTv(Define.LANGUAGE_DEFAULT, BuildConfig.API_KEY).collectLatest {
                 _popularTvStateFlow.value = it
             }
         }

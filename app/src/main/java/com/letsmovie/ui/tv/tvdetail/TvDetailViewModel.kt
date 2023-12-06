@@ -3,6 +3,7 @@ package com.letsmovie.ui.tv.tvdetail
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.letsmovie.BuildConfig
 import com.letsmovie.model.Result
 import com.letsmovie.model.Tv
 import com.letsmovie.repository.TvRepository
@@ -31,7 +32,7 @@ class TvDetailViewModel @Inject constructor(
         getTvDetail(
             tvId = tvId,
             language = Define.LANGUAGE_DEFAULT,
-            apiKey = Define.API_KEY
+            apiKey = BuildConfig.API_KEY
         )
     }
 

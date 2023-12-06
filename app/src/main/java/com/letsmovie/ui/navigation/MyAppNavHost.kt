@@ -10,6 +10,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
+import com.letsmovie.BuildConfig
 import com.letsmovie.ui.favourite.FavouriteUI
 import com.letsmovie.ui.movie.MovieUI
 import com.letsmovie.ui.movie.movebygenre.MovieByGenreUI
@@ -25,21 +26,34 @@ import com.letsmovie.util.Define
 fun MyAppNavHost(
     modifier: Modifier = Modifier,
     navController: NavHostController,
-    startDestination: String
+    startDestination: String,
+    onClickBack: () -> Unit,
+    onNavigateScreen: (String) -> Unit
 ) {
     NavHost(
         modifier = modifier,
         navController = navController,
         startDestination = startDestination
     ) {
-        movieGraph(navController)
-        tvGraph(navController)
-        favGraph(navController)
-        settingGraph(navController)
+        movieGraph(
+            onNavigateScreen = onNavigateScreen,
+            onClickBack = onClickBack
+        )
+        tvGraph(
+            onNavigateScreen = onNavigateScreen,
+            onClickBack = onClickBack
+        )
+        favGraph(
+            onNavigateScreen = onNavigateScreen
+        )
+        settingGraph()
     }
 }
 
-fun NavGraphBuilder.movieGraph(navController: NavHostController) {
+fun NavGraphBuilder.movieGraph(
+    onClickBack: () -> Unit,
+    onNavigateScreen: (String) -> Unit
+) {
     navigation(
         startDestination = TopLevelDestination.MOVIE.startDestination,
         route = TopLevelDestination.MOVIE.route
@@ -50,24 +64,16 @@ fun NavGraphBuilder.movieGraph(navController: NavHostController) {
             MovieUI(
                 movieViewModel = hiltViewModel(),
                 onMovieClickDetail = { movieId ->
-                    navController.navigate(
-                        MovieDetailDestination.createNavRoute(movieId)
-                    )
+                    onNavigateScreen(MovieDetailDestination.createNavRoute(movieId))
                 },
                 onGenreClick = { genreId, genreName ->
-                    navController.navigate(
-                        MovieByGenreDestination.createNavRoute(genreId, genreName)
-                    )
+                    onNavigateScreen(MovieByGenreDestination.createNavRoute(genreId, genreName))
                 },
                 onMovieViewMoreClick = { movieType ->
-                    navController.navigate(
-                        MovieByTypeDestination.createNavRoute(movieType)
-                    )
+                    onNavigateScreen(MovieByTypeDestination.createNavRoute(movieType))
                 },
                 onSearchBarClick = {
-                    navController.navigate(
-                        MovieBySearchDestination.createNavRoute()
-                    )
+                    onNavigateScreen(MovieBySearchDestination.createNavRoute())
                 }
             )
         }
@@ -80,14 +86,12 @@ fun NavGraphBuilder.movieGraph(navController: NavHostController) {
             MovieDetailUI(
                 modifier = Modifier.verticalScroll(rememberScrollState()),
                 movieDetailViewModel = hiltViewModel(),
-                onClickBack = {
-                    navController.popBackStack()
-                },
+                onClickBack = onClickBack,
                 onMovieClickDetail = { movieId ->
-                    navController.navigate(MovieDetailDestination.createNavRoute(movieId))
+                    onNavigateScreen(MovieDetailDestination.createNavRoute(movieId))
                 },
-                onGenreClick = {genreId, genreName ->
-                    navController.navigate(
+                onGenreClick = { genreId, genreName ->
+                    onNavigateScreen(
                         MovieByGenreDestination.createNavRoute(genreId, genreName)
                     )
                 }
@@ -104,11 +108,9 @@ fun NavGraphBuilder.movieGraph(navController: NavHostController) {
                 genreName = backStackEntry.arguments?.getString(MovieByGenreDestination.genreNameArg)
                     ?: "",
                 onMovieClick = { movieId ->
-                    navController.navigate(MovieDetailDestination.createNavRoute(movieId))
+                    onNavigateScreen(MovieDetailDestination.createNavRoute(movieId))
                 },
-                onBackClick = {
-                    navController.popBackStack()
-                }
+                onBackClick = onClickBack
             )
         }
 
@@ -122,11 +124,9 @@ fun NavGraphBuilder.movieGraph(navController: NavHostController) {
                 typeName = backStackEntry.arguments?.getString(MovieByTypeDestination.movieType)
                     ?: "",
                 onMovieClick = { movieId ->
-                    navController.navigate(MovieDetailDestination.createNavRoute(movieId))
+                    onNavigateScreen(MovieDetailDestination.createNavRoute(movieId))
                 },
-                onBackClick = {
-                    navController.popBackStack()
-                }
+                onBackClick = onClickBack
             )
         }
 
@@ -135,17 +135,15 @@ fun NavGraphBuilder.movieGraph(navController: NavHostController) {
         ) {
             MovieBySearchUI(
                 movieBySearchViewModel = hiltViewModel(),
-                onBackClick = {
-                    navController.popBackStack()
-                },
+                onBackClick = onClickBack,
                 onMovieDetailClick = { movieId ->
-                    navController.navigate(MovieDetailDestination.createNavRoute(movieId))
+                    onNavigateScreen(MovieDetailDestination.createNavRoute(movieId))
                 },
                 onSearchWithKeyWord = { movieBySearchViewModel, keyword ->
                     movieBySearchViewModel.setKeyWordSearch(keyword)
                     movieBySearchViewModel.getMovieSearch(
                         language = Define.LANGUAGE_DEFAULT,
-                        apiKey = Define.API_KEY,
+                        apiKey = BuildConfig.API_KEY,
                         includeAdult = false
                     )
                 }
@@ -154,7 +152,10 @@ fun NavGraphBuilder.movieGraph(navController: NavHostController) {
     }
 }
 
-fun NavGraphBuilder.tvGraph(navController: NavHostController) {
+fun NavGraphBuilder.tvGraph(
+    onNavigateScreen: (String) -> Unit,
+    onClickBack: () -> Unit
+) {
     navigation(
         startDestination = TopLevelDestination.TV.startDestination,
         route = TopLevelDestination.TV.route
@@ -163,7 +164,7 @@ fun NavGraphBuilder.tvGraph(navController: NavHostController) {
             TvUI(
                 tvViewModel = hiltViewModel(),
                 onTvClick = { tvId ->
-                    navController.navigate(TvDetailDestination.createNavRoute(tvId))
+                    onNavigateScreen(TvDetailDestination.createNavRoute(tvId))
                 }
             )
         }
@@ -171,15 +172,15 @@ fun NavGraphBuilder.tvGraph(navController: NavHostController) {
             TvDetailUI(
                 modifier = Modifier.verticalScroll(rememberScrollState()),
                 tvViewModel = hiltViewModel(),
-                onClickBack = {
-                    navController.popBackStack()
-                }
+                onClickBack = onClickBack
             )
         }
     }
 }
 
-fun NavGraphBuilder.favGraph(navController: NavHostController) {
+fun NavGraphBuilder.favGraph(
+    onNavigateScreen: (String) -> Unit
+) {
     navigation(
         startDestination = TopLevelDestination.FAVOURITE.startDestination,
         route = TopLevelDestination.FAVOURITE.route
@@ -189,17 +190,17 @@ fun NavGraphBuilder.favGraph(navController: NavHostController) {
                 movieViewModel = hiltViewModel(),
                 tvViewModel = hiltViewModel(),
                 onTvClick = { tvId ->
-                    navController.navigate(TvDetailDestination.createNavRoute(tvId))
+                    onNavigateScreen(TvDetailDestination.createNavRoute(tvId))
                 },
                 onMovieClick = { movieId ->
-                    navController.navigate(MovieDetailDestination.createNavRoute(movieId))
+                    onNavigateScreen(MovieDetailDestination.createNavRoute(movieId))
                 }
             )
         }
     }
 }
 
-fun NavGraphBuilder.settingGraph(navController: NavHostController) {
+fun NavGraphBuilder.settingGraph() {
     navigation(
         startDestination = TopLevelDestination.SETTING.startDestination,
         route = TopLevelDestination.SETTING.route

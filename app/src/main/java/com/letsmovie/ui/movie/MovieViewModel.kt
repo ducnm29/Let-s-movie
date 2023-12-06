@@ -4,6 +4,7 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.letsmovie.BuildConfig
 import com.letsmovie.model.DataGenreResponse
 import com.letsmovie.model.DataListResponse
 import com.letsmovie.model.Movie
@@ -124,12 +125,12 @@ class MovieViewModel @Inject constructor(
     }
 
     fun refreshData() {
-        getTrendingMovie(Define.LANGUAGE_DEFAULT, Define.API_KEY)
-        getPopularMovie(Define.LANGUAGE_DEFAULT, Define.API_KEY)
-        getTopRatedMovie(Define.LANGUAGE_DEFAULT, Define.API_KEY)
-        getUpComingMovie(Define.LANGUAGE_DEFAULT, Define.API_KEY)
-        getMovieGenreList(Define.LANGUAGE_DEFAULT, Define.API_KEY)
-        getNowPlayingMovie(Define.LANGUAGE_DEFAULT, Define.API_KEY, 1)
+        getTrendingMovie(Define.LANGUAGE_DEFAULT, BuildConfig.API_KEY)
+        getPopularMovie(Define.LANGUAGE_DEFAULT, BuildConfig.API_KEY)
+        getTopRatedMovie(Define.LANGUAGE_DEFAULT, BuildConfig.API_KEY)
+        getUpComingMovie(Define.LANGUAGE_DEFAULT, BuildConfig.API_KEY)
+        getMovieGenreList(Define.LANGUAGE_DEFAULT, BuildConfig.API_KEY)
+        getNowPlayingMovie(Define.LANGUAGE_DEFAULT, BuildConfig.API_KEY, 1)
     }
 
 }

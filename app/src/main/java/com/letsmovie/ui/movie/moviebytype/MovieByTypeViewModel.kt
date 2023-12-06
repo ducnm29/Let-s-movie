@@ -7,6 +7,7 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
+import com.letsmovie.BuildConfig
 import com.letsmovie.model.Movie
 import com.letsmovie.paging.MovieByTypePagingSource
 import com.letsmovie.repository.MovieRepository
@@ -35,7 +36,7 @@ class MovieByTypeViewModel @Inject constructor(
     init {
         getTopRatedMovies(
             language = Define.LANGUAGE_DEFAULT,
-            apiKey = Define.API_KEY,
+            apiKey = BuildConfig.API_KEY,
             movieType = movieType
         )
     }

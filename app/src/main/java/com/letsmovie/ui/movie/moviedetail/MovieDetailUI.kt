@@ -165,7 +165,7 @@ fun MovieDetailBodyUI(
                             .weight(1f)
                             .padding(top = dimensionResource(id = R.dimen.spacer_vertical3)),
                         textAlign = TextAlign.Center,
-                        maxLines = 3,
+                        maxLines = 2,
                         overflow = TextOverflow.Ellipsis
                     )
                     IconButton(
