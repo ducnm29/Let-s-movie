@@ -24,51 +24,41 @@ import com.letsmovie.model.Result
 fun ListMovieDetailUI(
     modifier: Modifier = Modifier,
     categoryType: String,
-    listMovieResult: Result<DataListResponse<Movie>>,
+    listMovie: List<Movie>,
     onclick: (String) -> Unit,
     onViewMoreClick: () -> Unit
 ) {
-    when (listMovieResult) {
-        is Result.Loading -> {
 
+    Column(
+        modifier = modifier.padding(
+            start = dimensionResource(id = R.dimen.spacer_horizontal1),
+            end = dimensionResource(id = R.dimen.spacer_horizontal1)
+        )
+    ) {
+        Text(
+            text = categoryType,
+            fontWeight = FontWeight.Medium,
+            fontSize = dimensionResource(id = R.dimen.category_title).value.sp,
+            modifier = Modifier.padding(
+                bottom = dimensionResource(id = R.dimen.spacer_vertical2)
+            )
+        )
+        val maxItem = if(listMovie.size > 5) 5 else listMovie.size
+        listMovie.subList(0, maxItem).forEach { movie ->
+            MovieItemHorizontalUI(
+                movie = movie,
+                onclick = onclick
+            )
         }
-
-        is Result.Error -> {
-
-        }
-
-        is Result.Success -> {
-            Column(
-                modifier = modifier.padding(
-                    start = dimensionResource(id = R.dimen.spacer_horizontal1),
-                    end = dimensionResource(id = R.dimen.spacer_horizontal1)
-                )
-            ) {
-                Text(
-                    text = categoryType,
-                    fontWeight = FontWeight.Medium,
-                    fontSize = dimensionResource(id = R.dimen.category_title).value.sp,
-                    modifier = Modifier.padding(
-                        bottom = dimensionResource(id = R.dimen.spacer_vertical2)
-                    )
-                )
-                listMovieResult.data.dataList.subList(0, 5).forEach { movie ->
-                    MovieItemHorizontalUI(
-                        movie = movie,
-                        onclick = onclick
-                    )
-                }
-                OutlinedButton(
-                    onClick = onViewMoreClick,
-                    modifier = Modifier.fillMaxWidth(),
-                    shape = RoundedCornerShape(5.dp),
-                    colors = ButtonDefaults.outlinedButtonColors(
-                        contentColor = MaterialTheme.colorScheme.onBackground
-                    )
-                ) {
-                    Text(text = stringResource(id = R.string.view_more))
-                }
-            }
+        OutlinedButton(
+            onClick = onViewMoreClick,
+            modifier = Modifier.fillMaxWidth(),
+            shape = RoundedCornerShape(5.dp),
+            colors = ButtonDefaults.outlinedButtonColors(
+                contentColor = MaterialTheme.colorScheme.onBackground
+            )
+        ) {
+            Text(text = stringResource(id = R.string.view_more))
         }
     }
 

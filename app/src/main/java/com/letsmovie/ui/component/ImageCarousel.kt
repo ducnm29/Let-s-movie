@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -37,36 +36,24 @@ import kotlinx.coroutines.launch
 import kotlin.math.absoluteValue
 
 @Composable
-fun <T : Any> ImageCarousel(
+fun MovieCarousel(
     modifier: Modifier = Modifier,
-    result: Result<DataListResponse<T>>,
+    listMovie: List<Movie>,
     onClick: (String) -> Unit
 ) {
-    when (result) {
-        is Result.Loading -> {
-
-        }
-
-        is Result.Error -> {
-            Log.d("ImageCarousel", "Ex: "+result.exception)
-        }
-
-        is Result.Success -> {
-            ImageCarouselBody(
-                modifier = modifier,
-                listData = result.data.dataList,
-                _itemNumber = 8,
-                onClick = onClick
-            )
-        }
-    }
+    ImageCarouselBody(
+        modifier = modifier,
+        listData = listMovie,
+        _itemNumber = 8,
+        onClick = onClick
+    )
 }
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun <T : Any> ImageCarouselBody(
+fun ImageCarouselBody(
     modifier: Modifier = Modifier,
-    listData: List<T>,
+    listData: List<Movie>,
     _itemNumber: Int,
     onClick: (String) -> Unit
 ) {

@@ -18,6 +18,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -27,36 +28,14 @@ class MovieViewModel @Inject constructor(
     private val genreRepository: GenreRepository
 ) : ViewModel() {
 
+    private val _uiState = MutableStateFlow(MovieUiState.EMPTY)
+    val uiState: StateFlow<MovieUiState> = _uiState
+
 
     private val _trendingMovieStateFlow: MutableStateFlow<Result<DataListResponse<Movie>>> =
         MutableStateFlow(Result.Loading)
     val trendingMovieStateFlow: StateFlow<Result<DataListResponse<Movie>>> =
         _trendingMovieStateFlow.asStateFlow()
-
-    private val _popularMovieStateFlow: MutableStateFlow<Result<DataListResponse<Movie>>> =
-        MutableStateFlow(Result.Loading)
-    val popularMovieStateFlow: StateFlow<Result<DataListResponse<Movie>>> =
-        _popularMovieStateFlow.asStateFlow()
-
-    private val _topRatedMovieStateFlow: MutableStateFlow<Result<DataListResponse<Movie>>> =
-        MutableStateFlow(Result.Loading)
-    val topRatedMovieStateFlow: StateFlow<Result<DataListResponse<Movie>>> =
-        _topRatedMovieStateFlow.asStateFlow()
-
-    private val _upComingMovieStateFlow: MutableStateFlow<Result<DataListResponse<Movie>>> =
-        MutableStateFlow(Result.Loading)
-    val upComingMovie: StateFlow<Result<DataListResponse<Movie>>> =
-        _upComingMovieStateFlow.asStateFlow()
-
-
-    private val _movieGenre: MutableStateFlow<Result<DataGenreResponse>> =
-        MutableStateFlow(Result.Loading)
-    val movieGenre: StateFlow<Result<DataGenreResponse>> = _movieGenre.asStateFlow()
-
-    private val _nowPlayingMovieStateFlow: MutableStateFlow<Result<DataListResponse<Movie>>> =
-        MutableStateFlow(Result.Loading)
-    val nowPlayingMovieStateFlow: StateFlow<Result<DataListResponse<Movie>>> =
-        _nowPlayingMovieStateFlow.asStateFlow()
 
     // Pull to refresh
     private val _refreshing = mutableStateOf(false)
@@ -68,49 +47,143 @@ class MovieViewModel @Inject constructor(
 
     fun getTrendingMovie(language: String, apiKey: String) {
         viewModelScope.launch {
-            movieRepository.getTrendingMovie(language, apiKey).collectLatest {
-                _trendingMovieStateFlow.value = it
-            }
+            movieRepository.getTrendingMovie(language, apiKey)
+                .collectLatest { trendingMovieResult ->
+                    _uiState.update { it.copy(trendingMovieState = trendingMovieResult) }
+                    when (trendingMovieResult) {
+                        Result.Loading -> {
+
+                        }
+
+                        is Result.Error -> {
+                            // Handle error
+                        }
+
+                        is Result.Success -> {
+                            _uiState.update {
+                                it.copy(listTrendingMovie = trendingMovieResult.data.dataList)
+                            }
+                        }
+                    }
+
+                }
         }
     }
 
     fun getPopularMovie(language: String, apiKey: String) {
         viewModelScope.launch {
-            movieRepository.getPopularMovie(language, apiKey).collectLatest {
-                _popularMovieStateFlow.value = it
+            movieRepository.getPopularMovie(language, apiKey).collectLatest { popularMovieResult ->
+                _uiState.update { it.copy(popularMovieState = popularMovieResult) }
+                when (popularMovieResult) {
+                    Result.Loading -> {
+
+                    }
+
+                    is Result.Error -> {
+                        // Handle error
+                    }
+
+                    is Result.Success -> {
+                        _uiState.update {
+                            it.copy(listPopularMovie = popularMovieResult.data.dataList)
+                        }
+                    }
+                }
             }
         }
     }
 
     fun getTopRatedMovie(language: String, apiKey: String) {
         viewModelScope.launch {
-            movieRepository.getTopRatedMovie(language, apiKey).collectLatest {
-                _topRatedMovieStateFlow.value = it
-            }
+            movieRepository.getTopRatedMovie(language, apiKey)
+                .collectLatest { topRatedMovieResult ->
+                    _uiState.update { it.copy(topRatedMovieState = topRatedMovieResult) }
+                    when (topRatedMovieResult) {
+                        Result.Loading -> {
+
+                        }
+
+                        is Result.Error -> {
+                            // Handle error
+                        }
+
+                        is Result.Success -> {
+                            _uiState.update {
+                                it.copy(listTopRatedMovie = topRatedMovieResult.data.dataList)
+                            }
+                        }
+                    }
+                }
         }
     }
 
     fun getUpComingMovie(language: String, apiKey: String) {
         viewModelScope.launch {
-            movieRepository.getUpComingMovie(language, apiKey).collectLatest {
-                _upComingMovieStateFlow.value = it
-            }
+            movieRepository.getUpComingMovie(language, apiKey)
+                .collectLatest { upComingMovieResult ->
+                    _uiState.update { it.copy(upComingMovieState = upComingMovieResult) }
+                    when (upComingMovieResult) {
+                        Result.Loading -> {
+
+                        }
+
+                        is Result.Error -> {
+                            // Handle error
+                        }
+
+                        is Result.Success -> {
+                            _uiState.update {
+                                it.copy(listUpComingMovie = upComingMovieResult.data.dataList)
+                            }
+                        }
+                    }
+                }
         }
     }
 
     private fun getMovieGenreList(language: String, apiKey: String) {
         viewModelScope.launch {
-            genreRepository.getMovieGenreList(language = language, apiKey = apiKey).collectLatest {
-                _movieGenre.value = it
-            }
+            genreRepository.getMovieGenreList(language = language, apiKey = apiKey)
+                .collectLatest { genreResult ->
+                    when (genreResult) {
+                        Result.Loading -> {
+
+                        }
+
+                        is Result.Error -> {
+                            // Handle error
+                        }
+
+                        is Result.Success -> {
+                            _uiState.update {
+                                it.copy(listGenre = genreResult.data.listGenre)
+                            }
+                        }
+                    }
+                }
         }
     }
 
     private fun getNowPlayingMovie(language: String, apiKey: String, page: Int) {
         viewModelScope.launch {
             movieRepository.getNowPlayingMovie(language = language, apiKey = apiKey, page = page)
-                .collectLatest {
-                    _nowPlayingMovieStateFlow.value = it
+                .collectLatest { nowPlayingMovieResult ->
+                    _uiState.update { it.copy(nowPlayingMovieState = nowPlayingMovieResult) }
+                    when (nowPlayingMovieResult) {
+                        Result.Loading -> {
+
+                        }
+
+                        is Result.Error -> {
+                            // Handle error
+                        }
+
+                        is Result.Success -> {
+                            _uiState.update {
+                                it.copy(listNowPlayingMovie = nowPlayingMovieResult.data.dataList)
+                            }
+                        }
+                    }
                 }
         }
     }

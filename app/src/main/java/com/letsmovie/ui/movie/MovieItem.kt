@@ -21,7 +21,6 @@ import com.letsmovie.R
 import com.letsmovie.model.Movie
 import com.letsmovie.util.Define
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MovieItem(
     movie: Movie,
