@@ -71,11 +71,10 @@ fun NavGraphBuilder.movieGraph(
                 },
                 onMovieViewMoreClick = { movieType ->
                     onNavigateScreen(MovieByTypeDestination.createNavRoute(movieType))
-                },
-                onSearchBarClick = {
-                    onNavigateScreen(MovieBySearchDestination.createNavRoute())
                 }
-            )
+            ) {
+                onNavigateScreen(MovieBySearchDestination.createNavRoute())
+            }
         }
 
         // Movie detail screen

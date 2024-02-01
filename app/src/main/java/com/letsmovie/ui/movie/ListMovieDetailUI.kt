@@ -16,9 +16,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.letsmovie.R
-import com.letsmovie.model.DataListResponse
 import com.letsmovie.model.Movie
-import com.letsmovie.model.Result
 
 @Composable
 fun ListMovieDetailUI(

@@ -29,7 +29,6 @@ import com.letsmovie.util.Define
 
 @Composable
 fun MovieUI(
-    modifier: Modifier = Modifier,
     movieViewModel: MovieViewModel,
     onMovieClickDetail: (String) -> Unit,
     onGenreClick: (String, String) -> Unit,

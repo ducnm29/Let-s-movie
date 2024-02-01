@@ -5,8 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.letsmovie.BuildConfig
-import com.letsmovie.model.DataGenreResponse
-import com.letsmovie.model.DataListResponse
+import com.letsmovie.data.api.movie.DataListResponse
 import com.letsmovie.model.Movie
 import com.letsmovie.model.Result
 import com.letsmovie.repository.GenreRepository
@@ -156,7 +155,7 @@ class MovieViewModel @Inject constructor(
 
                         is Result.Success -> {
                             _uiState.update {
-                                it.copy(listGenre = genreResult.data.listGenre)
+                                it.copy(listGenre = genreResult.data)
                             }
                         }
                     }

@@ -48,12 +48,12 @@ fun FooterMovieDetailUI(
             TextElementUI(
                 modifier = Modifier.width(dimensionResource(id = R.dimen.movie_item_height)),
                 titleRes = R.string.language_title,
-                body = movie.originalLanguage ?: Util.getDeviceLanguage()
+                body = movie.originalLanguage
             )
             TextElementUI(
                 modifier = Modifier.width(dimensionResource(id = R.dimen.movie_item_height)),
                 titleRes = R.string.status,
-                body = movie.status ?: "Released"
+                body = movie.status
             )
         }
         Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.spacer_vertical1)))
@@ -65,7 +65,7 @@ fun FooterMovieDetailUI(
                 modifier = Modifier.width(dimensionResource(id = R.dimen.movie_item_height)),
                 titleRes = R.string.production_company,
                 body = if (movie.productionCompanies.isNotEmpty()) {
-                    movie.productionCompanies[0].name ?: ""
+                    movie.productionCompanies[0].name
                 } else {
                     "..."
                 }
@@ -73,7 +73,7 @@ fun FooterMovieDetailUI(
             ClickAbleTextElementUI(
                 modifier = Modifier.width(dimensionResource(id = R.dimen.movie_item_height)),
                 titleRes = R.string.homepage_title,
-                body = movie.homePage ?: "",
+                body = movie.homePage,
                 onCLickOpenLink = onCLickOpenLink
             )
         }

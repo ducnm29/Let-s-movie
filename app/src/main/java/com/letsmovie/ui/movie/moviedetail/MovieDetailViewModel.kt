@@ -1,12 +1,10 @@
 package com.letsmovie.ui.movie.moviedetail
 
+import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.letsmovie.BuildConfig
-import com.letsmovie.model.DataCastResponse
-import com.letsmovie.model.DataListResponse
-import com.letsmovie.model.Movie
 import com.letsmovie.model.Result
 import com.letsmovie.repository.CastRepository
 import com.letsmovie.repository.MovieRepository
@@ -15,8 +13,8 @@ import com.letsmovie.util.Define
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -30,17 +28,8 @@ class MovieDetailViewModel @Inject constructor(
     // Movie id for detail screen
     private var movieId: String = savedStateHandle[MovieDetailDestination.movieIdArg] ?: "811567"
 
-    private val _movieDetail: MutableStateFlow<Result<Movie>> = MutableStateFlow(Result.Loading)
-    val movieDetail: StateFlow<Result<Movie>> = _movieDetail.asStateFlow()
-
-    private val _castList: MutableStateFlow<Result<DataCastResponse>> =
-        MutableStateFlow(Result.Loading)
-    val castList: StateFlow<Result<DataCastResponse>> = _castList.asStateFlow()
-
-    private val _recommendationsMovie: MutableStateFlow<Result<DataListResponse<Movie>>> =
-        MutableStateFlow(Result.Loading)
-    val recommendationsMovie: StateFlow<Result<DataListResponse<Movie>>> =
-        _recommendationsMovie.asStateFlow()
+    private val _uiState = MutableStateFlow(MovieDetailUiState.EMPTY)
+    val uiState: StateFlow<MovieDetailUiState> = _uiState
 
     init {
         getMovieDetail(
@@ -65,8 +54,21 @@ class MovieDetailViewModel @Inject constructor(
         viewModelScope.launch {
             movieRepository
                 .getMovieDetail(movieId = movieId, language = language, apiKey = apiKey)
-                .collectLatest {
-                    _movieDetail.value = it
+                .collectLatest { result ->
+                    _uiState.update { it.copy(movieState = result) }
+                    when (result) {
+                        is Result.Error -> {
+
+                        }
+
+                        Result.Loading -> {
+
+                        }
+
+                        is Result.Success -> {
+                            _uiState.update { it.copy(movie = result.data) }
+                        }
+                    }
                 }
         }
     }
@@ -75,8 +77,22 @@ class MovieDetailViewModel @Inject constructor(
         viewModelScope.launch {
             castRepository
                 .getCastsOfMovie(language, apiKey, movieId)
-                .collectLatest {
-                    _castList.value = it
+                .collectLatest { result ->
+                    _uiState.update { it.copy(listCastState = result) }
+                    when (result) {
+                        is Result.Error -> {
+                            Log.d("TestDetail", result.exception)
+                        }
+
+                        Result.Loading -> {
+
+                        }
+
+                        is Result.Success -> {
+                            _uiState.update { it.copy(listCast = result.data) }
+                        }
+                    }
+
                 }
         }
     }
@@ -91,8 +107,20 @@ class MovieDetailViewModel @Inject constructor(
                     page = page,
                     includeAdult = false
                 )
-                .collectLatest {
-                    _recommendationsMovie.value = it
+                .collectLatest { result ->
+                    when (result) {
+                        is Result.Error -> {
+
+                        }
+
+                        Result.Loading -> {
+
+                        }
+
+                        is Result.Success -> {
+                            _uiState.update { it.copy(listRecommendationMovie = result.data.dataList) }
+                        }
+                    }
                 }
         }
     }

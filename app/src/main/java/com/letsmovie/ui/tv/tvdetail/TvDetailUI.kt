@@ -129,7 +129,7 @@ fun TvDetailBodyUI(
                     )
                 }
                 Text(
-                    text = tvResult.data.tvName ?: "",
+                    text = tvResult.data.tvName,
                     fontWeight = FontWeight.Medium,
                     fontSize = 22.sp,
                     modifier = Modifier
@@ -179,7 +179,7 @@ fun TvDetailBodyUI(
             ) {
                 TagIconUI(
                     tagIcon = TagIcon(
-                        tagName = tvResult.data.firstAirDate ?: "",
+                        tagName = tvResult.data.firstAirDate,
                         tagIconImageVector = Icons.Default.DateRange
                     )
                 )
@@ -209,7 +209,7 @@ fun TvDetailBodyUI(
                 textAlign = TextAlign.Start
             )
             Text(
-                text = tvResult.data.tvOverview ?: "",
+                text = tvResult.data.tvOverview,
                 fontSize = 18.sp,
                 modifier = Modifier
                     .padding(
@@ -218,7 +218,6 @@ fun TvDetailBodyUI(
                         top = 32.dp
                     )
             )
-
         }
     }
 }

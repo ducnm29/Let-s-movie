@@ -1,12 +1,14 @@
 package com.letsmovie.data.api
 
+import com.letsmovie.data.api.cast.CastApi
+import com.letsmovie.data.api.genre.GenreApi
+import com.letsmovie.data.api.movie.MovieApi
+import com.letsmovie.data.api.tv.TvApi
 import com.letsmovie.util.Define
-import okhttp3.OkHttp
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.create
 
 object NetworkManager {
     fun createMovieApi(): MovieApi = createRetrofit().create(MovieApi::class.java)

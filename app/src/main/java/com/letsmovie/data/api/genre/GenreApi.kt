@@ -1,6 +1,6 @@
-package com.letsmovie.data.api
+package com.letsmovie.data.api.genre
 
-import com.letsmovie.model.DataGenreResponse
+import com.letsmovie.data.api.genre.DataGenreResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
 

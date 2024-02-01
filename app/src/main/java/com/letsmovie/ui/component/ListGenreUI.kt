@@ -13,9 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.unit.dp
 import com.letsmovie.R
-import com.letsmovie.model.DataGenreResponse
 import com.letsmovie.model.Genre
-import com.letsmovie.model.Result
 import com.letsmovie.ui.genre.GenreUI
 
 @Composable

@@ -28,11 +28,11 @@ fun GenreInDetailUI(
                 shape = RoundedCornerShape(6.dp)
             )
             .clickable {
-                onGenreClick(genre.id, genre.name ?: "")
+                onGenreClick(genre.id, genre.name)
             }
     ) {
         Text(
-            text = genre.name ?: "",
+            text = genre.name,
             style = MaterialTheme.typography.labelLarge,
             modifier = Modifier.padding(
                 horizontal = dimensionResource(id = R.dimen.spacer_horizontal2),

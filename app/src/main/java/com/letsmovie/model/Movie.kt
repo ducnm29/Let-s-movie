@@ -1,40 +1,43 @@
 package com.letsmovie.model
 
-import com.google.gson.annotations.SerializedName
-
 data class Movie(
-    @SerializedName("id")
     val id: String,
-    @SerializedName("title")
-    val movieName: String?,
-    @SerializedName("poster_path")
-    val imgPoster: String?,
-    @SerializedName("overview")
-    val movieOverview: String?,
-    @SerializedName("backdrop_path")
-    val imgBackground: String?,
-    @SerializedName("genre_ids")
-    val genreIdArr: List<Int>?,
-    @SerializedName("popularity")
-    val popularityPoint: Float?,
-    @SerializedName("release_date")
-    val releaseDate: String?,
-    @SerializedName("vote_average")
-    val voteAverage: Float?,
-    @SerializedName("vote_count")
-    val voteCount: Int?,
-    @SerializedName("media_type")
-    val mediaType: String?,
-    @SerializedName("genres")
-    val genreList: List<Genre>?,
-    @SerializedName("homepage")
-    val homePage: String?,
-    @SerializedName("runtime")
-    val runtime: Int?,
-    @SerializedName("original_language")
-    val originalLanguage: String?,
-    @SerializedName("production_companies")
+    val movieName: String,
+    val imgPoster: String,
+    val movieOverview: String,
+    val imgBackground: String,
+    val genreIdArr: List<Int>,
+    val popularityPoint: Float,
+    val releaseDate: String,
+    val voteAverage: Float,
+    val voteCount: Int,
+    val mediaType: String,
+    val genreList: List<Genre>,
+    val homePage: String,
+    val runtime: Int,
+    val originalLanguage: String,
     val productionCompanies: List<ProductionCompany>,
-    @SerializedName("status")
-    val status: String?,
-)
+    val status: String,
+) {
+    companion object {
+        val EMPTY = Movie(
+            id = "",
+            movieName = "",
+            imgPoster = "",
+            movieOverview = "",
+            imgBackground = "",
+            genreIdArr = listOf(),
+            popularityPoint = 0f,
+            releaseDate = "",
+            voteAverage = 0f,
+            voteCount = 0,
+            mediaType = "",
+            genreList = listOf(),
+            homePage = "",
+            runtime = 0,
+            originalLanguage = "",
+            productionCompanies = listOf(),
+            status = ""
+        )
+    }
+}

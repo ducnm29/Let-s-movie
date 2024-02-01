@@ -1,41 +1,24 @@
 package com.letsmovie.model
 
 import com.google.gson.annotations.SerializedName
+import com.letsmovie.data.api.tv.ProducerResponse
 
 data class Tv(
-    @SerializedName("id")
     val id: String,
-    @SerializedName("name")
-    val tvName: String?,
-    @SerializedName("original_name")
-    val originalName: String?,
-    @SerializedName("poster_path")
-    val imgPoster: String?,
-    @SerializedName("overview")
-    val tvOverview: String?,
-    @SerializedName("backdrop_path")
-    val imgBackground: String?,
-    @SerializedName("genre_ids")
-    val genreIdArr: List<Int>?,
-    @SerializedName("popularity")
-    val popularityPoint: Float?,
-    @SerializedName("first_air_date")
-    val firstAirDate: String?,
-    @SerializedName("vote_average")
-    val voteAverage: Float?,
-    @SerializedName("vote_count")
-    val voteCount: Int?,
-    @SerializedName("media_type")
-    val mediaType: String?,
-    @SerializedName("origin_country")
-    val originCountry: List<String>?,
-    @SerializedName("created_by")
-    val createdBy: List<Producer>?,
-    @SerializedName("genres")
-    val genreList: List<Genre>?,
-    @SerializedName("languages")
-    val languageList: List<String>?,
-    @SerializedName("status")
-    val status: String?
-
+    val tvName: String,
+    val originalName: String,
+    val imgPoster: String,
+    val tvOverview: String,
+    val imgBackground: String,
+    val genreIdArr: List<Int>,
+    val popularityPoint: Float,
+    val firstAirDate: String,
+    val voteAverage: Float,
+    val voteCount: Int,
+    val mediaType: String,
+    val originCountry: List<String>,
+    val createdBy: List<Producer>,
+    val genreList: List<Genre>,
+    val languageList: List<String>,
+    val status: String
 )

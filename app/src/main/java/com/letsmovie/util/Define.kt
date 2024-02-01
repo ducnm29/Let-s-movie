@@ -27,7 +27,7 @@ class Define {
         const val BASE_URL = "https://api.themoviedb.org/3/"
         const val BASE_IMG_URL = "https://image.tmdb.org/t/p/w500/"
         const val BASE_IMG_URL_ORIGIN = "https://image.tmdb.org/t/p/original/"
-        var LANGUAGE_DEFAULT = Util.getDeviceLanguage()
+        var LANGUAGE_DEFAULT = "EN"
         const val MAX_PAGING_SIZE = 5
         const val PREFETCH_DISTANCE = 2
         const val TOP_RATED_MOVIE = "Top Rated"

@@ -1,6 +1,6 @@
 package com.letsmovie.repository
 
-import com.letsmovie.model.DataListResponse
+import com.letsmovie.data.api.movie.DataListResponse
 import com.letsmovie.model.Movie
 import com.letsmovie.model.Result
 import kotlinx.coroutines.flow.Flow

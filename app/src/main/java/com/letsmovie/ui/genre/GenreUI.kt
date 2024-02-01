@@ -38,7 +38,7 @@ fun GenreUI(
             .clip(MaterialTheme.shapes.small)
             .background(MaterialTheme.colorScheme.tertiary)
             .clickable {
-                onGenreClick(genre.id, genre.name ?: "")
+                onGenreClick(genre.id, genre.name)
             },
         horizontalArrangement = Arrangement.Start,
         verticalAlignment = Alignment.CenterVertically
@@ -50,7 +50,7 @@ fun GenreUI(
             tint =  MaterialTheme.colorScheme.onTertiary
         )
         Text(
-            text = genre.name ?: "",
+            text = genre.name,
             fontSize = dimensionResource(id = R.dimen.genre_title).value.sp,
             maxLines = 1,
             color = MaterialTheme.colorScheme.onTertiary,
@@ -63,5 +63,5 @@ fun GenreUI(
 @Preview
 @Composable
 fun PreviewGenre() {
-    GenreUI(Modifier, Genre("1", "Detective"), {t,h->})
+    GenreUI(Modifier, Genre("1", "Detective")) { _, _ -> }
 }
