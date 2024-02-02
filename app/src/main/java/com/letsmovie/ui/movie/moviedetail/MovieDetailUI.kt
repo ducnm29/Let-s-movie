@@ -68,7 +68,8 @@ fun MovieDetailUI(
     movieDetailViewModel: MovieDetailViewModel,
     onClickBack: () -> Unit,
     onMovieClickDetail: (String) -> Unit,
-    onGenreClick: (String, String) -> Unit
+    onGenreClick: (String, String) -> Unit,
+    onCastClick: (String) -> Unit
 ) {
     val uiState by movieDetailViewModel.uiState.collectAsStateWithLifecycle()
     val currentContext = LocalContext.current
@@ -84,7 +85,8 @@ fun MovieDetailUI(
             onClickOpenLink = { link ->
                 currentContext.openLinkInBrowser(link = link)
             },
-            onGenreClick = onGenreClick
+            onGenreClick = onGenreClick,
+            onCastClick = onCastClick
         )
         if (uiState.isLoading) {
             ProgressLoading(
@@ -115,7 +117,8 @@ fun MovieDetailBodyUI(
     onClickBack: () -> Unit,
     onMovieClickDetail: (String) -> Unit,
     onClickOpenLink: (String) -> Unit,
-    onGenreClick: (String, String) -> Unit
+    onGenreClick: (String, String) -> Unit,
+    onCastClick: (String) -> Unit
 ) {
     Column(
         modifier = modifier
@@ -248,7 +251,8 @@ fun MovieDetailBodyUI(
 
             ListCastUI(
                 listCredit = listCast,
-                modifier = Modifier.padding(top = dimensionResource(id = R.dimen.spacer_vertical2))
+                modifier = Modifier.padding(top = dimensionResource(id = R.dimen.spacer_vertical2)),
+                onCastClick = onCastClick
             )
 
             ListMovie(

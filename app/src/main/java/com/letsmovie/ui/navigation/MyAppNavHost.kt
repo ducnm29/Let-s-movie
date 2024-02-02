@@ -11,6 +11,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.letsmovie.BuildConfig
+import com.letsmovie.ui.cast.CastDetailScreen
 import com.letsmovie.ui.favourite.FavouriteUI
 import com.letsmovie.ui.movie.MovieUI
 import com.letsmovie.ui.movie.movebygenre.MovieByGenreUI
@@ -93,6 +94,9 @@ fun NavGraphBuilder.movieGraph(
                     onNavigateScreen(
                         MovieByGenreDestination.createNavRoute(genreId, genreName)
                     )
+                },
+                onCastClick = { castId ->
+                    onNavigateScreen(CastDetailDestination.createNavRoute(castId))
                 }
             )
         }
@@ -147,6 +151,12 @@ fun NavGraphBuilder.movieGraph(
                     )
                 }
             )
+        }
+
+        composable(
+            route = CastDetailDestination.route
+        ) {
+            CastDetailScreen()
         }
     }
 }

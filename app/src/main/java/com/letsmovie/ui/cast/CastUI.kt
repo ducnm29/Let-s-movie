@@ -1,5 +1,6 @@
 package com.letsmovie.ui.cast
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
@@ -28,10 +29,15 @@ import com.letsmovie.util.Define
 @Composable
 fun CastUI(
     modifier: Modifier = Modifier,
-    cast: Credit
+    cast: Credit,
+    onCastItemClick: (String) -> Unit
 ) {
     Column(
-        modifier = modifier.width(dimensionResource(id = R.dimen.cast_item_size)),
+        modifier = modifier
+            .width(dimensionResource(id = R.dimen.cast_item_size))
+            .clickable {
+                onCastItemClick(cast.id)
+            },
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         AsyncImage(

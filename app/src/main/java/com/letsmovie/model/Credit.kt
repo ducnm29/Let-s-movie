@@ -11,4 +11,8 @@ data class Credit(
     val castId: Int,
     val creditId: String,
     val character: String,
+    val birthDay: String,
+    val deathDay: String,
+    val biography: String,
+    val alsoKnownAs: List<String>,
 )

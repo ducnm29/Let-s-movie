@@ -1,7 +1,8 @@
-package com.letsmovie.data.api.movie
+package com.letsmovie.data.api.cast
 
 import com.google.gson.annotations.SerializedName
 import com.letsmovie.model.Credit
+import com.letsmovie.util.Define.Companion.EMPTY
 
 data class CreditResponse(
     @SerializedName("id")
@@ -27,19 +28,32 @@ data class CreditResponse(
     @SerializedName("character")
     val character: String?,
     @SerializedName("order")
-    val order: Int?
+    val order: Int?,
+    @SerializedName("birthday")
+    val birthDay: String?,
+    @SerializedName("deathday")
+    val deathDay: String?,
+    @SerializedName("biography")
+    val biography: String?,
+    @SerializedName("also_known_as")
+    val alsoKnownAs: List<String>?,
 )
 
 fun CreditResponse.toModel(): Credit {
     return Credit(
         id = id,
         adult = adult ?: false,
-        knownForDepartment = knownForDepartment ?: "",
-        name = name ?: "",
-        originalName = originalName ?: "",
-        profilePath = profilePath ?: "",
+        knownForDepartment = knownForDepartment ?: EMPTY,
+        name = name ?: EMPTY,
+        originalName = originalName ?: EMPTY,
+        profilePath = profilePath ?: EMPTY,
         castId = castId ?: 0,
-        creditId = creditId ?: "",
-        character = character ?: ""
+        creditId = creditId ?: EMPTY,
+        character = character ?: EMPTY,
+        birthDay = birthDay ?: EMPTY,
+        deathDay = deathDay ?: EMPTY,
+        biography = biography ?: EMPTY,
+        alsoKnownAs = alsoKnownAs ?: listOf()
+
     )
 }

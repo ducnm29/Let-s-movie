@@ -1,9 +1,8 @@
 package com.letsmovie.data.api.cast
 
 import com.google.gson.annotations.SerializedName
-import com.letsmovie.data.api.movie.CreditResponse
 
-data class DataCastResponse(
+data class DataCreditResponse(
     @SerializedName("id")
     val id: String,
     @SerializedName("cast")

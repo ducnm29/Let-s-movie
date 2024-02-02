@@ -18,7 +18,8 @@ import com.letsmovie.ui.cast.CastUI
 @Composable
 fun ListCastUI(
     modifier: Modifier = Modifier,
-    listCredit: List<Credit>
+    listCredit: List<Credit>,
+    onCastClick: (String) -> Unit
 ) {
 
     if (listCredit.any { it.character.isNotEmpty() }) {
@@ -35,7 +36,10 @@ fun ListCastUI(
             horizontalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.spacer_vertical0))
         ) {
             items(listCredit.filter { it.character.isNotEmpty() }) { castItem ->
-                CastUI(cast = castItem)
+                CastUI(
+                    cast = castItem,
+                    onCastItemClick = onCastClick
+                )
             }
         }
     }

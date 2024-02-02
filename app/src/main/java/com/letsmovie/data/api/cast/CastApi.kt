@@ -11,5 +11,5 @@ interface CastApi {
         @Path("movie_id") movieId: String,
         @Query("language") language: String,
         @Query("api_key") apiKey: String
-    ): DataCastResponse
+    ): DataCreditResponse
 }

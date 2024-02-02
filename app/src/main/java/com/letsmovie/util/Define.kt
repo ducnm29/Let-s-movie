@@ -20,6 +20,7 @@ class Define {
         const val MOVIE_BY_GENRE_ROUTE = "movie_by_genre_route"
         const val MOVIE_BY_TYPE_ROUTE = "movie_by_type_route"
         const val MOVIE_BY_SEARCH_ROUTE = "movie_by_search_route"
+        const val CAST_DETAIL_ROUTE = "cast_detail_route"
 
         /**
          *  Const variable
@@ -28,10 +29,16 @@ class Define {
         const val BASE_IMG_URL = "https://image.tmdb.org/t/p/w500/"
         const val BASE_IMG_URL_ORIGIN = "https://image.tmdb.org/t/p/original/"
         var LANGUAGE_DEFAULT = "EN"
-        const val MAX_PAGING_SIZE = 5
-        const val PREFETCH_DISTANCE = 2
         const val TOP_RATED_MOVIE = "Top Rated"
         const val UP_COMING_MOVIE = "Up Coming"
+        const val EMPTY = "Empty"
+
+
+        /**
+         * Number constant
+         */
+        const val MAX_PAGING_SIZE = 5
+        const val PREFETCH_DISTANCE = 2
         const val MIN_LINES = 3
         const val MAX_LINES = Int.MAX_VALUE
 
