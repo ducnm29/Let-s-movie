@@ -21,7 +21,6 @@ import com.letsmovie.R
 import com.letsmovie.model.Movie
 import com.letsmovie.util.Define
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MovieItem(
     movie: Movie,
@@ -51,14 +50,14 @@ fun MovieItem(
         )
         Spacer(modifier = Modifier.height(8.dp))
         Text(
-            text = movie.movieName ?: "",
+            text = movie.movieName,
             style = MaterialTheme.typography.titleMedium,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis
         )
         Spacer(modifier = Modifier.height(8.dp))
         Text(
-            text = movie.releaseDate ?: "",
+            text = movie.releaseDate,
             style = MaterialTheme.typography.bodyMedium,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis

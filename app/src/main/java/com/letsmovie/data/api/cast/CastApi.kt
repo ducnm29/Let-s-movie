@@ -1,6 +1,5 @@
-package com.letsmovie.data.api
+package com.letsmovie.data.api.cast
 
-import com.letsmovie.model.DataCastResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -12,5 +11,5 @@ interface CastApi {
         @Path("movie_id") movieId: String,
         @Query("language") language: String,
         @Query("api_key") apiKey: String
-    ): DataCastResponse
+    ): DataCreditResponse
 }

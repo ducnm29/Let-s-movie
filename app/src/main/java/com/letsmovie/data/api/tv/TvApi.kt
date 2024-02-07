@@ -1,6 +1,6 @@
-package com.letsmovie.data.api
+package com.letsmovie.data.api.tv
 
-import com.letsmovie.model.DataListResponse
+import com.letsmovie.data.api.movie.DataListResponse
 import com.letsmovie.model.Tv
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -11,16 +11,16 @@ interface TvApi {
     suspend fun getTrendingTv(
         @Query("language") language: String,
         @Query("api_key") apiKey: String
-    ): DataListResponse<Tv>
+    ): DataListResponse<TvResponse>
     @GET("tv/popular")
     suspend fun getPopularTv(
         @Query("language") language: String,
         @Query("api_key") apiKey: String
-    ):DataListResponse<Tv>
+    ): DataListResponse<TvResponse>
     @GET("tv/{series_id}")
     suspend fun getTvDetail(
         @Path("series_id") tvId: String,
         @Query("language") language: String,
         @Query("api_key") apiKey: String
-    ): Tv
+    ): TvResponse
 }

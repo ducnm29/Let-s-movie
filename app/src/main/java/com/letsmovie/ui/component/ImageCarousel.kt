@@ -1,6 +1,5 @@
 package com.letsmovie.ui.component
 
-import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -10,7 +9,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -29,44 +27,30 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.lerp
-import com.letsmovie.model.DataListResponse
 import com.letsmovie.model.Movie
-import com.letsmovie.model.Result
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlin.math.absoluteValue
 
 @Composable
-fun <T : Any> ImageCarousel(
+fun MovieCarousel(
     modifier: Modifier = Modifier,
-    result: Result<DataListResponse<T>>,
+    listMovie: List<Movie>,
     onClick: (String) -> Unit
 ) {
-    when (result) {
-        is Result.Loading -> {
-
-        }
-
-        is Result.Error -> {
-            Log.d("ImageCarousel", "Ex: "+result.exception)
-        }
-
-        is Result.Success -> {
-            ImageCarouselBody(
-                modifier = modifier,
-                listData = result.data.dataList,
-                _itemNumber = 8,
-                onClick = onClick
-            )
-        }
-    }
+    ImageCarouselBody(
+        modifier = modifier,
+        listData = listMovie,
+        _itemNumber = 8,
+        onClick = onClick
+    )
 }
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun <T : Any> ImageCarouselBody(
+fun ImageCarouselBody(
     modifier: Modifier = Modifier,
-    listData: List<T>,
+    listData: List<Movie>,
     _itemNumber: Int,
     onClick: (String) -> Unit
 ) {
@@ -75,7 +59,7 @@ fun <T : Any> ImageCarouselBody(
     val itemNumber = if (listData.size > _itemNumber) _itemNumber else listData.size
 
     // Auto animate to next page
-    LaunchedEffect(pagerState.settledPage) {
+    LaunchedEffect(pagerState.settledPage, itemNumber) {
         delay(2000)
         val newPosition =
             if (pagerState.currentPage < itemNumber - 1) pagerState.currentPage + 1 else 0
@@ -111,7 +95,7 @@ fun <T : Any> ImageCarouselBody(
             ) {
                 val currentItem = listData[index]
                 CarouselItem(
-                    movieItem = currentItem as Movie,
+                    movieItem = currentItem,
                     onClick = onClick
                 )
             }

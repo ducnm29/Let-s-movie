@@ -1,6 +1,7 @@
 package com.letsmovie.ui.movie.moviedetail
 
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -25,9 +26,10 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
@@ -38,12 +40,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.zIndex
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import coil.size.Scale
 import com.letsmovie.R
-import com.letsmovie.model.DataCastResponse
-import com.letsmovie.model.DataListResponse
+import com.letsmovie.model.Credit
 import com.letsmovie.model.Movie
 import com.letsmovie.model.Result
 import com.letsmovie.model.TagIcon
@@ -51,8 +54,11 @@ import com.letsmovie.ui.component.FooterMovieDetailUI
 import com.letsmovie.ui.component.GenreListInDetailUI
 import com.letsmovie.ui.component.ListCastUI
 import com.letsmovie.ui.component.ListItemWithData
+import com.letsmovie.ui.component.ListMovie
+import com.letsmovie.ui.component.ProgressLoading
 import com.letsmovie.ui.component.TagIconUI
 import com.letsmovie.ui.component.TextSectionUI
+import com.letsmovie.ui.theme.background_card_item
 import com.letsmovie.util.Define
 import com.letsmovie.util.Util.openLinkInBrowser
 
@@ -62,48 +68,42 @@ fun MovieDetailUI(
     movieDetailViewModel: MovieDetailViewModel,
     onClickBack: () -> Unit,
     onMovieClickDetail: (String) -> Unit,
-    onGenreClick: (String, String) -> Unit
+    onGenreClick: (String, String) -> Unit,
+    onCastClick: (String) -> Unit
 ) {
-    val movieResult: Result<Movie> = movieDetailViewModel.movieDetail.collectAsState().value
-    val castResult: Result<DataCastResponse> = movieDetailViewModel.castList.collectAsState().value
-    val recommendationsMovie: Result<DataListResponse<Movie>> =
-        movieDetailViewModel.recommendationsMovie.collectAsState().value
+    val uiState by movieDetailViewModel.uiState.collectAsStateWithLifecycle()
     val currentContext = LocalContext.current
 
-    when (movieResult) {
-        is Result.Loading -> {
-            Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center
-            ) {
-                CircularProgressIndicator()
-            }
-
+    Box {
+        MovieDetailBodyUI(
+            modifier = modifier,
+            movie = uiState.movie,
+            listCast = uiState.listCast,
+            listRecommendationsMovie = uiState.listRecommendationMovie,
+            onClickBack = onClickBack,
+            onMovieClickDetail = onMovieClickDetail,
+            onClickOpenLink = { link ->
+                currentContext.openLinkInBrowser(link = link)
+            },
+            onGenreClick = onGenreClick,
+            onCastClick = onCastClick
+        )
+        if (uiState.isLoading) {
+            ProgressLoading(
+                modifier = Modifier
+                    .zIndex(1f)
+                    .fillMaxSize()
+                    .background(background_card_item)
+                    .alpha(0.5f)
+            )
         }
-
-        is Result.Error -> {
+        if (uiState.isError) {
             Box(
                 modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center
             ) {
                 Text(text = stringResource(id = R.string.common_error))
             }
-
-        }
-
-        is Result.Success -> {
-            MovieDetailBodyUI(
-                modifier = modifier,
-                movieResult = movieResult,
-                castResult = castResult,
-                recommendationsResult = recommendationsMovie,
-                onClickBack = onClickBack,
-                onMovieClickDetail = onMovieClickDetail,
-                onClickOpenLink = { link ->
-                    currentContext.openLinkInBrowser(link = link)
-                },
-                onGenreClick = onGenreClick
-            )
         }
     }
 }
@@ -111,13 +111,14 @@ fun MovieDetailUI(
 @Composable
 fun MovieDetailBodyUI(
     modifier: Modifier = Modifier,
-    movieResult: Result.Success<Movie>,
-    castResult: Result<DataCastResponse>,
-    recommendationsResult: Result<DataListResponse<Movie>>,
+    movie: Movie,
+    listCast: List<Credit>,
+    listRecommendationsMovie: List<Movie>,
     onClickBack: () -> Unit,
     onMovieClickDetail: (String) -> Unit,
     onClickOpenLink: (String) -> Unit,
-    onGenreClick: (String, String) -> Unit
+    onGenreClick: (String, String) -> Unit,
+    onCastClick: (String) -> Unit
 ) {
     Column(
         modifier = modifier
@@ -129,7 +130,7 @@ fun MovieDetailBodyUI(
         ) {
             AsyncImage(
                 model = ImageRequest.Builder(LocalContext.current)
-                    .data(Define.BASE_IMG_URL_ORIGIN + movieResult.data.imgBackground)
+                    .data(Define.BASE_IMG_URL_ORIGIN + movie.imgBackground)
                     .scale(Scale.FILL)
                     .crossfade(true)
                     .build(),
@@ -144,7 +145,9 @@ fun MovieDetailBodyUI(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Row {
+                Row(
+                    modifier = Modifier.padding(top = 8.dp)
+                ) {
                     IconButton(
                         onClick = onClickBack,
                         modifier = Modifier.padding(
@@ -158,7 +161,7 @@ fun MovieDetailBodyUI(
                         )
                     }
                     Text(
-                        text = movieResult.data.movieName ?: "",
+                        text = movie.movieName,
                         fontWeight = FontWeight.Medium,
                         fontSize = 22.sp,
                         modifier = Modifier
@@ -193,7 +196,7 @@ fun MovieDetailBodyUI(
                     AsyncImage(
                         model = ImageRequest
                             .Builder(LocalContext.current)
-                            .data(Define.BASE_IMG_URL_ORIGIN + movieResult.data.imgPoster)
+                            .data(Define.BASE_IMG_URL_ORIGIN + movie.imgPoster)
                             .scale(Scale.FILL)
                             .build(),
                         contentDescription = null,
@@ -208,19 +211,19 @@ fun MovieDetailBodyUI(
                 ) {
                     TagIconUI(
                         tagIcon = TagIcon(
-                            tagName = movieResult.data.releaseDate ?: "",
+                            tagName = movie.releaseDate,
                             tagIconImageVector = Icons.Default.DateRange
                         )
                     )
                     TagIconUI(
                         tagIcon = TagIcon(
-                            tagName = movieResult.data.voteAverage.toString(),
+                            tagName = movie.voteAverage.toString(),
                             tagIconImageVector = Icons.Default.StarRate
                         )
                     )
                     TagIconUI(
                         tagIcon = TagIcon(
-                            tagName = movieResult.data.runtime.toString(),
+                            tagName = movie.runtime.toString(),
                             tagIconImageVector = Icons.Default.AccessTime
                         )
                     )
@@ -237,30 +240,30 @@ fun MovieDetailBodyUI(
                     end = dimensionResource(id = R.dimen.spacer_horizontal2)
                 ),
                 titleRes = R.string.story_line_title,
-                body = movieResult.data.movieOverview ?: ""
+                body = movie.movieOverview
             )
 
             GenreListInDetailUI(
-                listGenre = movieResult.data.genreList ?: listOf(),
+                listGenre = movie.genreList,
                 modifier = Modifier.padding(top = dimensionResource(id = R.dimen.spacer_vertical1)),
                 onGenreClick = onGenreClick
             )
 
             ListCastUI(
-                dataResult = castResult,
-                modifier = Modifier.padding(top = dimensionResource(id = R.dimen.spacer_vertical2))
+                listCredit = listCast,
+                modifier = Modifier.padding(top = dimensionResource(id = R.dimen.spacer_vertical2)),
+                onCastClick = onCastClick
             )
 
-            ListItemWithData(
-                result = recommendationsResult,
+            ListMovie(
                 modifier = Modifier.padding(top = dimensionResource(id = R.dimen.spacer_vertical2)),
-                categoryName = stringResource(id = R.string.related_movie_title),
-                onClick = onMovieClickDetail
-            )
+                listMovieName = stringResource(id = R.string.related_movie_title),
+                onClick = onMovieClickDetail,
+                listMovie = listRecommendationsMovie)
 
             FooterMovieDetailUI(
                 modifier = Modifier.padding(top = dimensionResource(id = R.dimen.spacer_vertical3)),
-                movie = movieResult.data,
+                movie = movie,
                 onCLickOpenLink = onClickOpenLink
             )
 

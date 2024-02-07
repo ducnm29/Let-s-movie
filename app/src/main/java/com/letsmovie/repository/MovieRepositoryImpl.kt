@@ -1,7 +1,9 @@
 package com.letsmovie.repository
 
-import com.letsmovie.data.api.MovieApi
-import com.letsmovie.model.DataListResponse
+import com.letsmovie.data.api.movie.MovieApi
+import com.letsmovie.data.api.cast.toModel
+import com.letsmovie.data.api.movie.DataListResponse
+import com.letsmovie.data.api.movie.toModel
 import com.letsmovie.model.Movie
 import com.letsmovie.model.Result
 import kotlinx.coroutines.flow.Flow
@@ -19,7 +21,8 @@ class MovieRepositoryImpl @Inject constructor(
         return flow {
             emit(Result.Loading)
             val data = movieApi.getTrendingMovie(language, apiKey)
-            emit(Result.Success(data))
+            val parseData = data.toModel { data.dataList.map { it.toModel() } }
+            emit(Result.Success(parseData))
         }.catch { throwable -> emit(Result.Error(throwable.toString())) }
     }
 
@@ -30,7 +33,8 @@ class MovieRepositoryImpl @Inject constructor(
         return flow {
             emit(Result.Loading)
             val data = movieApi.getPopularMovie(language, apiKey)
-            emit(Result.Success(data))
+            val parseData = data.toModel { data.dataList.map { it.toModel() } }
+            emit(Result.Success(parseData))
         }.catch { throwable ->
             emit(Result.Error(throwable.toString()))
         }
@@ -45,7 +49,7 @@ class MovieRepositoryImpl @Inject constructor(
         return flow {
             emit(Result.Loading)
             val data = movieApi.getMovieDetail(movieId, language, apiKey)
-            emit(Result.Success(data))
+            emit(Result.Success(data.toModel()))
         }.catch {
             emit(Result.Error(it.toString()))
         }
@@ -58,7 +62,8 @@ class MovieRepositoryImpl @Inject constructor(
         return flow {
             emit(Result.Loading)
             val data = movieApi.getTopRatedMovie(language, apiKey)
-            emit(Result.Success(data))
+            val parseData = data.toModel { data.dataList.map { it.toModel() } }
+            emit(Result.Success(parseData))
         }.catch {
             emit(Result.Error(it.toString()))
         }
@@ -69,7 +74,8 @@ class MovieRepositoryImpl @Inject constructor(
         apiKey: String,
         page: Int
     ): DataListResponse<Movie> {
-        return movieApi.getTopRatedMovie(language, apiKey, page)
+        val data = movieApi.getTopRatedMovie(language, apiKey, page)
+        return data.toModel { data.dataList.map { it.toModel() } }
     }
 
     override fun getUpComingMovie(
@@ -79,7 +85,8 @@ class MovieRepositoryImpl @Inject constructor(
         return flow {
             emit(Result.Loading)
             val data = movieApi.getUpComingMovie(language, apiKey)
-            emit(Result.Success(data))
+            val parseData = data.toModel { data.dataList.map { it.toModel() } }
+            emit(Result.Success(parseData))
         }.catch {
             emit(Result.Error(it.toString()))
         }
@@ -90,7 +97,8 @@ class MovieRepositoryImpl @Inject constructor(
         apiKey: String,
         page: Int
     ): DataListResponse<Movie> {
-        return movieApi.getUpComingMovie(language, apiKey, page)
+        val data = movieApi.getUpComingMovie(language, apiKey, page)
+        return data.toModel { data.dataList.map { it.toModel() } }
     }
 
     override suspend fun getMovieInGenre(
@@ -99,7 +107,8 @@ class MovieRepositoryImpl @Inject constructor(
         genreId: String,
         page: Int
     ): DataListResponse<Movie> {
-        return movieApi.getMovieInGenre(language, apiKey, genreId, page)
+        val data = movieApi.getMovieInGenre(language, apiKey, genreId, page)
+        return data.toModel { data.dataList.map { it.toModel() } }
     }
 
     override suspend fun getSearchMovie(
@@ -109,7 +118,8 @@ class MovieRepositoryImpl @Inject constructor(
         searchKey: String,
         page: Int
     ): DataListResponse<Movie> {
-        return movieApi.getSearchMovie(language, apiKey, includeAdult, page, searchKey)
+        val data = movieApi.getSearchMovie(language, apiKey, includeAdult, page, searchKey)
+        return data.toModel { data.dataList.map { it.toModel() } }
     }
 
     override fun getNowPlayingMovie(
@@ -120,7 +130,8 @@ class MovieRepositoryImpl @Inject constructor(
         return flow {
             emit(Result.Loading)
             val data = movieApi.getNowPlayingMovie(language, apiKey, page)
-            emit(Result.Success(data))
+            val parseData = data.toModel { data.dataList.map { it.toModel() } }
+            emit(Result.Success(parseData))
         }.catch {
             emit(Result.Error(it.toString()))
         }
@@ -136,7 +147,8 @@ class MovieRepositoryImpl @Inject constructor(
         return flow {
             emit(Result.Loading)
             val data = movieApi.getRecommendationMovie(movieId, language, apiKey, page, includeAdult)
-            emit(Result.Success(data))
+            val parseData = data.toModel { data.dataList.map { it.toModel() } }
+            emit(Result.Success(parseData))
         }.catch {
             emit(Result.Error(it.toString()))
         }

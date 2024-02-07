@@ -1,4 +1,4 @@
-package com.letsmovie.model
+package com.letsmovie.data.api.movie
 
 import com.google.gson.annotations.SerializedName
 
@@ -12,3 +12,12 @@ data class DataListResponse<out T>(
     @SerializedName("total_results")
     val totalResults: Int?
 )
+
+fun <T, U> DataListResponse<T>.toModel(parse: (List<T>) -> List<U>): DataListResponse<U> {
+    return DataListResponse(
+        currentPage = currentPage,
+        dataList = parse(dataList),
+        totalPages = totalPages,
+        totalResults = totalResults
+    )
+}

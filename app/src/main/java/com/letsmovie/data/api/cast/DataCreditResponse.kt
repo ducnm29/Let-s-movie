@@ -1,10 +1,10 @@
-package com.letsmovie.model
+package com.letsmovie.data.api.cast
 
 import com.google.gson.annotations.SerializedName
 
-data class DataCastResponse(
+data class DataCreditResponse(
     @SerializedName("id")
     val id: String,
     @SerializedName("cast")
-    val listCast: List<Credit>
+    val listCast: List<CreditResponse>
 )

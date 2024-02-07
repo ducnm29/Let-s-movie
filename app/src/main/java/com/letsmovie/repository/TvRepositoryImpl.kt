@@ -1,7 +1,10 @@
 package com.letsmovie.repository
 
-import com.letsmovie.data.api.TvApi
-import com.letsmovie.model.DataListResponse
+import com.letsmovie.data.api.tv.TvApi
+import com.letsmovie.data.api.movie.DataListResponse
+import com.letsmovie.data.api.cast.toModel
+import com.letsmovie.data.api.movie.toModel
+import com.letsmovie.data.api.tv.toModel
 import com.letsmovie.model.Result
 import com.letsmovie.model.Tv
 import kotlinx.coroutines.flow.Flow
@@ -18,7 +21,8 @@ class TvRepositoryImpl(
         return flow {
             emit(Result.Loading)
             val data = tvApi.getTrendingTv(language = language, apiKey = apiKey)
-            emit(Result.Success(data))
+            val dataParse = data.toModel { data.dataList.map { it.toModel() } }
+            emit(Result.Success(dataParse))
         }.catch {
             emit(Result.Error(it.toString()))
         }
@@ -31,7 +35,8 @@ class TvRepositoryImpl(
         return flow {
             emit(Result.Loading)
             val data = tvApi.getPopularTv(language = language, apiKey = apiKey)
-            emit(Result.Success(data))
+            val dataParse = data.toModel { data.dataList.map { it.toModel() } }
+            emit(Result.Success(dataParse))
         }.catch {
             emit(Result.Error(it.toString()))
         }
@@ -45,7 +50,7 @@ class TvRepositoryImpl(
         return flow {
             emit(Result.Loading)
             val data = tvApi.getTvDetail(tvId = tvId, language = language, apiKey = apiKey)
-            emit(Result.Success(data))
+            emit(Result.Success(data.toModel()))
         }.catch {
             emit(Result.Error(it.toString()))
         }

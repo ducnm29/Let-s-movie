@@ -1,9 +1,9 @@
 package com.letsmovie.di
 
-import com.letsmovie.data.api.CastApi
-import com.letsmovie.data.api.GenreApi
-import com.letsmovie.data.api.MovieApi
-import com.letsmovie.data.api.TvApi
+import com.letsmovie.data.api.cast.CastApi
+import com.letsmovie.data.api.genre.GenreApi
+import com.letsmovie.data.api.movie.MovieApi
+import com.letsmovie.data.api.tv.TvApi
 import com.letsmovie.repository.CastRepository
 import com.letsmovie.repository.CastRepositoryImpl
 import com.letsmovie.repository.GenreRepository
