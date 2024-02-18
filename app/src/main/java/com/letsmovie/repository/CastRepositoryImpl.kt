@@ -25,4 +25,17 @@ class CastRepositoryImpl(
             emit(Result.Error(it.toString()))
         }
     }
+
+    override suspend fun getCastDetail(
+        personId: String,
+        apiKey: String
+    ): Flow<Result<Credit>> {
+        return flow {
+            emit(Result.Loading)
+            val dataResponse = castApi.getCastDetail(personId = personId, apiKey = apiKey)
+            emit(Result.Success(dataResponse.toModel()))
+        }.catch {
+            emit(Result.Error(it.toString()))
+        }
+    }
 }

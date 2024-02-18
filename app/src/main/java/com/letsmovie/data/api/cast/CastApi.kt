@@ -12,4 +12,10 @@ interface CastApi {
         @Query("language") language: String,
         @Query("api_key") apiKey: String
     ): DataCreditResponse
+
+    @GET("person/{person_id}")
+    suspend fun getCastDetail(
+        @Path("person_id") personId: String,
+        @Query("api_key") apiKey: String
+    ): CreditResponse
 }
