@@ -15,4 +15,22 @@ data class Credit(
     val deathDay: String,
     val biography: String,
     val alsoKnownAs: List<String>,
-)
+) {
+    companion object {
+        val EMPTY = Credit(
+            id = "",
+            adult = false,
+            knownForDepartment = "",
+            name = "",
+            originalName = "",
+            profilePath = "",
+            castId = 0,
+            creditId = "",
+            character = "",
+            birthDay = "",
+            deathDay = "",
+            biography = "",
+            alsoKnownAs = listOf()
+        )
+    }
+}

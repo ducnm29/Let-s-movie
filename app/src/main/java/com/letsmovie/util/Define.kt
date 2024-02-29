@@ -32,6 +32,7 @@ class Define {
         const val TOP_RATED_MOVIE = "Top Rated"
         const val UP_COMING_MOVIE = "Up Coming"
         const val EMPTY = "Empty"
+        const val KNOWN_FOR = "Known For"
 
 
         /**

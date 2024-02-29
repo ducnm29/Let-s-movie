@@ -156,7 +156,13 @@ fun NavGraphBuilder.movieGraph(
         composable(
             route = CastDetailDestination.route
         ) {
-            CastDetailScreen()
+            CastDetailScreen(
+                viewModel = hiltViewModel(),
+                onClickBack = onClickBack,
+                onMovieDetailClick = { movieId ->
+                    onNavigateScreen(MovieDetailDestination.createNavRoute(movieId))
+                }
+            )
         }
     }
 }

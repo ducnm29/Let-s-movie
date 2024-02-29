@@ -26,4 +26,5 @@
     <string name="production_company">Nhà sản xuất</string>
     <string name="status">Trạng thái</string>
     <string name="no_value_data">Không có dữ liệu</string>
+    <string name="biography">Tiểu sử</string>
 </resources>
