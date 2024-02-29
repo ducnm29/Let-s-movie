@@ -31,6 +31,14 @@ class CastDetailViewModel @Inject constructor(
             castId = castId,
             apiKey = BuildConfig.API_KEY
         )
+        getRelatedMovie(
+            castId = castId,
+            apiKey = BuildConfig.API_KEY
+        )
+        getCastImages(
+            castId = castId,
+            apiKey = BuildConfig.API_KEY
+        )
     }
 
     private fun getCastDetail(castId: String, apiKey: String) {
@@ -53,6 +61,48 @@ class CastDetailViewModel @Inject constructor(
                     }
                 }
             }
+        }
+    }
+
+    private fun getRelatedMovie(castId: String, apiKey: String) {
+        viewModelScope.launch {
+            castRepository.getMovieRelated(personId = castId, apiKey = apiKey)
+                .collectLatest { result ->
+                    when (result) {
+                        is Result.Loading -> {
+
+                        }
+
+                        is Result.Error -> {
+
+                        }
+
+                        is Result.Success -> {
+                            _uiState.update { it.copy(listMovieRelated = result.data) }
+                        }
+                    }
+                }
+        }
+    }
+
+    private fun getCastImages(castId: String, apiKey: String) {
+        viewModelScope.launch {
+            castRepository.getCastImage(personId = castId, apiKey = apiKey)
+                .collectLatest { result ->
+                    when (result) {
+                        is Result.Loading -> {
+
+                        }
+
+                        is Result.Error -> {
+
+                        }
+
+                        is Result.Success -> {
+                            _uiState.update { it.copy(listCastImage = result.data) }
+                        }
+                    }
+                }
         }
     }
 }
