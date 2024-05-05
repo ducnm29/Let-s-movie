@@ -92,15 +92,15 @@ fun MovieUI(
             Spacer(modifier = Modifier.size(dimensionResource(id = R.dimen.spacer_vertical1)))
         }
 
-        if (uiState.isLoading) {
-            ProgressLoading(
-                modifier = Modifier
-                    .zIndex(1f)
-                    .fillMaxSize()
-                    .alpha(0.5f)
-                    .background(MaterialTheme.colorScheme.secondaryContainer)
-            )
-        }
+//        if (uiState.isLoading) {
+//            ProgressLoading(
+//                modifier = Modifier
+//                    .zIndex(1f)
+//                    .fillMaxSize()
+//                    .alpha(0.5f)
+//                    .background(MaterialTheme.colorScheme.secondaryContainer)
+//            )
+//        }
     }
 }
 

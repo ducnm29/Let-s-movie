@@ -90,13 +90,13 @@ fun MovieDetailUI(
             onCastClick = onCastClick
         )
         if (uiState.isLoading) {
-            ProgressLoading(
-                modifier = Modifier
-                    .zIndex(1f)
-                    .fillMaxSize()
-                    .alpha(0.5f)
-                    .background(MaterialTheme.colorScheme.secondaryContainer)
-            )
+//            ProgressLoading(
+//                modifier = Modifier
+//                    .zIndex(1f)
+//                    .fillMaxSize()
+//                    .alpha(0.5f)
+//                    .background(MaterialTheme.colorScheme.secondaryContainer)
+//            )
         }
         if (uiState.isError) {
             Box(

@@ -141,14 +141,6 @@ fun NavGraphBuilder.movieGraph(
                 onBackClick = onClickBack,
                 onMovieDetailClick = { movieId ->
                     onNavigateScreen(MovieDetailDestination.createNavRoute(movieId))
-                },
-                onSearchWithKeyWord = { movieBySearchViewModel, keyword ->
-                    movieBySearchViewModel.setKeyWordSearch(keyword)
-                    movieBySearchViewModel.getMovieSearch(
-                        language = Define.LANGUAGE_DEFAULT,
-                        apiKey = BuildConfig.API_KEY,
-                        includeAdult = false
-                    )
                 }
             )
         }

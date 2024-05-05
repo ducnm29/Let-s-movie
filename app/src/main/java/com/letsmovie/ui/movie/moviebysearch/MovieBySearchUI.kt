@@ -23,6 +23,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
+import com.letsmovie.BuildConfig
 import com.letsmovie.R
 import com.letsmovie.model.Movie
 import com.letsmovie.ui.component.SearchBarInDetailUI
@@ -35,7 +36,6 @@ fun MovieBySearchUI(
     movieBySearchViewModel: MovieBySearchViewModel,
     onMovieDetailClick: (String) -> Unit,
     onBackClick: () -> Unit,
-    onSearchWithKeyWord: (MovieBySearchViewModel, String) -> Unit
 ) {
     val movieData = movieBySearchViewModel.movieSearchStateFlow.collectAsLazyPagingItems()
     val focusRequester = remember {
@@ -56,7 +56,14 @@ fun MovieBySearchUI(
             onBackClick = onBackClick,
             focusRequester = focusRequester,
             movieData = movieData,
-            onSearchWithKeyWord = onSearchWithKeyWord
+            onSearchWithKeyWord = { keyword ->
+                movieBySearchViewModel.setKeyWordSearch(keyword)
+                movieBySearchViewModel.getMovieSearch(
+                    language = Define.LANGUAGE_DEFAULT,
+                    apiKey = BuildConfig.API_KEY,
+                    includeAdult = false
+                )
+            }
         )
     }
 
@@ -70,7 +77,7 @@ fun MovieBySearchBodyUI(
     onBackClick: () -> Unit,
     focusRequester: FocusRequester,
     movieData: LazyPagingItems<Movie>,
-    onSearchWithKeyWord: (MovieBySearchViewModel, String) -> Unit
+    onSearchWithKeyWord: (String) -> Unit
 ) {
     Column(
         modifier = modifier
@@ -78,12 +85,12 @@ fun MovieBySearchBodyUI(
         //Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.spacer_vertical3)))
         SearchBarInDetailUI(
             onValueChange = { keyword ->
-                onSearchWithKeyWord(movieBySearchViewModel, keyword)
+                onSearchWithKeyWord(keyword)
             },
             searchKeywordValue = movieBySearchViewModel.keywordState.value,
             onBackClick = onBackClick,
             onCLearClick = {
-                onSearchWithKeyWord(movieBySearchViewModel, "")
+                onSearchWithKeyWord("")
             },
             focusRequester = focusRequester
         )
