@@ -1,8 +1,5 @@
 package com.letsmovie.model
 
-import com.google.gson.annotations.SerializedName
-import com.letsmovie.data.api.tv.ProducerResponse
-
 data class Tv(
     val id: String,
     val tvName: String,

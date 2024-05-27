@@ -1,4 +1,4 @@
-package com.letsmovie.data.api.cast
+package com.letsmovie.data.network.cast
 
 import com.google.gson.annotations.SerializedName
 import com.letsmovie.model.Credit

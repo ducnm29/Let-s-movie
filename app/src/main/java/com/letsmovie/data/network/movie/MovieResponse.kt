@@ -1,9 +1,8 @@
-package com.letsmovie.data.api.movie
+package com.letsmovie.data.network.movie
 
 import com.google.gson.annotations.SerializedName
 import com.letsmovie.model.Genre
 import com.letsmovie.model.Movie
-import com.letsmovie.model.ProductionCompany
 
 data class MovieResponse(
     @SerializedName("id")

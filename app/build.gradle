@@ -114,4 +114,11 @@ dependencies {
     implementation(platform("com.google.firebase:firebase-bom:32.7.1"))
     implementation "com.google.firebase:firebase-crashlytics"
     implementation "com.google.firebase:firebase-analytics"
+
+    // Google login
+    //implementation("androidx.credentials:credentials:1.2.2")
+
+    // optional - needed for credentials support from play services, for devices running
+    // Android 13 and below.
+    //implementation("androidx.credentials:credentials-play-services-auth:1.2.2")
 }

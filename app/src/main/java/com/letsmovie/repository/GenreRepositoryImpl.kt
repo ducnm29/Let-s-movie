@@ -1,8 +1,7 @@
 package com.letsmovie.repository
 
-import com.letsmovie.data.api.genre.GenreApi
-import com.letsmovie.data.api.genre.DataGenreResponse
-import com.letsmovie.data.api.genre.toModel
+import com.letsmovie.data.network.genre.GenreApi
+import com.letsmovie.data.network.genre.toModel
 import com.letsmovie.model.Genre
 import com.letsmovie.model.Result
 import kotlinx.coroutines.flow.Flow

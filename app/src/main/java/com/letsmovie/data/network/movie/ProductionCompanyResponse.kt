@@ -1,4 +1,4 @@
-package com.letsmovie.data.api.movie
+package com.letsmovie.data.network.movie
 
 import com.google.gson.annotations.SerializedName
 import com.letsmovie.model.ProductionCompany

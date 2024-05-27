@@ -93,3 +93,10 @@ object CastDetailDestination : AppNavDestination {
         return Define.CAST_DETAIL_ROUTE + "/$castId"
     }
 }
+
+object LoginDestination : AppNavDestination {
+    override val route = Define.LOGIN_ROUTE
+    fun createNavRoute(): String {
+        return Define.LOGIN_ROUTE
+    }
+}

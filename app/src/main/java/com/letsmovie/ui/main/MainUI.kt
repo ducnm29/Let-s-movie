@@ -11,9 +11,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLayoutDirection
 import com.letsmovie.LetsMovieAppState
 import com.letsmovie.ui.component.AppNavigation
+import com.letsmovie.ui.navigation.LoginDestination
 import com.letsmovie.ui.navigation.MyAppNavHost
 import com.letsmovie.ui.navigation.TopLevelDestination
-import com.letsmovie.util.Define
 
 @Composable
 fun MainUI(
@@ -47,7 +47,7 @@ fun MainUI(
         ) {
             MyAppNavHost(
                 navController = appState.navController,
-                startDestination = Define.MOVIE_HOME,
+                startDestination = LoginDestination.route,
                 onClickBack = {
                     appState.popBackStack()
                 },

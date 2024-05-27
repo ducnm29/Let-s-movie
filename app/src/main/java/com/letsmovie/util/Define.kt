@@ -21,6 +21,7 @@ class Define {
         const val MOVIE_BY_TYPE_ROUTE = "movie_by_type_route"
         const val MOVIE_BY_SEARCH_ROUTE = "movie_by_search_route"
         const val CAST_DETAIL_ROUTE = "cast_detail_route"
+        const val LOGIN_ROUTE = "login_route"
 
         /**
          *  Const variable

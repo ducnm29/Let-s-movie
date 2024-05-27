@@ -1,4 +1,4 @@
-package com.letsmovie.data.api.movie
+package com.letsmovie.data.network.movie
 
 import retrofit2.http.GET
 import retrofit2.http.Path

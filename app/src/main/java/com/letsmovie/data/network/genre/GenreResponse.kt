@@ -1,4 +1,4 @@
-package com.letsmovie.data.api.genre
+package com.letsmovie.data.network.genre
 
 import com.google.gson.annotations.SerializedName
 import com.letsmovie.model.Genre

@@ -3,7 +3,7 @@ package com.letsmovie.ui.tv
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.letsmovie.BuildConfig
-import com.letsmovie.data.api.movie.DataListResponse
+import com.letsmovie.data.network.movie.DataListResponse
 import com.letsmovie.model.Result
 import com.letsmovie.model.Tv
 import com.letsmovie.repository.TvRepository

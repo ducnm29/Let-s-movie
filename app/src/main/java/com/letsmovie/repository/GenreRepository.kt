@@ -1,6 +1,5 @@
 package com.letsmovie.repository
 
-import com.letsmovie.data.api.genre.DataGenreResponse
 import com.letsmovie.model.Genre
 import com.letsmovie.model.Result
 import kotlinx.coroutines.flow.Flow

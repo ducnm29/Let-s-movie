@@ -1,8 +1,8 @@
 package com.letsmovie.repository
 
-import com.letsmovie.data.api.cast.CastApi
-import com.letsmovie.data.api.cast.toModel
-import com.letsmovie.data.api.movie.toModel
+import com.letsmovie.data.network.cast.CastApi
+import com.letsmovie.data.network.cast.toModel
+import com.letsmovie.data.network.movie.toModel
 import com.letsmovie.model.CastImage
 import com.letsmovie.model.Credit
 import com.letsmovie.model.Movie

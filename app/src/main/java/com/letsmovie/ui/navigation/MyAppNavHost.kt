@@ -10,9 +10,9 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
-import com.letsmovie.BuildConfig
 import com.letsmovie.ui.cast.CastDetailScreen
 import com.letsmovie.ui.favourite.FavouriteUI
+import com.letsmovie.ui.login.LoginUI
 import com.letsmovie.ui.movie.MovieUI
 import com.letsmovie.ui.movie.movebygenre.MovieByGenreUI
 import com.letsmovie.ui.movie.moviebysearch.MovieBySearchUI
@@ -21,7 +21,6 @@ import com.letsmovie.ui.movie.moviedetail.MovieDetailUI
 import com.letsmovie.ui.setting.SettingUI
 import com.letsmovie.ui.tv.TvUI
 import com.letsmovie.ui.tv.tvdetail.TvDetailUI
-import com.letsmovie.util.Define
 
 @Composable
 fun MyAppNavHost(
@@ -36,6 +35,11 @@ fun MyAppNavHost(
         navController = navController,
         startDestination = startDestination
     ) {
+        //Login
+        composable(route = LoginDestination.route){
+            LoginUI(loginViewModel = hiltViewModel())
+        }
+
         movieGraph(
             onNavigateScreen = onNavigateScreen,
             onClickBack = onClickBack

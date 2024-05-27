@@ -1,7 +1,7 @@
-package com.letsmovie.data.api.cast
+package com.letsmovie.data.network.cast
 
 import com.google.gson.annotations.SerializedName
-import com.letsmovie.data.api.movie.MovieResponse
+import com.letsmovie.data.network.movie.MovieResponse
 
 data class MovieRelatedResponse(
     @SerializedName("id")

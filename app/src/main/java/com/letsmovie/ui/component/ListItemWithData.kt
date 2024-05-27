@@ -2,7 +2,7 @@ package com.letsmovie.ui.component
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.letsmovie.data.api.movie.DataListResponse
+import com.letsmovie.data.network.movie.DataListResponse
 import com.letsmovie.model.Result
 import com.letsmovie.ui.movie.ListItemUI
 

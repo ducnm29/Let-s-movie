@@ -1,9 +1,9 @@
-package com.letsmovie.data.api
+package com.letsmovie.data.network
 
-import com.letsmovie.data.api.cast.CastApi
-import com.letsmovie.data.api.genre.GenreApi
-import com.letsmovie.data.api.movie.MovieApi
-import com.letsmovie.data.api.tv.TvApi
+import com.letsmovie.data.network.cast.CastApi
+import com.letsmovie.data.network.genre.GenreApi
+import com.letsmovie.data.network.movie.MovieApi
+import com.letsmovie.data.network.tv.TvApi
 import com.letsmovie.util.Define
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor

@@ -1,7 +1,7 @@
 package com.letsmovie.ui.genre
 
 import androidx.lifecycle.ViewModel
-import com.letsmovie.data.api.genre.DataGenreResponse
+import com.letsmovie.data.network.genre.DataGenreResponse
 import com.letsmovie.model.Result
 import com.letsmovie.repository.GenreRepository
 import dagger.hilt.android.lifecycle.HiltViewModel

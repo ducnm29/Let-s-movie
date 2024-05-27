@@ -1,8 +1,7 @@
-package com.letsmovie.data.api.tv
+package com.letsmovie.data.network.tv
 
 import com.google.gson.annotations.SerializedName
 import com.letsmovie.model.Genre
-import com.letsmovie.model.Producer
 import com.letsmovie.model.Tv
 
 data class TvResponse(

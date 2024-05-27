@@ -1,10 +1,9 @@
 package com.letsmovie.repository
 
-import com.letsmovie.data.api.tv.TvApi
-import com.letsmovie.data.api.movie.DataListResponse
-import com.letsmovie.data.api.cast.toModel
-import com.letsmovie.data.api.movie.toModel
-import com.letsmovie.data.api.tv.toModel
+import com.letsmovie.data.network.tv.TvApi
+import com.letsmovie.data.network.movie.DataListResponse
+import com.letsmovie.data.network.movie.toModel
+import com.letsmovie.data.network.tv.toModel
 import com.letsmovie.model.Result
 import com.letsmovie.model.Tv
 import kotlinx.coroutines.flow.Flow

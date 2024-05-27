@@ -1,7 +1,6 @@
-package com.letsmovie.data.api.tv
+package com.letsmovie.data.network.tv
 
-import com.letsmovie.data.api.movie.DataListResponse
-import com.letsmovie.model.Tv
+import com.letsmovie.data.network.movie.DataListResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query

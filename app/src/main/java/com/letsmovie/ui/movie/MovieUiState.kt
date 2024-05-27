@@ -1,6 +1,6 @@
 package com.letsmovie.ui.movie
 
-import com.letsmovie.data.api.movie.DataListResponse
+import com.letsmovie.data.network.movie.DataListResponse
 import com.letsmovie.model.Genre
 import com.letsmovie.model.Movie
 import com.letsmovie.model.Result
