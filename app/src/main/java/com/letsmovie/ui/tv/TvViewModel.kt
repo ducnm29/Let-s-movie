@@ -13,6 +13,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -21,15 +22,8 @@ class TvViewModel @Inject constructor(
     private val tvRepository: TvRepository
 ) : ViewModel() {
 
-    private val _trendingTvStateFlow: MutableStateFlow<Result<DataListResponse<Tv>>> =
-        MutableStateFlow(Result.Loading)
-    val trendingTvStateFlow: StateFlow<Result<DataListResponse<Tv>>> =
-        _trendingTvStateFlow.asStateFlow()
-
-    private val _popularTvStateFlow: MutableStateFlow<Result<DataListResponse<Tv>>> =
-        MutableStateFlow(Result.Loading)
-    val popularTvStateFlow: StateFlow<Result<DataListResponse<Tv>>> =
-        _popularTvStateFlow.asStateFlow()
+    private val _uiState = MutableStateFlow(TvUiState.EMPTY)
+    val uiState: StateFlow<TvUiState> get() = _uiState.asStateFlow()
 
 
     init {
@@ -39,17 +33,47 @@ class TvViewModel @Inject constructor(
 
     fun getTrendingTv() {
         viewModelScope.launch {
-            tvRepository.getTrendingTv(Define.LANGUAGE_DEFAULT, BuildConfig.API_KEY).collectLatest {
-                _trendingTvStateFlow.value = it
-            }
+            tvRepository.getTrendingTv(Define.LANGUAGE_DEFAULT, BuildConfig.API_KEY)
+                .collectLatest { result ->
+                    when (result) {
+                        is Result.Error -> {
+                            // handle error
+                        }
+
+                        Result.Loading -> {
+                            // handle later
+                        }
+
+                        is Result.Success -> {
+                            _uiState.update {
+                                it.copy(listTrendingTv = result.data.dataList)
+                            }
+                        }
+                    }
+                }
         }
     }
 
     fun getPopularTv() {
         viewModelScope.launch {
-            tvRepository.getPopularTv(Define.LANGUAGE_DEFAULT, BuildConfig.API_KEY).collectLatest {
-                _popularTvStateFlow.value = it
-            }
+            tvRepository.getPopularTv(Define.LANGUAGE_DEFAULT, BuildConfig.API_KEY)
+                .collectLatest { result ->
+                    when (result) {
+                        is Result.Error -> {
+                            // handle error
+                        }
+
+                        Result.Loading -> {
+                            // handle later
+                        }
+
+                        is Result.Success -> {
+                            _uiState.update {
+                                it.copy(listPopularTv = result.data.dataList)
+                            }
+                        }
+                    }
+                }
         }
     }
 }
