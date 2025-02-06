@@ -16,18 +16,5 @@ fun FavouriteTvUI(
     tvViewModel: TvViewModel,
     onTvClick: (String) -> Unit
 ) {
-    val trendingTvStateFlow = tvViewModel.trendingTvStateFlow.collectAsState()
-    Column(
-        modifier = modifier.verticalScroll(rememberScrollState())
-    ) {
-        SearchBarUI(
-            onClick = {}
-        )
-        ListItemWithData(
-            result = trendingTvStateFlow.value,
-            modifier = modifier,
-            categoryName = "Trending",
-            onClick = onTvClick
-        )
-    }
+
 }

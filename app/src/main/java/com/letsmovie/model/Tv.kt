@@ -21,4 +21,26 @@ data class Tv(
     val genreList: List<Genre>,
     val languageList: List<String>,
     val status: String
-)
+) {
+    companion object {
+        val EMPTY = Tv(
+            id = "",
+            tvName = "Empty Name",
+            originalName = "",
+            imgPoster = "/t2rAdgjSh0WYbXzdOB5zTDqzdCI.jpg",
+            tvOverview = "",
+            imgBackground = "/t2rAdgjSh0WYbXzdOB5zTDqzdCI.jpg",
+            genreIdArr = listOf(),
+            popularityPoint = 0f,
+            firstAirDate = "",
+            voteCount = 0,
+            voteAverage = 0f,
+            mediaType = "",
+            originCountry = listOf(),
+            createdBy = listOf(),
+            genreList = listOf(),
+            languageList = listOf(),
+            status = ""
+        )
+    }
+}

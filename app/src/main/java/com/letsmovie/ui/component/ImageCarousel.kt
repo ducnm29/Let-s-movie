@@ -1,6 +1,5 @@
 package com.letsmovie.ui.component
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -46,7 +45,6 @@ fun MovieCarousel(
     )
 }
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun ImageCarouselBody(
     modifier: Modifier = Modifier,
@@ -54,9 +52,9 @@ fun ImageCarouselBody(
     _itemNumber: Int,
     onClick: (String) -> Unit
 ) {
-    val pagerState = rememberPagerState(initialPage = 0)
     val scope = rememberCoroutineScope()
     val itemNumber = if (listData.size > _itemNumber) _itemNumber else listData.size
+    val pagerState = rememberPagerState(initialPage = 0, pageCount = { itemNumber })
 
     // Auto animate to next page
     LaunchedEffect(pagerState.settledPage, itemNumber) {
@@ -69,10 +67,8 @@ fun ImageCarouselBody(
         modifier = modifier.fillMaxWidth()
     ) {
         HorizontalPager(
-            pageCount = itemNumber,
             state = pagerState,
             pageSpacing = 10.dp,
-            beyondBoundsPageCount = 2,
             contentPadding = PaddingValues(16.dp)
         ) { index ->
             Surface(

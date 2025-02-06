@@ -14,3 +14,29 @@
 .externalNativeBuild
 .cxx
 local.properties
+
+# JetBrains IDE
+.idea/
+.kotlin/
+
+# Unit test reports
+TEST*.xml
+
+# Log files
+*.log
+
+*.dex
+
+# Java class files
+*.class
+
+.navigation
+captures/
+output.json
+
+# Applications
+*.app
+*.exe
+*.war
+*.apk
+*.aab
