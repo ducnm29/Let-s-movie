@@ -27,7 +27,7 @@ fun FavouriteUI(
     onMovieClick: (String) -> Unit,
     onTvClick: (String) -> Unit
 ) {
-    val pagerState = rememberPagerState(initialPage = 0)
+    val pagerState = rememberPagerState(initialPage = 0, pageCount = { 2 })
 
 
     Column(
